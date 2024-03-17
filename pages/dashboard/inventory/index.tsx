@@ -11,14 +11,17 @@ interface DropdownProps {
 }
 
 export default function SampleRender() {
+    
     const [sample, setSample] = useState<string>("");
     const [tblName, setTblName] = useState<string>("");
     // const inventories = await fetchGPCInventoryList()
     // console.log(inventories)
     const handleCompanyChange = (value: string) => {
         setSample(value)
+        setTblName(value)
     }
-    // const table = (value: string) => {
+    console.log(tblName)
+    console.log(sample);
         let name = tableName.find(company => company.name === sample)?.displayName || sample
         
     // }
@@ -32,8 +35,8 @@ export default function SampleRender() {
                  <Dropdown onCompanyChange={handleCompanyChange}/>
              </div>
                  {/* Use curly braces to embed JavaScript expressions */}
-                 { sample === "gpc_inventory" && <GPCInventoryTable />}
-                 {/* { sample === "lsi_inventory" && <LSIInventoryTable/>} */}
+                 { sample === 'gpc_inventory' && <GPCInventoryTable gettableName={sample}/>}
+                 { sample === "lsi_inventory" && <GPCInventoryTable gettableName={sample}/>}
         </div>
         </Layout>
      )

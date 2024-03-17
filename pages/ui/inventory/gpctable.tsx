@@ -9,15 +9,21 @@ import { RowDataPacket } from "mysql2";
 import { GetServerSideProps } from "next";
 
 
-export default function GPCInventoryTable (){
+export default function GPCInventoryTable ({gettableName}:{gettableName: string}){
   const [inventories, setInventories] = useState<InventoryList[]>([]);
 
   useEffect(() => {
     async function getPageData(){
-        const apiUrlEndpoint = `http://localhost:3000/api/getInvetory`
-        const response = await fetch(apiUrlEndpoint);
+        const pageData = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+        const apiUrlEndpoint = `http://localhost:3000/api/${gettableName}`
+        const response = await fetch(apiUrlEndpoint, pageData);
         const res = await response.json();
-        console.log(res.results);
+  
         setInventories(res.results)
     }
     getPageData();
@@ -84,7 +90,7 @@ export default function GPCInventoryTable (){
             </thead>
             <tbody className="bg-white">
               {inventories?.map((inventory) => (
-                <tr
+                <tr key={inventory.id}
                   className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                 >
                   <td className="py-3 pl-6 pr-3 whitespace-nowrap">
