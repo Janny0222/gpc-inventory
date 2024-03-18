@@ -16,6 +16,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "lib/db.js", "pages/api/lsi_inventory.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "lib/db.js", "pages/api/lsi_inventorys.js"],
   "exclude": ["node_modules"]
 }

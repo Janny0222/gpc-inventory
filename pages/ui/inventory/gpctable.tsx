@@ -1,67 +1,35 @@
 
 'use client'
-import { fetchGPCInventoryList } from "@/pages/lib/data";
-import { tableName } from "@/pages/lib/company";
 import { useEffect } from "react";
 import { useState } from "react";
 import { InventoryList } from "@/pages/lib/definition";
-import { RowDataPacket } from "mysql2";
-import { GetServerSideProps } from "next";
 
+interface GPCInventoryTableProps {
+  gettableName: string;
+  onDataSubmitted: () => void;
+}
 
-export default function GPCInventoryTable ({gettableName}:{gettableName: string}){
+export default function GPCInventoryTable ({gettableName, onDataSubmitted}:GPCInventoryTableProps){
   const [inventories, setInventories] = useState<InventoryList[]>([]);
 
   useEffect(() => {
-    async function getPageData(){
-        const pageData = {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-        const apiUrlEndpoint = `http://localhost:3000/api/${gettableName}`
-        const response = await fetch(apiUrlEndpoint, pageData);
-        const res = await response.json();
-  
-        setInventories(res.results)
+    async function fetchInventoryData() {
+      try {
+        const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}`;
+        const response = await fetch(apiUrlEndpoint);
+        const data = await response.json();
+        setInventories(data.results);
+      } catch (error) {
+        console.error('Error fetching inventory data:', error);
+      }
     }
-    getPageData();
-  }, [])
+    
+    fetchInventoryData();
+  }, [gettableName, onDataSubmitted]);
     return (  
     <div className="flow-root mt-6">
       <div className="inline-block min-w-full align-middle">
         <div className="p-2 rounded-lg bg-gray-50 md:pt-0">
-          <div className="md:hidden">
-            {inventories?.map((inventory) => (
-              <div
-                key={inventory.id}
-                className="w-full p-4 mb-2 bg-white rounded-md"
-              >
-                <div className="flex items-center justify-between pb-4 border-b">
-                  <div>
-                    <div className="flex items-center mb-2">
-                      <p>{inventory.pc_name}</p>
-                    </div>
-                    <p className="text-sm text-gray-500">{inventory.mac_address}</p>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between w-full pt-4">
-                  <div>
-                    <p className="text-xl font-medium">
-                      {inventory.computer_type}
-                    </p>
-                    <p>{inventory.specs}</p>
-                  </div>
-                  <div className="flex justify-end gap-2">
-                    {/* <UpdateInvoice id={invoice.id} />
-                    <DeleteInvoice id={invoice.id} /> */}
-                    <p>{inventory.pc_name}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
         <table className="min-w-full text-gray-900 md:table">
             <thead className="text-sm font-normal text-left rounded-lg">
               <tr>
@@ -84,7 +52,7 @@ export default function GPCInventoryTable ({gettableName}:{gettableName: string}
                   Date Purchased
                 </th>
                 <th scope="col" className="relative py-3 pl-6 pr-3">
-                  <span className="sr-only">Edit</span>
+                  <span className="sr-only">Action</span>
                 </th>
               </tr>
             </thead>
