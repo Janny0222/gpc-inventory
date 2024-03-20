@@ -3,6 +3,11 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { InventoryList } from "@/pages/lib/definition";
+import { UpdateInventory } from "../buttons";
+import { tableName } from "@/pages/lib/company";
+import Form from "./gpc-create/create-form";
+import EditModal from "@/pages/components/editmodal";
+import { CreateInventory } from "../buttons";
 
 interface GPCInventoryTableProps {
   gettableName: string;
@@ -11,7 +16,31 @@ interface GPCInventoryTableProps {
 
 export default function GPCInventoryTable ({gettableName, onDataSubmitted}:GPCInventoryTableProps){
   const [inventories, setInventories] = useState<InventoryList[]>([]);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState<number | null>(null)
+  const [specificData, setSpecificData] = useState<any>(null)
+  const [editName, setEditName] = useState("")
+  
+  // useEffect(() => {
+  //   const fetchSpecificData = async (id: number) => {
+  //       try {
+  //         const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/${gettableName}/${id}`)
+  //         if(!res.ok){
+  //           throw new Error('Failed to fetch inventory item');
+  //         }
+  //         const data = await res.json();
+  //         setSpecificData(data.results[0]);
+  //         setEditName(data.results[0].pc_name)
+  //         console.log(editName)
+  //         console.log(specificData)
+  //     } catch (error){
+  //       console.error('Error fetching inventory item:', error)
+  //     }
+  //   };
+  //   if(selectedId !== null){
+  //      fetchSpecificData(selectedId)
+  //   }
+  // }, [gettableName, selectedId])
   useEffect(() => {
     async function fetchInventoryData() {
       try {
@@ -23,9 +52,57 @@ export default function GPCInventoryTable ({gettableName, onDataSubmitted}:GPCIn
         console.error('Error fetching inventory data:', error);
       }
     }
-    
     fetchInventoryData();
   }, [gettableName, onDataSubmitted]);
+  // Getting the specific display name
+  let name = tableName.find(company => company.name === gettableName)?.displayName || gettableName
+
+  
+  // modal for edit
+  const openModal = async (id: number) =>{
+    setSelectedId(id);
+    setIsModalOpen(true);
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/${gettableName}/${id}`)
+        if(!res.ok){
+          throw new Error('Failed to fetch inventory item');
+        }
+        const data = await res.json();
+        setSpecificData(data.results[0]);
+        setEditName(data.results[0].pc_name)
+        console.log(editName)
+        console.log(specificData)
+    } catch (error){
+      console.error('Error fetching inventory item:', error)
+    }
+  
+  }
+  console.log(selectedId);
+  const closeModal = () => {
+      setIsModalOpen(false)
+  }
+  const handleFormSubmit = async () =>{
+    closeModal();
+    
+    await getPageData();
+  }
+  const getPageData = async () => {
+    try {
+        const pageData = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+        const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}`;
+        const response = await fetch(apiUrlEndpoint, pageData);
+        const res = await response.json();
+
+        setInventories(res.results);
+    } catch (error) {
+        console.error('Error fetching inventory data:', error);
+    }
+  }
     return (  
     <div className="flow-root mt-6">
       <div className="inline-block min-w-full align-middle">
@@ -51,8 +128,8 @@ export default function GPCInventoryTable ({gettableName, onDataSubmitted}:GPCIn
                 <th scope="col" className="px-3 py-5 font-medium">
                   Date Purchased
                 </th>
-                <th scope="col" className="relative py-3 pl-6 pr-3">
-                  <span className="sr-only">Action</span>
+                <th scope="col" className="py-3 pl-6 pr-3">
+                  Action
                 </th>
               </tr>
             </thead>
@@ -83,14 +160,18 @@ export default function GPCInventoryTable ({gettableName, onDataSubmitted}:GPCIn
                     {inventory.date_purchased}
                   </td>
                   <td className="py-3 pl-6 pr-3 whitespace-nowrap">
-                    <div className="flex justify-end gap-3">
-                      
+                    <div className="flex items-center gap-3">
+                      <UpdateInventory id={inventory.id} onClick={openModal}/>
                     </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          {isModalOpen && (
+                        <EditModal onClose={closeModal} companyName={name} onSubmit={handleFormSubmit} id={selectedId} editName={selectedId} tablename={gettableName} initialValues={specificData}/>
+                          
+                    )}
         </div>
       </div>
     </div>     

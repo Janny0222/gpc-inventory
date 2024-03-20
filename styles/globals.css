@@ -8,3 +8,8 @@
   box-sizing: border-box;
   scroll-behavior: smooth;
 }
+
+.sidebar {
+  background: rgb(31,68,35);
+background: linear-gradient(90deg, rgba(31,68,35,1) 0%, rgba(70,156,45,1) 48%, rgba(224,224,224,1) 100%);
+}

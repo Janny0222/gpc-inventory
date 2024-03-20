@@ -1,5 +1,5 @@
 import Image from "next/image";
-import NavLinks from "./ui/sidebar";
+import NavLinks from "./components/sidebar";
 
 export default function Home() {
   return (

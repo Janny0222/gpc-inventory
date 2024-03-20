@@ -3,18 +3,26 @@ import { query } from '@/lib/db';
 
 export default async function handler(req, res) {
     const tableName = req.query.tableName;
-    
-  if (req.method === 'GET') {
-    try {
-      const data = `SELECT * FROM ${tableName}`;
-      const values = [];
-      const inventory = await query(data, values);
+    const {id} = req.query
+    if (req.method === 'GET') {
+      try {
+          if (id) { // If ID is provided, fetch specific data
+              const data = `SELECT * FROM ${tableName} WHERE id = ?`;
+              const values = [id];
+              const inventory = await query(data, values);
 
-      res.status(200).json({ results: inventory });
-    } catch (error) {
-      console.error('Error fetching inventory:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
+              if (inventory.length === 0) {
+                  return res.status(404).json({ error: 'Inventory not found' });
+              }
+
+              res.status(200).json({ results: inventory });
+            //   console.log(id)
+            //   console.log({results: inventory})
+          }
+      } catch (error) {
+          console.error('Error fetching inventory:', error);
+          res.status(500).json({ error: 'Internal Server Error' });
+      }
   } else if (req.method === 'POST') {
     try {
       const pc_name = req.body.pc_name;
@@ -49,7 +57,7 @@ export default async function handler(req, res) {
       console.error('Error adding inventory:', error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
-  } else if (method === 'PUT'){
+  } else if (req.method === 'PUT'){
 
     try {
       const {id} = req.query;
@@ -59,11 +67,11 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: 'Missing required fields' })
       }
       const updateResult = await query
-      (`UPDATE ${tableName} SET pc_name=?, mac_address=?, computer_type=?, specs=?, supplier=?, date_purchase=? WHERE id=?`,
+      (`UPDATE ${tableName} SET pc_name=?, mac_address=?, computer_type=?, specs=?, supplier=?, date_purchased=? WHERE id=?`,
       [pc_name, mac_address, computer_type, specs, supplier, date_purchased, id]);
-
+      
       if(updateResult.affectedRows > 0){
-        res.status(200).json({ message: 'success', updatedItem: id })
+        res.status(200).json({response: { message: 'success', updatedItem: id }})
       } else {
         res.status(404).json({ error: 'Item not found or not updated '});
       }

@@ -3,13 +3,15 @@ import { CreateList } from '@/pages/lib/definition';
 import { useFormState } from 'react-dom';
 import { useState, useEffect, FormEvent } from 'react';
 import { useRouter } from 'next/router';
+import errorMap from 'zod/locales/en.js';
 
 interface FormProps {
   gettableName: string;
-  onDataSubmitted: () => void; // Callback function to handle data submission
+  id: number;
+  onDataSubmitted: () => void; // Callback function to handle data submissio
 }
 
-export default function Form({ gettableName, onDataSubmitted }: FormProps) {
+export default function Form({ gettableName, onDataSubmitted, id}: FormProps) {
   console.log(gettableName);
   const [formData, setFormData] = useState({
     pcname: '',
@@ -19,7 +21,27 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
     supplier: '',
     date: ''
   });
-  const [create, setCreated] = useState(false);
+  const [uid, setId] = useState('');
+  const [pcName, setPCName] = useState('');
+  const [macaddress, setMacAddress] = useState('');
+  const [computerType, setComputerType] = useState('');
+  const [specs, setSpecs] = useState('');
+  const [supplier, setSupplier] = useState('');
+  const [datePurchased, setDatePurchased] = useState('')
+  
+  useEffect(() => {
+    async function fetchInventoryItem() {
+      try {
+        const res = await fetch(`http://localhost:3000/api/${gettableName}/${id}`);
+        const data = await res.json();
+        console.log("result of fetch", data)
+        setPCName(data.pc_name);
+      } catch(error) {
+        console.error('Error fetching inventory item:', error)
+      }
+    }
+    fetchInventoryItem()
+  }, [gettableName, id])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -64,7 +86,6 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
       console.error('Error adding inventory:', error);
     }
   }
-
   return (
     <form onSubmit={addInventory}>
       <div className="p-4 rounded-md bg-gray-50 md:p-6">
@@ -76,8 +97,8 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
             type="text"
             id="pcname"
             name="pcname"
-            value={formData.pcname}
-            onChange={handleChange}
+            value="pcName"
+            // onChange={handleChange}
             className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500"
             placeholder="Enter PC Name"
           />
@@ -137,7 +158,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
             value={formData.supplier}
             onChange={handleChange}
             className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500"
-            placeholder="Enter Computer Type"
+            placeholder="Enter Supplier"
           />
         </div>
         <div className="mb-4">

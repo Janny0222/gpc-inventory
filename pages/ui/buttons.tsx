@@ -5,6 +5,10 @@ import Link from 'next/link';
 interface CreateInventoryProps {
   onClick: () => void;
 }
+interface UpdateInventoryProps {
+  id: number;
+  onClick: (id: number) => void;
+}
 
 export function CreateInventory({onClick}: CreateInventoryProps) {
   return (
@@ -18,14 +22,14 @@ export function CreateInventory({onClick}: CreateInventoryProps) {
   );
 }
 
-export function UpdateInventory({ id }: { id: string }) {
+export function UpdateInventory({ id, onClick }: UpdateInventoryProps) {
   return (
-    <Link
-      href={`/dashboard/invoices/${id}/edit`}
+    <button
+      onClick={() => onClick(id)}
       className="p-2 border rounded-md hover:bg-gray-100"
     >
       <PencilIcon className="w-5" />
-    </Link>
+    </button>
   );
 }
 

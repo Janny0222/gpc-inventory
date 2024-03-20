@@ -1,12 +1,12 @@
 "use client"
 import { useState } from "react";
 import { tableName } from "@/pages/lib/company";
-import { lusitana } from "@/pages/ui/font";
+import { lusitana } from "@/styles/font";
 import GPCInventoryTable from "@/pages/ui/inventory/gpctable";
 import Dropdown from "@/pages/ui/inventory/dropdown";
 import Layout from "../layout";
 import { CreateInventory } from "@/pages/ui/buttons";
-import Modal from "@/pages/ui/modal";
+import Modal from "@/pages/components/modal";
 import Form from "@/pages/ui/inventory/gpc-create/create-form";
 import { InventoryList } from "@/pages/lib/definition";
 

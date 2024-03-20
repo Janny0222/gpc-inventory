@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { tableName } from "../../lib/company";
-import { lusitana } from "../font";
+import { lusitana } from "../../../styles/font";
 
 interface DropdownProps {
     onCompanyChange: (value: string) => void,

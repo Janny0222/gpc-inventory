@@ -16,6 +16,7 @@ const Modal: React.FC<ModalProps> = ({ onClose, companyName, onSubmit, children,
         <div className="relative flex flex-col w-full bg-white rounded-lg shadow-lg outline-none focus:outline-none">
           <div className="flex items-start justify-between p-5 border-b border-solid rounded-t border-blueGray-200">
             <h3 className="text-3xl font-semibold">{companyName} Inventory</h3>
+            
             <button
               className="float-right p-1 ml-auto text-3xl font-semibold leading-none text-black bg-transparent border-0 outline-none focus:outline-none"
               onClick={onClose}

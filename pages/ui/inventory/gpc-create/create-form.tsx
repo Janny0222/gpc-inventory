@@ -19,7 +19,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
     supplier: '',
     date: ''
   });
-  const [create, setCreated] = useState(false);
+  // const [create, setCreated] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -44,7 +44,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
           specs: formData.specs,
           supplier: formData.supplier,
           date_purchased: formData.date,
-          tableName: gettableName
+          // tableName: gettableName
         }),
       };
       const res = await fetch(`http://localhost:3000/api/${gettableName}`, postInventory);
@@ -137,7 +137,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
             value={formData.supplier}
             onChange={handleChange}
             className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500"
-            placeholder="Enter Computer Type"
+            placeholder="Enter Supplier"
           />
         </div>
         <div className="mb-4">
