@@ -1,19 +1,26 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+
 import { query } from '@/lib/db';
 
 export default async function handler(req, res) {
     const tableName = req.query.tableName;
-    
+    const searchQuery = req.query.query
   if (req.method === 'GET') {
     try {
-      const data = `SELECT * FROM ${tableName}`;
-      const values = [];
+      let data;
+      let values = [];
+      if(searchQuery){
+        data = `SELECT * FROM ${tableName} 
+        WHERE pc_name LIKE ? OR computer_type LIKE ?`;
+        values = [`%${searchQuery}%`, `%${searchQuery}%`]
+      } else {
+        data = `SELECT * FROM ${tableName}`
+      }
       const inventory = await query(data, values);
 
       res.status(200).json({ results: inventory });
     } catch (error) {
       console.error('Error fetching inventory:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      res.status(500).json({ error: 'Internal Server Errors' });
     }
   } else if (req.method === 'POST') {
     try {

@@ -3,8 +3,8 @@ import Layout from './layout';
 import { lusitana } from '@/styles/font';
 import { CardSkeleton } from '../ui/skeleton';
 import Card from '../ui/cards';
-import { io, Socket } from 'socket.io-client';
 import { Suspense } from 'react';
+import Oldunit from '../ui/inventory/oldunit';
 
 export default function Page(computerType: string) {
   const [count, setCount] = useState<number | null>(null);
@@ -12,7 +12,7 @@ export default function Page(computerType: string) {
   const [error, setError] = useState<string | null>(null);
   const [desktopToCount, setDesktopToCount] = useState<number | null>(null)
   const [laptopToCount, setLaptopToCount] = useState<number | null>(null)
-  const socket: Socket = io('http://localhost:3000');
+
   
   
   const fetchData = async () => {
@@ -44,11 +44,12 @@ export default function Page(computerType: string) {
   }, []);
   
   
+  
   return (
     <Layout>
-      <main>
-        <div className="p-3 mb-4 bg-gray-100 rounded-t-lg">
-          <h1 className={`${lusitana.className} text-xl md:text-2xl`}>Summary</h1>
+      
+        <div className="p-3 mb-4 rounded-t-lg dashbord-summary">
+          <h1 className={`${lusitana.className} text-xl md:text-2xl custom-font`}>Summary</h1>
         </div>
         <div className="p-4 bg-white rounded-lg shadow">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -63,23 +64,15 @@ export default function Page(computerType: string) {
             </Suspense>
           </div>
         </div>
-        <div className="p-3 my-4 bg-gray-100 rounded-t-lg">
-          <h1 className={`${lusitana.className} text-xl md:text-2xl`}>Unit/s age above 5 years</h1>
+        <div className="p-2 my-2 rounded-t-lg dashbord-summary">
+          <h1 className={`${lusitana.className} text-xl md:text-[15px]`}>Unit/s 5years old and Above</h1>
         </div>
-        <div className="p-4 bg-white rounded-lg shadow">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <Suspense fallback={<CardSkeleton />} >
-              {(desktopToCount === null || laptopToCount === null) && <><CardSkeleton /> <CardSkeleton /></>}
-              {desktopToCount !== null && laptopToCount !== null && (
-                <>
-                  <Card title="Desktop" value={desktopToCount} type="desktop" />
-                  <Card title="Laptop" value={laptopToCount} type="laptop" />
-                </>
-              )}
-            </Suspense>
+        <div className="p-1 bg-white rounded-lg shadow">
+          <div className="grid">
+            <Oldunit />
           </div>
         </div>
-      </main>
+      
     </Layout>
   );
 }

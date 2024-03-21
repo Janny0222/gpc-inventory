@@ -1,6 +1,4 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
-import { fetchInventoryData } from '../lib/data';
 import { BanknotesIcon, ClockIcon, UserGroupIcon, InboxIcon, ComputerDesktopIcon } from '@heroicons/react/24/outline';
 import { lusitana } from '@/styles/font';
 
@@ -21,10 +19,10 @@ const Card = ({
   const Icon = iconMap[type];
 
   return (
-    <div className="p-2 bg-green-700 shadow rounded-xl">
-      <div className="flex p-4 ">
-        {Icon ? <Icon className="mr-auto text-white h-7 w-7"  /> : null}
-        <h3 className="ml-auto text-2xl font-medium text-gray-200">{title}</h3>
+    <div className="p-2 shadow summary-cards rounded-xl">
+      <div className="flex p-1 ">
+        {Icon ? <Icon className="mr-auto text-black h-7 w-7"  /> : null}
+        <h3 className="ml-auto text-2xl font-medium text-black">{title}</h3>
       </div>
       <p
         className={`${lusitana.className}

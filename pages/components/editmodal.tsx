@@ -1,13 +1,7 @@
-import React, { FormEvent, ReactNode } from 'react';
-import { useState, useEffect } from 'react';
-import { io, Socket } from 'socket.io-client'
-import { InventoryList } from '../lib/definition';
-import { fetchData } from 'next-auth/client/_utils';
+import React, { FormEvent, useState, useEffect } from 'react';
 
 interface ModalProps {
   onClose: () => void;
-  companyName: string;
-  editName: number | null;
   onSubmit: () => void;
   id: number | null;
   tablename: string;
@@ -16,17 +10,7 @@ interface ModalProps {
 
 
 
-const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, companyName, editName, initialValues, tablename, id}) => {
-  const [socket, setSocket] = useState<Socket | null>(null);
-  useEffect(() => {
-    const newSocket = io('http://localhost:3000');
-    setSocket(newSocket);
-
-    return () => {
-      newSocket.disconnect();
-    };
-  }, []);
- 
+const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, initialValues, tablename, id}) => {
   const [formData, setFormData] = useState({
     pc_name: '',
     mac_address: '',
@@ -43,26 +27,14 @@ const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, companyName, editNa
       [name]: value,
     }));
   };
-  
-  async function updateComputerType() {
-    try {
-      const [desktop, laptop] = await Promise.all([
-        fetch(`api/computer_type/desktop`),
-        fetch(`api/computer_type/laptop`)
-      ]);
-      if (!desktop.ok || !laptop.ok) {
-        throw new Error('Failed to fetch data');
-      }
-    } catch (error: any) {
-      console.error('Error fetching computer_type:', error)
-    }
-  }
   // handle for getting the specific data in database using the unique id
   async function fetchInventoryItem() {
     try {
       const res = await fetch(`http://localhost:3000/api/${tablename}/${id}`);
+      if(!res.ok){
+        throw new Error('Failed to fetch inventory item')
+      }
       const data = await res.json();
-      console.log("result of fetch", data)
       setFormData(data.results[0])
     } catch(error) {
       console.error('Error fetching inventory item:', error)
@@ -73,6 +45,7 @@ const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, companyName, editNa
   }, [tablename, id])
 
   // this function to be called upon clicking the save button in edit modal and automaticall save in the database and show in the table
+  
   async function updateInventory(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
@@ -95,12 +68,6 @@ const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, companyName, editNa
       if(!res.ok){
         throw new Error('Failed to update inventory')
       }
-      if (socket) {
-        socket.emit('inventoryUpdated');
-        console.log(socket.emit)
-      }
-
-      await updateComputerType();
       const response = await res.json();
       if (response.response.message === "success") {
         setFormData({

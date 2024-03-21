@@ -20,14 +20,14 @@ export default function GpcLogo() {
 
   return (
     <>
-      <div className="ml-auto text-gray-300 sm:flex-grow">
+      <div className="p-1 ml-auto text-gray-300 sm:flex-grow custom-font">
         {/* <GlobeAltIcon className="h-12 w-12 rotate-[15deg]" /> */}
         {isSmallScreen ? (
           <p className={`${lusitana.className} text-[64px] xs:text-5 text-white`}>Greenstone</p>
         ) : (
-          <div className="relative flex items-center">
-            <span className={`${lusitana.className} text-[9.5rem] text-white `}>G</span>
-            <span className={`${anek_latin.className} text-3xl text-white ` }>reenstone</span>
+          <div className="relative flex items-center p-1">
+            <span className={`${lusitana.className} custom-font text-[9.5rem] text-white `}>G</span>
+            <span className={`${anek_latin.className} custom-font text-[29px] text-white ` }>reenstone</span>
           </div>
         )}
       </div>

@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react";
+import React, { useState } from "react";
 import { tableName } from "@/pages/lib/company";
 import { lusitana } from "@/styles/font";
 import GPCInventoryTable from "@/pages/ui/inventory/gpctable";
@@ -12,29 +12,40 @@ import { InventoryList } from "@/pages/lib/definition";
 import { Suspense } from "react";
 import Search from "@/pages/ui/search";
 
-
-export default function SampleRender() {
+export default function SampleRender({searchParams,}:{searchParams?: {search?: string}}) {
+    const search = searchParams?.search || ''
+    
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [inventories, setInventories] = useState<InventoryList[]>([]);
     const [sample, setSample] = useState<string>("");
     const [tblName, setTblName] = useState<string>("");
     // const inventories = await fetchGPCInventoryList()
     // console.log(inventories)
+
+    // modal for edit
     const openModal = () =>{
         setIsModalOpen(true);
     }
+
+    // close modal
     const closeModal = () => {
         setIsModalOpen(false)
     }
+
+    // Handle selecting company
     const handleCompanyChange = (value: string) => {
         setSample(value)
         setTblName(value)
     }
+
+    // modal for add
     const handleFormSubmit = async () =>{
         closeModal();
         
         await getPageData();
     }
+
+    // getting the data from database
     const getPageData = async () => {
         try {
             const pageData = {
@@ -66,7 +77,7 @@ export default function SampleRender() {
             </div>
                     <div className="flex items-center justify-between gap-2 mt-4 md:mt-8">
                         
-                        {table !== "" && <><Search placeholder="Search..."/> <CreateInventory onClick={openModal}/></> }
+                        {table !== "" && <><Search placeholder="Search..." /> <CreateInventory onClick={openModal}/></> }
                     </div>
             <div className="flex items-center mt-1">
                     
@@ -77,7 +88,7 @@ export default function SampleRender() {
                     </div>
             </div>
                 
-                    { sample === table && sample !== ""  && <GPCInventoryTable gettableName={sample} onDataSubmitted={handleFormSubmit}/>}
+                    { sample === table && sample !== ""  && <GPCInventoryTable query={search} gettableName={sample} onDataSubmitted={handleFormSubmit}/>}
                     
                     {isModalOpen && (
                         <Modal onClose={closeModal} companyName={name} onSubmit={handleFormSubmit} tablename={sample}>

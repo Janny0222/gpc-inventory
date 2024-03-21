@@ -10,6 +10,15 @@
 }
 
 .sidebar {
-  background: rgb(31,68,35);
-background: linear-gradient(90deg, rgba(31,68,35,1) 0%, rgba(70,156,45,1) 48%, rgba(224,224,224,1) 100%);
+  background: rgb(166, 187, 141);
+}
+
+.sidenav {
+  background: rgb(166, 187, 141)
+}
+.summary-cards, .dashbord-summary, .create-button, .bg-table {
+  background-color: rgb(166, 187, 141);
+}
+.custom-font {
+  color: rgb(60, 98, 85)
 }
