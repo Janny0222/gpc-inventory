@@ -16,6 +16,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "lib/db.js", "pages/api/lsi_inventorys.js", "pages/api/countData.js", "pages/api/socket.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "lib/db.js", "pages/api/lsi_inventorys.js", "pages/api/countData.js", "pages/api/socket.js", "pages/dashboard/homepage/index.js"],
   "exclude": ["node_modules"]
 }

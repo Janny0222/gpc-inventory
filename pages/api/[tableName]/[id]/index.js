@@ -20,7 +20,7 @@ export default async function handler(req, res) {
             //   console.log({results: inventory})
           }
       } catch (error) {
-          console.error('Error fetching inventory:', error);
+          
           res.status(500).json({ error: 'Internal Server Error' });
       }
   } else if (req.method === 'POST') {

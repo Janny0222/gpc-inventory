@@ -4,7 +4,7 @@ import { lusitana } from '@/styles/font';
 import { CardSkeleton } from '../ui/skeleton';
 import Card from '../ui/cards';
 import { Suspense } from 'react';
-import Oldunit from '../ui/inventory/oldunit';
+import Oldunit from '../ui/tables/oldunit';
 
 export default function Page(computerType: string) {
   const [count, setCount] = useState<number | null>(null);
@@ -59,6 +59,7 @@ export default function Page(computerType: string) {
                 <>
                   <Card title="Desktop" value={desktopToCount} type="desktop" />
                   <Card title="Laptop" value={laptopToCount} type="laptop" />
+                  <Card title="Cellphone" value={0} type="cellphone" />
                 </>
               )}
             </Suspense>

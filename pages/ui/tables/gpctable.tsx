@@ -1,25 +1,28 @@
 
 'use client'
-import { ChangeEvent, useEffect } from "react";
-import { useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { InventoryList } from "@/pages/lib/definition";
 import { UpdateInventory } from "../buttons";
 import { tableName } from "@/pages/lib/company";
-import Form from "./gpc-create/create-form";
+import Form from "../inventory/gpc-create/create-form";
 import EditModal from "@/pages/components/editmodal";
 import { CreateInventory } from "../buttons";
 import { useSearchParams } from "next/navigation";
+import Pagination from "@/pages/components/Pagination";
+import ReactPaginate from "react-paginate";
+import CustomPagination from "@/pages/components/Pagination";
 
 interface GPCInventoryTableProps {
   gettableName: string;
   onDataSubmitted: () => void;
   query: string;
-  
+
 }
 
-export default function GPCInventoryTable ({gettableName, onDataSubmitted, query}:GPCInventoryTableProps){
+export default function GPCInventoryTable ({ gettableName, onDataSubmitted, query}:GPCInventoryTableProps){
   const [inventories, setInventories] = useState<InventoryList[]>([]);
-  const [filteredInventories, setFilteredInventories] = useState<InventoryList[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null)
   const [specificData, setSpecificData] = useState<any>(null)
@@ -27,23 +30,26 @@ export default function GPCInventoryTable ({gettableName, onDataSubmitted, query
   
   const getquery = new URLSearchParams(window.location.search)
   const queryvalue = getquery.get('query')
-  console.log(queryvalue)
-
-  
+ 
   // Fetching the data from database
   useEffect(() => {
     async function fetchInventoryData() {
       try {
         if(queryvalue) {
-          const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}?&query=${queryvalue}`;
+          const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}?query=${queryvalue}&page=${currentPage}`;
           const response = await fetch(apiUrlEndpoint);
           const data = await response.json();
+          setTotalPages(data.totalPages)
           setInventories(data.results);
+          
+         
         } else {
           const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}`;
           const response = await fetch(apiUrlEndpoint);
           const data = await response.json();
           setInventories(data.results);
+          setTotalPages(data.totalPages)
+          console.log(totalPages, currentPage)
         }
         
         
@@ -53,10 +59,24 @@ export default function GPCInventoryTable ({gettableName, onDataSubmitted, query
     }
     fetchInventoryData();
   }, [gettableName, onDataSubmitted, query]);
+
+  const handlePageClick = async (selected: { selected: number }) => {
+    try {
+      setCurrentPage(selected.selected + 1); // Update currentPage when page is clicked
+      const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}?query=${query}&page=${selected.selected + 1}`;
+      const response = await fetch(apiUrlEndpoint);
+      const data = await response.json()
+      setInventories(data.results)
+      setTotalPages(data.totalPages)
+    } catch ( error) {
+      console.error('Error fetching inventory data:', error)
+    }
+    
+  };
+
+  
   // Getting the specific display name
   let name = tableName.find(company => company.name === gettableName)?.displayName || gettableName
-
-
   // modal for edit
   const openModal = async (id: number) =>{
     setSelectedId(id);
@@ -78,6 +98,8 @@ export default function GPCInventoryTable ({gettableName, onDataSubmitted, query
       setIsModalOpen(false)
       setSelectedId(null)
   }
+
+  
   const handleFormSubmit = async () =>{
     closeModal();
     
@@ -94,8 +116,10 @@ export default function GPCInventoryTable ({gettableName, onDataSubmitted, query
         const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}`;
         const response = await fetch(apiUrlEndpoint, pageData);
         const res = await response.json();
-
+        
         setInventories(res.results);
+        
+        console.log(currentPage)
     } catch (error) {
         console.error('Error fetching inventory data:', error);
     }
@@ -104,25 +128,25 @@ export default function GPCInventoryTable ({gettableName, onDataSubmitted, query
     <div className="overflow-x-auto sm:p-2">
       <div className="inline-block min-w-full align-middle">
         <div className="p-2 rounded-lg bg-table md:pt-0">
-        <table className="min-w-full text-gray-900 md:table">
+          <table className="min-w-full text-gray-900 md:table">
             <thead className="text-sm font-normal text-left rounded-lg">
               <tr>
-                <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
+                <th scope="col" className="px-4 py-1 font-medium sm:pl-6">
                   PC Name
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className="px-3 py-1 font-medium">
                   Mac Address
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className="px-3 py-1 font-medium">
                   Computer Type
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className="px-3 py-1 font-medium">
                   Specs
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className="px-3 py-1 font-medium">
                   Supplier
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className="px-3 py-1 font-medium">
                   Date Purchased
                 </th>
                 <th scope="col" className="py-3 pl-6 pr-3">
@@ -165,13 +189,20 @@ export default function GPCInventoryTable ({gettableName, onDataSubmitted, query
               ))}
             </tbody>
           </table>
+          
           {isModalOpen && (
                         <EditModal onClose={closeModal} onSubmit={handleFormSubmit} id={selectedId} tablename={gettableName} initialValues={specificData}/>
                           
                     )}
         </div>
+        <CustomPagination
+          pageCount={totalPages}
+          currentPage={currentPage}
+          onPageChange={handlePageClick}
+        />
       </div>
     </div>     
     )
 }
+
 

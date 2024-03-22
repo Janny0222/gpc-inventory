@@ -68,7 +68,7 @@ export default function Oldunit (){
                             <th scope="col" className="px-3 py-5 font-medium">
                             Mac Address
                             </th>
-                            <th scope="col" className="px-3 py-5 font-medium">
+                            {/* <th scope="col" className="px-3 py-5 font-medium">
                             Computer Type
                             </th>
                             <th scope="col" className="px-3 py-5 font-medium">
@@ -76,7 +76,7 @@ export default function Oldunit (){
                             </th>
                             <th scope="col" className="px-3 py-5 font-medium">
                             Supplier
-                            </th>
+                            </th> */}
                             <th scope="col" className="px-3 py-5 font-medium">
                             Date Purchased
                             </th>
@@ -101,7 +101,7 @@ export default function Oldunit (){
                   <td className="px-3 py-3 whitespace-nowrap">
                     {inventory.mac_address}
                   </td>
-                  <td className="px-3 py-3 whitespace-nowrap">
+                  {/* <td className="px-3 py-3 whitespace-nowrap">
                     {inventory.computer_type}
                   </td>
                   <td className="px-3 py-3 whitespace-nowrap">
@@ -109,7 +109,7 @@ export default function Oldunit (){
                   </td>
                   <td className="px-3 py-3 whitespace-nowrap">
                     {inventory.supplier}
-                  </td>
+                  </td> */}
                   <td className="px-3 py-3 whitespace-nowrap">
                     {inventory.date_purchased}
                   </td>

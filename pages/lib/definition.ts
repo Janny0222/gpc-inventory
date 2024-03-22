@@ -8,6 +8,19 @@ export interface InventoryList {
     date_purchased: string;
 }
 
+export interface MobileInventoryList {
+    id: number;
+    assigned_to: string;
+    department: string;
+    brand: string;
+    model_specs: string;
+    imei: string;
+    serial_number: string;
+    inclusion: string;
+    date_issued: string;
+}
+
+
 export interface FetchInventoryList {
     id: number;
     pc_name: string;

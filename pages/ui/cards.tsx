@@ -1,10 +1,11 @@
 import React from 'react';
-import { BanknotesIcon, ClockIcon, UserGroupIcon, InboxIcon, ComputerDesktopIcon } from '@heroicons/react/24/outline';
+import { BanknotesIcon, ClockIcon, UserGroupIcon, InboxIcon, ComputerDesktopIcon, DevicePhoneMobileIcon } from '@heroicons/react/24/outline';
 import { lusitana } from '@/styles/font';
 
 const iconMap = {
   laptop: BanknotesIcon,
   desktop: ComputerDesktopIcon,
+  cellphone: DevicePhoneMobileIcon
 };
 
 const Card = ({
@@ -14,7 +15,7 @@ const Card = ({
 }: {
   title: string;
   value: any;
-  type: 'laptop' | 'desktop';
+  type: 'laptop' | 'desktop' | 'cellphone';
 }) => {
   const Icon = iconMap[type];
 

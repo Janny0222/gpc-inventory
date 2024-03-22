@@ -10,7 +10,7 @@ interface ModalProps {
 
 
 
-const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, initialValues, tablename, id}) => {
+const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, initialValues, tablename, id}) => {
   const [formData, setFormData] = useState({
     pc_name: '',
     mac_address: '',
@@ -211,4 +211,4 @@ const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, initialValues, tabl
   );
 };
 
-export default EditModal;
+export default EditMobileModal;
