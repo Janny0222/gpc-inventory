@@ -5,19 +5,21 @@ interface ModalProps {
   onSubmit: () => void;
   id: number | null;
   tablename: string;
-  initialValues: Record<string, string>;
+  
 }
 
 
 
-const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, initialValues, tablename, id}) => {
+const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id}) => {
   const [formData, setFormData] = useState({
-    pc_name: '',
-    mac_address: '',
-    computer_type: '',
-    specs: '',
-    supplier: '',
-    date_purchased: ''
+    assigned_to: '',
+    department: '',
+    brand: '',
+    model_specs: '',
+    imei: '',
+    serial_number: '',
+    inclusion: '',
+    date_issued: ''
   });
   // handle for changing the value in inputs
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -35,6 +37,7 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, initialValues
         throw new Error('Failed to fetch inventory item')
       }
       const data = await res.json();
+      console.log(data.results)
       setFormData(data.results[0])
     } catch(error) {
       console.error('Error fetching inventory item:', error)
@@ -55,28 +58,32 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, initialValues
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          pc_name: formData.pc_name,
-          mac_address: formData.mac_address,
-          computer_type: formData.computer_type,
-          specs: formData.specs,
-          supplier: formData.supplier,
-          date_purchased: formData.date_purchased,
+          assigned_to: formData.assigned_to,
+          department: formData.department,
+          brand: formData.brand,
+          model_specs: formData.model_specs,
+          imei: formData.imei,
+          serial_number: formData.serial_number,
+          inclusion: formData.inclusion,
+          date_issued: formData.date_issued,
           // tableName: gettableName
         }),
       };
-      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/${tablename}/${id}`, putInventory);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/${tablename}/cellphones/${id}`, putInventory);
       if(!res.ok){
         throw new Error('Failed to update inventory')
       }
       const response = await res.json();
       if (response.response.message === "success") {
         setFormData({
-          pc_name: '',
-          mac_address: '',
-          computer_type: '',
-          specs: '',
-          supplier: '',
-          date_purchased: ''
+          assigned_to: '',
+          department: '',
+          brand: '',
+          model_specs: '',
+          imei: '',
+          serial_number: '',
+          inclusion: '',
+          date_issued: ''
         });
         onSubmit();
         
@@ -108,86 +115,114 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, initialValues
           
             <div className="p-4 rounded-md bg-gray-50 md:p-6">
               <div className="mb-4">
-                <label htmlFor="pc_name" className="block mb-2 text-sm font-medium">
-                  PC Name
+                <label htmlFor="assigned_to" className="block mb-2 text-sm font-medium">
+                  Assiged To
                 </label>
                 <input
                   type="text"
-                  id="pc_name"
-                  name="pc_name"
-                  value={formData.pc_name}
+                  id="assigned_to"
+                  name="assigned_to"
+                  value={formData.assigned_to}
                   onChange={handleChange}
                   className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500"
-                  placeholder="Enter PC Name"
+                  placeholder="Enter Assigned To"
                 />
               </div>
       
               <div className="mb-4">
-                <label htmlFor="mac_address" className="block mb-2 text-sm font-medium">
-                  Mac Address
+                <label htmlFor="department" className="block mb-2 text-sm font-medium">
+                  Department
                 </label>
                 <input
                   type="text"
-                  id="mac_address"
-                  name="mac_address"
-                  value={formData.mac_address}
+                  id="department"
+                  name="department"
+                  value={formData.department}
                   onChange={handleChange}
                   className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500"
-                  placeholder="Enter Mac Address"
+                  placeholder="Enter Department"
                 />
               </div>
 
               <div className="mb-4">
-                <label htmlFor="computer_type" className="block mb-2 text-sm font-medium">
-                  Computer Type
+                <label htmlFor="brand" className="block mb-2 text-sm font-medium">
+                  Brand
                 </label>
                 <input
                   type="text"
-                  id="computer_type"
-                  name="computer_type"
-                  value={formData.computer_type}
+                  id="brand"
+                  name="brand"
+                  value={formData.brand}
                   onChange={handleChange}
                   className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500"
-                  placeholder="Enter Computer Type"
+                  placeholder="Enter Brand"
                 />
               </div>
 
               <div className="mb-4">
-                <label htmlFor="specs" className="block mb-2 text-sm font-medium">
-                  Specs
+                <label htmlFor="model_specs" className="block mb-2 text-sm font-medium">
+                  Model / Specs
                 </label>
                 <textarea
-                  id="specs"
-                  name="specs"
-                  value={formData.specs}
+                  id="model_specs"
+                  name="model_specs"
+                  value={formData.model_specs}
                   onChange={handleChange}
                   className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500"
-                  placeholder="Enter Specs"
+                  placeholder="Enter Model / Specs"
                 />
               </div>
               <div className="mb-4">
-                <label htmlFor="supplier" className="block mb-2 text-sm font-medium">
-                  Supplier
+                <label htmlFor="imei" className="block mb-2 text-sm font-medium">
+                  IMEI
                 </label>
                 <input
                   type="text"
-                  id="supplier"
-                  name="supplier"
-                  value={formData.supplier}
+                  id="imei"
+                  name="imei"
+                  value={formData.imei}
                   onChange={handleChange}
                   className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500"
-                  placeholder="Enter Supplier"
+                  placeholder="Enter IMEI"
                 />
               </div>
               <div className="mb-4">
-              <label htmlFor="date_purchased" className="block mb-2 text-sm font-medium">
-                Date Purchased
+                <label htmlFor="serial_number" className="block mb-2 text-sm font-medium">
+                  Serial Number
+                </label>
+                <input
+                  type="text"
+                  id="serial_number"
+                  name="serial_number"
+                  value={formData.serial_number}
+                  onChange={handleChange}
+                  className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500"
+                  placeholder="Enter Serial Number"
+                />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="inclusion" className="block mb-2 text-sm font-medium">
+                  Inclusion
+                </label>
+                <input
+                  type="text"
+                  id="inclusion"
+                  name="inclusion"
+                  value={formData.inclusion}
+                  onChange={handleChange}
+                  className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500"
+                  placeholder="Enter Inclusion"
+                />
+              </div>
+              <div className="mb-4">
+              <label htmlFor="date_issued" className="block mb-2 text-sm font-medium">
+                Date Issued
               </label>
               <input
                 type="date"
-                id="date_purchased"
-                name="date_purchased"
-                value={formData.date_purchased}
+                id="date_issued"
+                name="date_issued"
+                value={formData.date_issued}
                 onChange={handleChange}
                 className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500"
               />

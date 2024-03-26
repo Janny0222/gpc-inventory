@@ -5,7 +5,7 @@ import { InventoryList } from "@/pages/lib/definition";
 import { UpdateInventory } from "../buttons";
 import { tableName } from "@/pages/lib/company";
 import Form from "../inventory/gpc-create/create-form";
-import EditModal from "@/pages/components/editmodal";
+import EditModal from "@/pages/components/EditInventoryModal";
 import { CreateInventory } from "../buttons";
 import { useSearchParams } from "next/navigation";
 import Pagination from "@/pages/components/Pagination";
@@ -25,49 +25,59 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
   const [totalPages, setTotalPages] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null)
-  const [specificData, setSpecificData] = useState<any>(null)
-  const [editName, setEditName] = useState("")
+  
   
   const getquery = new URLSearchParams(window.location.search)
   const queryvalue = getquery.get('query')
  
   // Fetching the data from database
-  useEffect(() => {
-    async function fetchInventoryData() {
-      try {
-        if(queryvalue) {
-          const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}?query=${queryvalue}&page=${currentPage}`;
-          const response = await fetch(apiUrlEndpoint);
-          const data = await response.json();
-          setTotalPages(data.totalPages)
-          setInventories(data.results);
-          
-         
-        } else {
-          const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}`;
-          const response = await fetch(apiUrlEndpoint);
-          const data = await response.json();
-          setInventories(data.results);
-          setTotalPages(data.totalPages)
-          console.log(totalPages, currentPage)
-        }
+  async function fetchInventoryData() {
+    try {
+      if(queryvalue) {
+        const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}?query=${queryvalue}`;
+        const response = await fetch(apiUrlEndpoint);
+        const data = await response.json();
+        setTotalPages(data.totalPages)
+        setInventories(data.results);
         
-        
-      } catch (error) {
-        console.error('Error fetching inventory data:', error);
+      } else {
+        const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}?page=${currentPage}`;
+        const response = await fetch(apiUrlEndpoint);
+        const data = await response.json();
+        setInventories(data.results);
+        setTotalPages(data.totalPages)
+        setCurrentPage(1)
+        console.log(totalPages, currentPage)
       }
+    } catch (error) {
+      console.error('Error fetching inventory data:', error);
     }
+  }
+  useEffect(() => {
+    
     fetchInventoryData();
-  }, [gettableName, onDataSubmitted, query]);
+  }, [gettableName, onDataSubmitted, query, queryvalue]);
 
   const handlePageClick = async (selected: { selected: number }) => {
     try {
-      setCurrentPage(selected.selected + 1); // Update currentPage when page is clicked
-      const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}?query=${query}&page=${selected.selected + 1}`;
+      const newPage = selected.selected + 1
+      
+      if (newPage > currentPage) {
+      const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}?page=${newPage}`;
       const response = await fetch(apiUrlEndpoint);
       const data = await response.json()
       setInventories(data.results)
       setTotalPages(data.totalPages)
+      } else if (newPage < currentPage) {
+      const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}?page=${newPage}`;
+      const response = await fetch(apiUrlEndpoint);
+      const data = await response.json()
+      setInventories(data.results)
+      setTotalPages(data.totalPages)
+      }
+      setCurrentPage(newPage)
+      console.log("result total page",totalPages);
+      console.log("result select",currentPage);
     } catch ( error) {
       console.error('Error fetching inventory data:', error)
     }
@@ -81,14 +91,14 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
   const openModal = async (id: number) =>{
     setSelectedId(id);
     setIsModalOpen(true);
+    console.log(selectedId)
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/${gettableName}/${id}`)
         if(!res.ok){
           throw new Error('Failed to fetch inventory item');
         }
         const data = await res.json();
-        setSpecificData(data.results[0]);
-        setEditName(data.results[0].pc_name)
+        
     } catch (error){
       console.error('Error fetching inventory item:', error)
     }
@@ -103,7 +113,7 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
   const handleFormSubmit = async () =>{
     closeModal();
     
-    await getPageData();
+    await fetchInventoryData();
   }
   const getPageData = async () => {
     try {
@@ -181,7 +191,7 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
                     {inventory.date_purchased}
                   </td>
                   <td className="py-3 pl-6 pr-3 whitespace-nowrap">
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 edit-button">
                       <UpdateInventory id={inventory.id} onClick={openModal}/>
                     </div>
                   </td>
@@ -191,8 +201,7 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
           </table>
           
           {isModalOpen && (
-                        <EditModal onClose={closeModal} onSubmit={handleFormSubmit} id={selectedId} tablename={gettableName} initialValues={specificData}/>
-                          
+                        <EditModal onClose={closeModal} onSubmit={handleFormSubmit} id={selectedId} tablename={gettableName}/>
                     )}
         </div>
         <CustomPagination

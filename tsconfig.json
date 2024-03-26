@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["node", "formidable"],
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -16,6 +17,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "lib/db.js", "pages/api/lsi_inventorys.js", "pages/api/countData.js", "pages/api/socket.js", "pages/dashboard/homepage/index.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "lib/db.js", "pages/api/lsi_inventorys.js", "pages/api/countData.js", "pages/api/socket.js", "pages/dashboard/homepage/index.js", "pages/api/upload.js", "pages/middleware/uploadMiddleware.js"],
   "exclude": ["node_modules"]
 }

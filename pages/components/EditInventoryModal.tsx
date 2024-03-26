@@ -5,12 +5,11 @@ interface ModalProps {
   onSubmit: () => void;
   id: number | null;
   tablename: string;
-  initialValues: Record<string, string>;
 }
 
 
 
-const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, initialValues, tablename, id}) => {
+const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id}) => {
   const [formData, setFormData] = useState({
     pc_name: '',
     mac_address: '',
@@ -35,6 +34,7 @@ const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, initialValues, tabl
         throw new Error('Failed to fetch inventory item')
       }
       const data = await res.json();
+      
       setFormData(data.results[0])
     } catch(error) {
       console.error('Error fetching inventory item:', error)

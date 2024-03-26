@@ -3,13 +3,31 @@ import { query } from '@/lib/db';
 
 export default async function handler (req, res) {
     const tableName = req.query.tableName;
+    const searchQuery = req.query.query;
+    const page = req.query.page || 1
+    const itemPerPage = 7;
+
     if (req.method === 'GET') {
         try {
-            const values = []
-            const data = `SELECT * FROM ${tableName}`
-            const mobile = await query(data, values)
+          let data;
+          let values = []
+            if(searchQuery) {
+              data = `SELECT * FROM ${tableName}
+              WHERE assigned_to LIKE ? OR imei LIKE ? OR brand LIKE ? LIMIT 7`;
+              values = [`%${searchQuery}%`, `%${searchQuery}%`, `%${searchQuery}%`, itemPerPage, (page - 1) * itemPerPage]
+            
+            } else {
+              data = `SELECT * FROM ${tableName} LIMIT ? OFFSET ?`;
+              values = [itemPerPage, (page - 1) * itemPerPage]
+              }
+            const [inventory, totalCountRows] = await Promise.all([
+              query(data, values),
+              query(`SELECT COUNT(*) as total FROM ${tableName}`)
+            ]);
+            const totalCount = totalCountRows[0].total;
+            const totalPages = Math.ceil(totalCount / itemPerPage)
 
-            res.status(200).json({ results: mobile})
+            res.status(200).json({ results: inventory, totalPages})
         } catch ( error ) {
             res.status(500).json({ error: 'Internal Server Errors' });
         }

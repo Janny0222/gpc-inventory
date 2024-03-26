@@ -13,7 +13,7 @@ const Modal: React.FC<ModalProps> = ({ onClose, companyName, onSubmit, children,
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none">
       <div className="fixed inset-0 bg-black opacity-50"></div>
       <div className="relative w-full max-w-lg mx-auto my-6">
-        <div className="relative flex flex-col w-full bg-white rounded-lg shadow-lg outline-none focus:outline-none">
+        <div className="relative flex flex-col w-full bg-white rounded-lg shadow-lg outline-none focus:outline-none ">
           <div className="flex items-start justify-between p-5 border-b border-solid rounded-t border-blueGray-200">
             <h3 className="text-3xl font-semibold">{companyName} Inventory</h3>
             

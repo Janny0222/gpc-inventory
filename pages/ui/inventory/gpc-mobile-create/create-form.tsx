@@ -10,7 +10,7 @@ interface FormProps {
 }
 
 export default function Form({ gettableName, onDataSubmitted }: FormProps) {
-  console.log(gettableName);
+  
   const [formData, setFormData] = useState({
     assigned_to: '',
     department: '',
@@ -64,6 +64,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
         inclusion: '',
         date_issued: ''
         });
+        console.log("successfully trigger");
         onDataSubmitted();
       }
     } catch (error) {

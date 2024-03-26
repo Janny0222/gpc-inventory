@@ -59,6 +59,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
           date: ''
         });
         onDataSubmitted();
+        console.log("successfully trigger");
       }
     } catch (error) {
       console.error('Error adding inventory:', error);
