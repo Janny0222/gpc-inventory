@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { UpdateMobileInventory } from "../buttons";
 import CustomPagination from "@/pages/components/Pagination";
 
+
 interface MobileInventoryProps {
     gettableName: string,
     onDataSubmitted: () => void;
