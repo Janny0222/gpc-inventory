@@ -9,6 +9,9 @@
 #env
 .env
 
+#for database seed
+/scripts
+
 /styles
 #upload
 /uploads
