@@ -17,6 +17,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
 const [value, setValue] = useState<string>("")
 const [tablename, setTableName] = useState<string>("")
 const [mobileInventory, setMobileInventory] = useState<MobileInventoryList[]>([])
+const [dataUploaderHandler, setDataUploaderHandler] = useState<() => void>(() => () => {}) 
 
     let name = tableName.find(company => company.name === value)?.displayName || value
     let getName = tableName.find(company => company.name === tablename)?.name || tablename
@@ -35,16 +36,7 @@ const [mobileInventory, setMobileInventory] = useState<MobileInventoryList[]>([]
     const handleFormSubmit = async () =>{
         closeModal();
     }
-    const handleDataUpload = async () => {
-        try {
-            const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${getTable}/cellphones`
-            const response = await fetch(apiUrlEndpoint);
-            const data = await response.json();
-            setMobileInventory(data.results)
-        } catch (error) {
-            console.error('Error fetching data', error)
-        }
-    }
+    
     useEffect(()=> {
         const handleDataUploaded = async () => {
             try {
@@ -56,6 +48,8 @@ const [mobileInventory, setMobileInventory] = useState<MobileInventoryList[]>([]
                 console.error('Error fetching data', error)
             }
         }
+        // to use the handleDataUploaded function outside the useEffect
+        setDataUploaderHandler(() => handleDataUploaded)
         handleDataUploaded()
     }, [tablename, getTable])
     
@@ -71,7 +65,7 @@ const [mobileInventory, setMobileInventory] = useState<MobileInventoryList[]>([]
                     
                    {name !== '' && <> <Search placeholder="Search...." /><CreateInventory onClick={openModal} /> </>}
                 </div>
-                    {name !== '' && (mobileInventory?.length === 0 || mobileInventory === undefined) && <Upload tablename={getTable} onDataUploaded={handleDataUpload}/>}
+                    {name !== '' && (mobileInventory?.length === 0 || mobileInventory === undefined) && <Upload tablename={getTable} onDataUploaded={dataUploaderHandler}/>}
                 <div className="flex flex-row items-center mt-1">
                     <div className="flex items-center justify-between gap-2 mt-2 md:mt-4">
                         <label className="mr-2">Select Company:</label>

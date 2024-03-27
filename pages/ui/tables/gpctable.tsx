@@ -4,12 +4,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { InventoryList } from "@/pages/lib/definition";
 import { UpdateInventory } from "../buttons";
 import { tableName } from "@/pages/lib/company";
-import Form from "../inventory/gpc-create/create-form";
 import EditModal from "@/pages/components/EditInventoryModal";
-import { CreateInventory } from "../buttons";
-import { useSearchParams } from "next/navigation";
-import Pagination from "@/pages/components/Pagination";
-import ReactPaginate from "react-paginate";
 import CustomPagination from "@/pages/components/Pagination";
 
 interface GPCInventoryTableProps {

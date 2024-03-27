@@ -8,7 +8,6 @@ export default function Upload({tablename, onDataUploaded}:{tablename: string, o
     const handleFilechange = (event: ChangeEvent<HTMLInputElement>) => {
         if(event.target.files && event.target.files[0]){
             const selectedFile = event.target.files[0];
-            console.log("selected file:", selectedFile)
             setFile(selectedFile);
         }
     }

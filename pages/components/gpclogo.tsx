@@ -1,7 +1,5 @@
 
 import { useEffect, useState } from 'react';
-import { roboto } from '@/styles/font';
-import { bsdisplay } from '@/styles/font';
 import { anek_latin } from '@/styles/font';
 import { lusitana } from '@/styles/font';
 

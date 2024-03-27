@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import NavLinks from './navlinks';
 import GpcLogo from './gpclogo';
-import { PowerIcon } from '@heroicons/react/24/outline';
+
   export default function SideBar() {
     return (
         <div className="flex flex-col h-full p-1">

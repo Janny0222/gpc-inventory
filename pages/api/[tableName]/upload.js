@@ -3,19 +3,9 @@ import path from 'path';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { query } from '@/lib/db';
 import csvParser from 'csv-parser'
-import fs from 'fs'
 import xlsx from 'xlsx'
 
-const upload = multer({
-  storage: multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, './uploads'); // Specify the directory where you want to save the files
-    },
-    filename: function (req, file, cb) {
-      cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
-    },
-  }),
-});
+const upload = multer();
 
 export const config = {
   api: {
@@ -23,8 +13,8 @@ export const config = {
   },
 };
 
-async function parseExcel(filePath) {
-  const workbook = xlsx.readFile(filePath);
+async function parseExcel(filebuffer) {
+  const workbook = xlsx.read(filebuffer, {type : 'buffer'});
   const sheetName = workbook.SheetNames[0];
   const sheet = workbook.Sheets[sheetName];
   const data = xlsx.utils.sheet_to_json(sheet, { header: 1 });
@@ -41,7 +31,7 @@ async function parseExcel(filePath) {
         excelDate.setFullYear(excelDate.getFullYear() - 70)
         // Format the date as desired, e.g., 'MM-dd-yyyy'
         const formattedDate = excelDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' });
-        console.log("this is the formatted date: ",formattedDate)
+        
         return formattedDate;
       }
       // Return other values as is
@@ -53,7 +43,7 @@ async function parseExcel(filePath) {
 }
 export default async function handler(req, res) {
   const tableName = req.query.tableName;
-  console.log(tableName);
+
   if (req.method === 'POST') {
     try {
       upload.single('file')(req, res, async (err) => {
@@ -61,20 +51,23 @@ export default async function handler(req, res) {
           console.error(err);
           return res.status(500).send('Error uploading file');
         }
-        const filePath = req.file.path;
-        const {headers, rows} = await parseExcel(filePath)
-        console.log(headers)
+        const fileBuffer = req.file.buffer;
 
-        const insertQuery = `INSERT INTO ${tableName} (${headers.join(', ')}) VALUES ?`;
-        const result = await query(insertQuery, [rows]);
+        try {
+          const {headers, rows} = await parseExcel(fileBuffer)
+          const insertQuery = `INSERT INTO ${tableName} (${headers.join(', ')}) VALUES ?`;
+          const result = await query(insertQuery, [rows]);
 
         return res.status(200).send('File uploaded successfully');
-      });
-    } catch (error) {
+      } catch (error) {
       console.error('Error uploading file:', error);
       return res.status(500).send('Error uploading file');
-    }
-  } else {
+        }
+      })
+  } catch (error){
+    console.error('Error uploadig file:', error)
+  }
+ } else {
     res.status(405).send('Method Not Allowed');
   }
 }

@@ -18,6 +18,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
 const [totalPages, setTotalPages] = useState(1);
 const [currentPage, setCurrentPage] = useState(1);
 
+
 const getquery = new URLSearchParams(window.location.search)
 const queryvalue = getquery.get('query')
     
