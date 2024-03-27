@@ -44,7 +44,6 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
           setInventories(data.results);
           setTotalPages(data.totalPages)
           setCurrentPage(1)
-          console.log(totalPages, currentPage)
         }
       } catch (error) {
         console.error('Error fetching inventory data:', error);
@@ -52,7 +51,7 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
     }
     
     fetchInventoryData();
-  }, [gettableName, onDataSubmitted, query, queryvalue, totalPages]);
+  }, [gettableName, onDataSubmitted, queryvalue, totalPages]);
 
   const handlePageClick = async (selected: { selected: number }) => {
     try {
