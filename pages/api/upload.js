@@ -33,6 +33,12 @@ async function parseExcel(filePath) {
 
   const rows = data.slice(1).map(row => {
     return headers.map((headers, index) => {
+      if(headers[index] === 'date_issued' && typeof row[index] === 'number') {
+        const dateValue = new Date(Math.round((row[index] - 25569) * 86400 * 1000))
+        console.log('Numeric Date Value:', row[index]);
+        console.log('Javascript date object:', dateValue);
+        return dateValue;
+      }
       return row[index] || null
     })
   })

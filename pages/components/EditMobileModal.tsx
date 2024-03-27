@@ -30,20 +30,21 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
     }));
   };
   // handle for getting the specific data in database using the unique id
-  async function fetchInventoryItem() {
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/${tablename}/${id}`);
-      if(!res.ok){
-        throw new Error('Failed to fetch inventory item')
-      }
-      const data = await res.json();
-      console.log(data.results)
-      setFormData(data.results[0])
-    } catch(error) {
-      console.error('Error fetching inventory item:', error)
-    }
-  }
+  
   useEffect(() => {
+    async function fetchInventoryItem() {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/${tablename}/${id}`);
+        if(!res.ok){
+          throw new Error('Failed to fetch inventory item')
+        }
+        const data = await res.json();
+        console.log(data.results)
+        setFormData(data.results[0])
+      } catch(error) {
+        console.error('Error fetching inventory item:', error)
+      }
+    }
     fetchInventoryItem()
   }, [tablename, id])
 
@@ -52,6 +53,7 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
   async function updateInventory(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
+      const formattedDate = formData.date_issued ? new Date(formData.date_issued).toLocaleDateString('en-US', {month: '2-digit', day: '2-digit', year: 'numeric'}): ''
       const putInventory = {
         method: "PUT",
         headers: {

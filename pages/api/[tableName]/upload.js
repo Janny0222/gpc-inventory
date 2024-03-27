@@ -24,19 +24,32 @@ export const config = {
 };
 
 async function parseExcel(filePath) {
-  const workbook = xlsx.readFile(filePath)
+  const workbook = xlsx.readFile(filePath);
   const sheetName = workbook.SheetNames[0];
   const sheet = workbook.Sheets[sheetName];
-  const data = xlsx.utils.sheet_to_json(sheet, {header: 1})
+  const data = xlsx.utils.sheet_to_json(sheet, { header: 1 });
 
-  const headers = data[0]
+  const headers = data[0];
 
   const rows = data.slice(1).map(row => {
-    return headers.map((headers, index) => {
-      return row[index] || null
-    })
-  })
-  return {headers, rows}
+    return headers.map((header, index) => {
+      // Check if the value is a numeric date (45302 is a common representation for Excel date values)
+      if (typeof row[index] === 'number' && row[index] > 1 && row[index] < 50000) {
+        // Convert the Excel numeric date value to JavaScript Date object
+        const excelDate = new Date((row[index] - 1) * 86400 * 1000);
+
+        excelDate.setFullYear(excelDate.getFullYear() - 70)
+        // Format the date as desired, e.g., 'MM-dd-yyyy'
+        const formattedDate = excelDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' });
+        console.log("this is the formatted date: ",formattedDate)
+        return formattedDate;
+      }
+      // Return other values as is
+      return row[index];
+    });
+  });
+
+  return { headers, rows };
 }
 export default async function handler(req, res) {
   const tableName = req.query.tableName;

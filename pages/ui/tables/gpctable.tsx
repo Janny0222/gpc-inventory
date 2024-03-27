@@ -31,29 +31,30 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
   const queryvalue = getquery.get('query')
  
   // Fetching the data from database
-  async function fetchInventoryData() {
-    try {
-      if(queryvalue) {
-        const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}?query=${queryvalue}`;
-        const response = await fetch(apiUrlEndpoint);
-        const data = await response.json();
-        setTotalPages(data.totalPages)
-        setInventories(data.results);
-        
-      } else {
-        const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}?page=${currentPage}`;
-        const response = await fetch(apiUrlEndpoint);
-        const data = await response.json();
-        setInventories(data.results);
-        setTotalPages(data.totalPages)
-        setCurrentPage(1)
-        console.log(totalPages, currentPage)
-      }
-    } catch (error) {
-      console.error('Error fetching inventory data:', error);
-    }
-  }
+  
   useEffect(() => {
+    async function fetchInventoryData() {
+      try {
+        if(queryvalue) {
+          const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}?query=${queryvalue}`;
+          const response = await fetch(apiUrlEndpoint);
+          const data = await response.json();
+          setTotalPages(data.totalPages)
+          setInventories(data.results);
+          
+        } else {
+          const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}?page=${currentPage}`;
+          const response = await fetch(apiUrlEndpoint);
+          const data = await response.json();
+          setInventories(data.results);
+          setTotalPages(data.totalPages)
+          setCurrentPage(1)
+          console.log(totalPages, currentPage)
+        }
+      } catch (error) {
+        console.error('Error fetching inventory data:', error);
+      }
+    }
     
     fetchInventoryData();
   }, [gettableName, onDataSubmitted, query, queryvalue]);
@@ -113,7 +114,7 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
   const handleFormSubmit = async () =>{
     closeModal();
     
-    await fetchInventoryData();
+   getPageData()
   }
   const getPageData = async () => {
     try {
