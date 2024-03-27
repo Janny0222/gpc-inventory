@@ -21,7 +21,7 @@ const [currentPage, setCurrentPage] = useState(1);
 const getquery = new URLSearchParams(window.location.search)
 const queryvalue = getquery.get('query')
     
-async function fetchMobileInventory () {
+async function fetchMobile () {
   try {
     if(queryvalue) {
       const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}/cellphones/?query=${queryvalue}`
@@ -42,12 +42,32 @@ async function fetchMobileInventory () {
   }
 }
 useEffect(() => {
+  async function fetchMobileInventory () {
+    try {
+      if(queryvalue) {
+        const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}/cellphones/?query=${queryvalue}`
+        const response = await fetch(apiUrlEndpoint);
+        const data = await response.json();
+        setMobileInventory(data.results)
+        setTotalPages(data.totalPages);
+      } else {
+        const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}/cellphones/?page=${currentPage}`;
+        const response = await fetch(apiUrlEndpoint);
+        const data = await response.json()
+        setMobileInventory(data.results);
+        setCurrentPage(1);
+        setTotalPages(data.totalPages)
+      }
+    } catch (error) {
+        console.error('Error fetching data', error)
+    }
+  }
         fetchMobileInventory()
 }, [gettableName, onDataSubmitted])
 
 const handleFormSubmit = async () => {
   closeModal();
-  fetchMobileInventory();
+  fetchMobile();
 }
 
 // const getPageData = async () => {

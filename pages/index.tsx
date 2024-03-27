@@ -1,15 +1,16 @@
 import Image from "next/image";
 import NavLinks from "./components/sidebar";
+import Link from "next/link";
 
 
 export default function Home() {
   return (
     <>
     <main>
-    <a href="/dashboard">
+    <Link href="/dashboard">
       <span>Go to Dashboard</span>
       
-    </a>
+    </Link>
     
     </main>
     </>

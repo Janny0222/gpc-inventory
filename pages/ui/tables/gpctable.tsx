@@ -57,7 +57,7 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
     }
     
     fetchInventoryData();
-  }, [gettableName, onDataSubmitted, query, queryvalue]);
+  }, [gettableName, onDataSubmitted, query, queryvalue, currentPage, totalPages]);
 
   const handlePageClick = async (selected: { selected: number }) => {
     try {

@@ -18,6 +18,9 @@ const [value, setValue] = useState<string>("")
 const [tablename, setTableName] = useState<string>("")
 const [mobileInventory, setMobileInventory] = useState<MobileInventoryList[]>([])
 
+    let name = tableName.find(company => company.name === value)?.displayName || value
+    let getName = tableName.find(company => company.name === tablename)?.name || tablename
+    let getTable = tableName.find(company => company.name === tablename)?.table || tablename
     const handleDropdown = (value: string) => {
         setTableName(value)
         setValue(value)
@@ -53,14 +56,11 @@ const [mobileInventory, setMobileInventory] = useState<MobileInventoryList[]>([]
                 console.error('Error fetching data', error)
             }
         }
-        console.log("the database:", mobileInventory?.length);
         handleDataUploaded()
-    }, [tablename])
+    }, [tablename, getTable])
     
     
-    let name = tableName.find(company => company.name === value)?.displayName || value
-    let getName = tableName.find(company => company.name === tablename)?.name || tablename
-    let getTable = tableName.find(company => company.name === tablename)?.table || tablename
+    
     return (
         <Layout>
             <div className="w-full">
