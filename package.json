@@ -14,7 +14,6 @@
     "@emotion/styled": "^11.11.0",
     "@heroicons/react": "^2.1.1",
     "@mui/material": "^5.15.14",
-    "@types/socket.io": "^3.0.2",
     "axios": "^1.6.8",
     "busboy": "^1.6.0",
     "clsx": "^2.1.0",

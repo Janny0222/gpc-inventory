@@ -1,8 +1,5 @@
 import multer from 'multer';
-import path from 'path';
-import { NextApiRequest, NextApiResponse } from 'next';
 import { query } from '@/lib/db';
-import csvParser from 'csv-parser'
 import xlsx from 'xlsx'
 
 const upload = multer();

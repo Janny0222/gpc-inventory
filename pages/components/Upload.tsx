@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { ChangeEvent } from "react";
-import { tableName } from "../lib/company";
 
 export default function Upload({tablename, onDataUploaded}:{tablename: string, onDataUploaded: () => void}){
 
