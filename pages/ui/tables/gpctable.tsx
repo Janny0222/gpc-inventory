@@ -38,7 +38,7 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
           setInventories(data.results);
           
         } else {
-          const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}?page=${currentPage}`;
+          const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}`;
           const response = await fetch(apiUrlEndpoint);
           const data = await response.json();
           setInventories(data.results);
@@ -52,7 +52,7 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
     }
     
     fetchInventoryData();
-  }, [gettableName, onDataSubmitted, query, queryvalue, currentPage, totalPages]);
+  }, [gettableName, onDataSubmitted, query, queryvalue, totalPages]);
 
   const handlePageClick = async (selected: { selected: number }) => {
     try {
@@ -204,7 +204,7 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
           pageCount={totalPages}
           currentPage={currentPage}
           onPageChange={handlePageClick}
-        />
+        />  
       </div>
     </div>     
     )

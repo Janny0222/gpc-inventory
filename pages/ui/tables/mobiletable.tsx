@@ -52,7 +52,7 @@ useEffect(() => {
         setMobileInventory(data.results)
         setTotalPages(data.totalPages);
       } else {
-        const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}/cellphones/?page=${currentPage}`;
+        const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}/cellphones`;
         const response = await fetch(apiUrlEndpoint);
         const data = await response.json()
         setMobileInventory(data.results);
@@ -64,7 +64,7 @@ useEffect(() => {
     }
   }
         fetchMobileInventory()
-}, [gettableName, onDataSubmitted])
+}, [gettableName, onDataSubmitted, queryvalue])
 
 const handleFormSubmit = async () => {
   closeModal();
@@ -218,7 +218,7 @@ const closeModal = () => {
                               
                     )}
             </div>
-            {mobileInventory?.length !== 0 && mobileInventory !== undefined &&
+            {mobileInventory?.length !== 0 && mobileInventory !== undefined && !queryvalue &&
             <CustomPagination
               pageCount={totalPages}
               currentPage={currentPage}
