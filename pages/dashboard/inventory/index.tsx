@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { tableName } from "@/pages/lib/company";
 import { lusitana } from "@/styles/font";
 import GPCInventoryTable from "@/pages/ui/tables/gpctable";
@@ -10,6 +10,7 @@ import Modal from "@/pages/components/modal";
 import Form from "@/pages/ui/inventory/gpc-create/create-form";
 import { InventoryList } from "@/pages/lib/definition";
 import Search from "@/pages/ui/search";
+import Upload from "@/pages/components/Upload";
 
 
 export default function SampleRender({searchParams,}:{searchParams?: {search?: string}}) {
@@ -19,6 +20,11 @@ export default function SampleRender({searchParams,}:{searchParams?: {search?: s
     const [inventories, setInventories] = useState<InventoryList[]>([]);
     const [sample, setSample] = useState<string>("");
     const [tblName, setTblName] = useState<string>("");
+    const [dataUploaderHandler, setDataUploaderHandler] = useState<() => void>(() => () => {})
+
+    let name = tableName.find(company => company.name === sample)?.displayName || sample
+        
+    let table = tableName.find(company => company.name === tblName)?.name || tblName
     // const inventories = await fetchGPCInventoryList()
     // console.log(inventories)
 
@@ -41,12 +47,25 @@ export default function SampleRender({searchParams,}:{searchParams?: {search?: s
     // modal for add
     const handleFormSubmit = async () =>{
         closeModal();
-        
         // await getPageData();
     }
-        let name = tableName.find(company => company.name === sample)?.displayName || sample
+    useEffect(() => {
+        if(tblName){
+        const handleDataUploaded = async () =>{
+            try {
+                const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${table}`
+                const response = await fetch(apiUrlEndpoint);
+                const data = await response.json()
+                setInventories(data.results)
+            } catch (error){
+                console.error('Error fetching data: ', error)
+            }
+        }
+        setDataUploaderHandler(() => handleDataUploaded)
+        handleDataUploaded()
+        }
+    }, [tblName, table])
         
-        let table = tableName.find(company => company.name === tblName)?.name || tblName
 
      return (
         
@@ -59,11 +78,11 @@ export default function SampleRender({searchParams,}:{searchParams?: {search?: s
                 <div className="flex items-center justify-between gap-2 mt-4 md:mt-8">
                     {table !== "" && <><Search placeholder="Search..." /> <CreateInventory onClick={openModal}/></> }
                 </div>
+                    {name !== '' && (inventories?.length === 0 || inventories === undefined ) && <Upload tablename={table} onDataUploaded={dataUploaderHandler} />}
                 <div className="flex items-center mt-1">
                     <div className="flex items-center justify-between gap-2 mt-4 md:mt-8">
                         <label className="mr-2">Select Company:</label>
                         <Dropdown onCompanyChange={handleCompanyChange}/>  
-                         
                     </div>
                 </div>
                 

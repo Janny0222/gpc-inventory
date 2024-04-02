@@ -120,7 +120,7 @@ const openModal = async (id: number) => {
       throw new Error (`Failed to fetch seleted Data`)
     }
     const data = await res.json()
-    console.log(data.results);
+    
   } catch (error){
     
   }
@@ -181,7 +181,11 @@ const closeModal = () => {
                         {inventory.brand}
                       </td>
                       <td className="px-3 py-3 whitespace-nowrap">
-                        {inventory.model_specs}
+                        {inventory.model_specs?.split(",").map((item, index) => (
+                          <div key={index}>
+                            {item.trim()}
+                          </div>
+                        ))}
                       </td>
                       <td className="px-3 py-3 whitespace-nowrap">
                       {inventory.imei?.split("IMEI").map((imei, index) => (

@@ -38,19 +38,21 @@ const [dataUploaderHandler, setDataUploaderHandler] = useState<() => void>(() =>
     }
     
     useEffect(()=> {
+        if(tablename) {
         const handleDataUploaded = async () => {
-            try {
-                const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${getTable}/cellphones`
-                const response = await fetch(apiUrlEndpoint);
-                const data = await response.json();
-                setMobileInventory(data.results)
+        try {
+            const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${getTable}/cellphones`
+            const response = await fetch(apiUrlEndpoint);
+            const data = await response.json();
+            setMobileInventory(data.results)
             } catch (error) {
                 console.error('Error fetching data', error)
             }
         }
-        // to use the handleDataUploaded function outside the useEffect
         setDataUploaderHandler(() => handleDataUploaded)
         handleDataUploaded()
+        // to use the handleDataUploaded function outside the useEffect
+       } 
     }, [tablename, getTable])
     
     

@@ -13,19 +13,18 @@ const CustomPagination: React.FC<CustomPaginationProps> = ({
   currentPage,
   onPageChange,
 }) => {
+  
   const handlePreviousClick = () => {
-    if(currentPage >= 1) {
+    if(currentPage > 1) {
       const newPage = currentPage - 1
       onPageChange({selected: newPage - 1})
-      console.log("result for currentPage: ", currentPage);
-      console.log("result for newpage: ", newPage);
     }
     
   };
-  console.log("this is the current page", currentPage);
   const handleNextClick = () => {
     if(currentPage < pageCount){
-      onPageChange({selected: currentPage})
+      const newPage = currentPage;
+      onPageChange({selected: newPage})
     }
   }
     return (

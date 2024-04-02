@@ -26,7 +26,7 @@ export default async function handler (req, res) {
             ]);
             const totalCount = totalCountRows[0].total;
             const totalPages = Math.ceil(totalCount / itemPerPage)
-
+            console.log(console.log("cellphone length: ", inventory.length))
             res.status(200).json({ results: inventory, totalPages})
         } catch ( error ) {
             res.status(500).json({ error: 'Internal Server Errors' });

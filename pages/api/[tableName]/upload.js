@@ -27,7 +27,7 @@ async function parseExcel(filebuffer) {
 
         excelDate.setFullYear(excelDate.getFullYear() - 70)
         // Format the date as desired, e.g., 'MM-dd-yyyy'
-        const formattedDate = excelDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' });
+        const formattedDate = excelDate.toISOString().split('T')[0]
         
         return formattedDate;
       }
@@ -52,6 +52,7 @@ export default async function handler(req, res) {
 
         try {
           const {headers, rows} = await parseExcel(fileBuffer)
+          console.log(headers)
           const insertQuery = `INSERT INTO ${tableName} (${headers.join(', ')}) VALUES ?`;
           const result = await query(insertQuery, [rows]);
 

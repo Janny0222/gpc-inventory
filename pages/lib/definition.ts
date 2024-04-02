@@ -20,6 +20,15 @@ export interface MobileInventoryList {
     date_issued: string;
 }
 
+export interface fetchMobileInventoryList {
+    id: number;
+    assigned_to: string;
+    department: string;
+    imei: string;
+    serial_number: string;
+    date_issued: string;
+    source_table: string;
+}
 
 export interface FetchInventoryList {
     id: number;

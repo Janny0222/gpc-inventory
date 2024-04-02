@@ -39,7 +39,7 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
           throw new Error('Failed to fetch inventory item')
         }
         const data = await res.json();
-        console.log(data.results)
+       
         setFormData(data.results[0])
       } catch(error) {
         console.error('Error fetching inventory item:', error)

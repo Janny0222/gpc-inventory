@@ -177,7 +177,13 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
                     {inventory.computer_type}
                   </td>
                   <td className="px-3 py-3 whitespace-nowrap">
-                    {inventory.specs}
+                    {inventory.specs?.split(",").map((specs, index) => (
+                      index > 0 && (
+                        <div key={index}>
+                          {specs.trim()}
+                        </div>
+                      )
+                    ))}
                   </td>
                   <td className="px-3 py-3 whitespace-nowrap">
                     {inventory.supplier}
@@ -198,12 +204,12 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
           {isModalOpen && (
                         <EditModal onClose={closeModal} onSubmit={handleFormSubmit} id={selectedId} tablename={gettableName}/>
                     )}
-        </div>
+        </div>{!queryvalue &&
         <CustomPagination
           pageCount={totalPages}
           currentPage={currentPage}
           onPageChange={handlePageClick}
-        />  
+        />   }
       </div>
     </div>     
     )

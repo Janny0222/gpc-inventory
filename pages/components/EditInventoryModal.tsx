@@ -50,7 +50,7 @@ const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id}) => 
   async function updateInventory(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
-      const formattedDate = formData.date_purchased ? new Date(formData.date_purchased).toLocaleDateString('en-Us', {month: '2-digit', day: '2-digit', year: 'numeric'}): ''
+      const formattedDate = formData.date_purchased ? new Date(formData.date_purchased).toISOString().split('T')[0]: '';
       const putInventory = {
         method: "PUT",
         headers: {

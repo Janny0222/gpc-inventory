@@ -1,12 +1,13 @@
 import Link from 'next/link';
 import NavLinks from './navlinks';
 import GpcLogo from './gpclogo';
+import { rubik } from '@/styles/font';
 
   export default function SideBar() {
     return (
         <div className="flex flex-col h-full p-1">
           <Link
-            className="flex items-center justify-center h-20 mb-2 bg-green-700 rounded-md md:h-40 sidebar"
+            className={`${rubik.className} flex items-center justify-center h-20 mb-2 bg-green-700 rounded-md md:h-40 sidebar`}
             href="/"
           >
             {/* Centering the GpcLogo */}

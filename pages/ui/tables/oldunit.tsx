@@ -26,7 +26,7 @@ export default function Oldunit (){
     }, [])
 
     function calculateYearsAge(datePurchased: string): string {
-        const now = new Date();
+    const now = new Date();
     const purchasedDate = new Date(datePurchased);
 
     // Calculate the difference in milliseconds
