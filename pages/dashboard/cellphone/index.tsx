@@ -35,6 +35,7 @@ const [dataUploaderHandler, setDataUploaderHandler] = useState<() => void>(() =>
     }
     const handleFormSubmit = async () =>{
         closeModal();
+        dataUploaderHandler();
     }
     
     useEffect(()=> {
@@ -74,7 +75,7 @@ const [dataUploaderHandler, setDataUploaderHandler] = useState<() => void>(() =>
                         <Dropdown onCompanyChange={handleDropdown} />
                     </div>
                 </div>
-                {name !== '' && <GPCMobileInventory gettableName={getTable} onDataSubmitted={handleFormSubmit}/>}
+                {name !== '' && <GPCMobileInventory getTableName={getTable} onDataSubmitted={handleFormSubmit}/>}
                 {isModalOpen && (
                         <Modal onClose={closeModal} companyName={name} onSubmit={handleFormSubmit} tablename={getTable}>
                             <Form gettableName={getTable} onDataSubmitted={handleFormSubmit}/>

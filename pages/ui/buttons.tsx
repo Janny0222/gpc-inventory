@@ -1,11 +1,11 @@
-import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { PencilIcon, PlusIcon, TrashIcon, QrCodeIcon } from '@heroicons/react/24/outline';
 
 import Link from 'next/link';
 
 interface CreateInventoryProps {
   onClick: () => void;
 }
-interface UpdateInventoryProps {
+interface PropsForID {
   id: number;
   onClick: (id: number) => void;
 }
@@ -22,7 +22,7 @@ export function CreateInventory({onClick}: CreateInventoryProps) {
   );
 }
 
-export function UpdateInventory({ id, onClick }: UpdateInventoryProps) {
+export function UpdateInventory({ id, onClick }: PropsForID) {
   return (
     <button
       onClick={() => onClick(id)}
@@ -33,7 +33,17 @@ export function UpdateInventory({ id, onClick }: UpdateInventoryProps) {
   );
 }
 
-export function UpdateMobileInventory({ id, onClick }: UpdateInventoryProps) {
+export function QRGenerator ({ id, onClick }: PropsForID) {
+  return (
+    <button 
+    onClick={() => onClick(id)}
+    className="p-2 border rounded-md hover:bg-gray-100">
+      <QrCodeIcon className='w-5' />  
+    </button>
+  )
+}
+
+export function UpdateMobileInventory({ id, onClick }: PropsForID) {
   return (
     <button
       onClick={() => onClick(id)}

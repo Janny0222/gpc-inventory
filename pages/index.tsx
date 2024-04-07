@@ -1,16 +1,20 @@
-import Image from "next/image";
-import NavLinks from "./components/sidebar";
+import Chart from 'chart.js';
+import React from 'react';
 import Link from "next/link";
-
+import { CardSkeleton } from './ui/skeleton';
+import  CardLineChart  from './components/CardLineChart'
+import QRCodeGenerator from './components/QRCodeGenerator';
 
 export default function Home() {
+  
   return (
     <>
     <main>
     <Link href="/dashboard">
       <span>Go to Dashboard</span>
-      
-    </Link>
+      </Link>
+    {/* <QRCodeGenerator /> */}
+      <CardLineChart />
     
     </main>
     </>

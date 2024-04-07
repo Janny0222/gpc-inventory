@@ -48,6 +48,7 @@ export default function SampleRender({searchParams,}:{searchParams?: {search?: s
     const handleFormSubmit = async () =>{
         closeModal();
         // await getPageData();
+        dataUploaderHandler()
     }
     useEffect(() => {
         if(tblName){
