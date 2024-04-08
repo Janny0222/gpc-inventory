@@ -20,7 +20,7 @@ const Card = ({
   const Icon = iconMap[type];
 
   return (
-    <div className="p-2 shadow summary-cards rounded-xl">
+    <div className="p-2 text-black shadow summary-cards rounded-xl">
       <div className="flex p-1 ">
         {Icon ? <Icon className="mr-auto text-black h-7 w-7"  /> : null}
         <h3 className="ml-auto text-xl font-medium text-white ">{title}</h3>

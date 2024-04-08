@@ -7,7 +7,7 @@ import { tableName } from "@/pages/lib/company";
 import EditModal from "@/pages/components/EditInventoryModal";
 import CustomPagination from "@/pages/components/Pagination";
 import html2canvas from "html2canvas";
-import BarcodeModal from "@/pages/components/BarcodeModal";
+import BarcodeModal from "@/pages/components/QRCodeModal";
 
 interface GPCInventoryTableProps {
   gettableName: string;

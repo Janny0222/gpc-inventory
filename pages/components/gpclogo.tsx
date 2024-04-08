@@ -26,7 +26,7 @@ export default function GpcLogo() {
         ) : (
           <div className="relative flex items-center p-1">
             <span className={`${lato.className} custom-font text-[9.2rem] text-white `}>G</span>
-            <span className={`${rubik.className} custom-font flex  justify-end pt-10 items-end text-[25px] text-white ` }>reenstone</span>
+            <span className={`${lato.className} custom-font flex  justify-end pt-10 items-end text-[25px] text-white ` }>reenstone</span>
           </div>
         )}
       </div>

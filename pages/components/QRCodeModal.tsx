@@ -53,7 +53,7 @@ return (
             <div className='p2'>
                 <QRCodeGenerator pc_name={formData.pc_name} mac_address={formData.mac_address} specs={formData.specs}/>
             </div>
-            <div className='ml-8 flex flex-col text-sm'>
+            <div className='flex flex-col ml-8 text-sm'>
                 <span><strong>Company: </strong> {company}</span>
                 <span><strong>PC Name: </strong> {formData.pc_name}</span>
                 <span><strong>MacAddress: </strong> {formData.mac_address}</span>

@@ -64,14 +64,14 @@ export default function Page() {
     <Layout>
       
         <div className="p-3 mb-4 rounded-t-lg dashbord-summary">
-          <h1 className={`${rubik.className} text-xl md:text-xl custom-font`}>Summary</h1>
+          <h1 className={`${rubik.className} text-xl md:text-xl custom-font `}>Summary</h1>
         </div>
-        <div className="px-4 bg-white rounded-lg shadow">
+        <div className="px-4 text-white bg-gray-700 rounded-lg shadow">
             <div className='flex flex-col pb-2'>
                 <h3 className='text-2xl'>Inventory</h3>
                 <ToggleButton loading={loading} onChange={handleTrigger}/>
             </div>
-            <div className='grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 lg:w-auto md:w-auto sm:w-96 gap-4'>
+            <div className='grid gap-4 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 lg:w-auto md:w-auto'>
               {triggerValue === 'detail' ? (
                 <>
                 {(desktopToCount === null || laptopToCount === null) && <><CardSkeleton /> <CardSkeleton /> <CardSkeleton /></>}
@@ -85,24 +85,24 @@ export default function Page() {
                 </>
               ): null}
             </div>
-            <div className="grid py-1 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 lg:w-auto md:w-auto sm:w-96 gap-4">
+            <div className="grid gap-4 py-1 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 lg:w-auto md:w-auto">
             
               {triggerValue === 'graph' ? (
               <>
                 <div className=''>
-                  <h6 className='border-b-2 border-x-2 border-b-current text-center'>GPC</h6>
+                  <h6 className='text-center text-white border-b-2 border-x-2 border-b-current'>GPC</h6>
                   <DoughnutChart tableName='gpc_inventory' mobileTable='gpc_mobile_inventory'/>
                 </div>
                 <div className=''>
-                  <h6 className='border-b-2 border-x-2 border-b-current text-center'>LSI</h6>
+                  <h6 className='text-center border-b-2 border-x-2 border-b-current'>LSI</h6>
                   <DoughnutChart tableName='lsi_inventory' mobileTable='lsi_mobile_inventory'/>
                 </div>
                 <div className=''>
-                  <h6 className='border-b-2 border-x-2 border-b-current text-center'>GKC</h6>
+                  <h6 className='text-center border-b-2 border-x-2 border-b-current'>GKC</h6>
                   <DoughnutChart tableName='gkc_inventory' mobileTable='gkc_mobile_inventory'/>
                 </div>
                 <div className=''>
-                  <h6 className='border-b-2 border-x-2 border-b-current text-center'>GSRC</h6>
+                  <h6 className='text-center border-b-2 border-x-2 border-b-current'>GSRC</h6>
                   <DoughnutChart tableName='gsrc_inventory' mobileTable='gsrc_mobile_inventory'/>
                 </div>
               </>

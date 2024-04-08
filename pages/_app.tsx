@@ -7,10 +7,10 @@ import ThemeToggle from './ui/theme-toggle';
 export default function App({ Component, pageProps }: AppProps) {
   return (
   <SessionProvider session={pageProps.session}>
-    <ThemeProvider attribute="class">
+    {/* <ThemeProvider attribute="class"> */}
       
     <Component {...pageProps} />
-    </ThemeProvider>
+    {/* </ThemeProvider> */}
   </SessionProvider>
   )
 }

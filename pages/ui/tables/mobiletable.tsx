@@ -4,7 +4,7 @@ import { MobileInventoryList } from "@/pages/lib/definition"
 import { useEffect, useState } from "react"
 import { QRGenerator, UpdateMobileInventory } from "../buttons";
 import CustomPagination from "@/pages/components/Pagination";
-import BarcodeModal from "@/pages/components/BarcodeModal";
+import BarcodeModal from "@/pages/components/QRCodeModal";
 
 
 interface MobileInventoryProps {

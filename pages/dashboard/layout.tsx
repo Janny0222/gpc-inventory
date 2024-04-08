@@ -7,9 +7,9 @@ export default function Layout({ children }: {children: React.ReactNode}){
         
             {/* <ThemeToggle /> */}
         
-        <div className="flex flex-row h-screen md:flex-row md:overflow-hidden">
+        <div className="flex flex-col h-screen md:flex-row md:overflow-hidden">
         
-            <div className="flex-none md:w-64">
+            <div className=" md:w-64">
                 <SideBar />
                 
             </div>

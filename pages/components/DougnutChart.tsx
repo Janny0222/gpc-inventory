@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
+import { Doughnut, Bar } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -59,11 +59,7 @@ const data = {
 };
     return (
     <>
-       
-            
-         
-             <Doughnut data = {data} height={311} width={311} className='w-96' />  
-        
+             <Doughnut data = {data} height={311} width={311} className='' />  
     </>
     )
 }
