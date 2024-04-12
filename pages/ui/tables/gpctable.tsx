@@ -2,7 +2,7 @@
 'use client'
 import { ChangeEvent, useEffect, useState } from "react";
 import { InventoryList } from "@/pages/lib/definition";
-import { QRGenerator, UpdateInventory } from "../buttons";
+import { QRGeneratorButton, UpdateInventory } from "../buttons";
 import { tableName } from "@/pages/lib/company";
 import EditModal from "@/pages/components/EditInventoryModal";
 import CustomPagination from "@/pages/components/Pagination";
@@ -22,6 +22,7 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
   const [totalPages, setTotalPages] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null)
+  const [modalData, setModalData] = useState<any>(null)
   const [isQRModalOpen, setIsQRModalOpen] = useState(false);
   
   const getquery = new URLSearchParams(window.location.search)
@@ -95,7 +96,8 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
           throw new Error('Failed to fetch inventory item');
         }
         const data = await res.json();
-        saveBarcodeModalAsImage()
+        
+        setModalData(data.results[0])
       } catch (error){
         console.error('Error fetching inventory item:', error)
       }
@@ -128,21 +130,21 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
   }
 
   const qrModal = async (id: number) => {
-    setSelectedId(id)
-    setIsQRModalOpen(true)
+    setSelectedId(id);
+    setIsQRModalOpen(true);
   
-    console.log("Generate QR Code Button, Getting id: ",selectedId)
+    console.log("Generate QR Code Button, Getting id: ", selectedId);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/${gettableName}/${id}`)
-      if(!res.ok){
+      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/${gettableName}/${id}`);
+      if (!res.ok) {
         throw new Error('Failed to fetch inventory item');
       }
       const data = await res.json();
-      
-      } catch (error){
-        console.error('Error fetching inventory item:', error)
-      }
-  }
+      // Make sure to pass necessary arguments if needed
+    } catch (error) {
+      console.error('Error fetching inventory item:', error);
+    }
+  };
 
   const closeQrModal = () => {
     setIsQRModalOpen(false);
@@ -153,6 +155,16 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
     closeModal();
     getPageData()
   }
+  const handleSave = async () => {
+    try {
+        // Call any necessary functions or perform any actions here
+        console.log("Saving data...");
+        // Once everything is saved, close the QR modal
+        closeQrModal();
+    } catch (error) {
+        console.error('Error saving data:', error);
+    }
+}
   const getPageData = async () => {
     try {
         const pageData = {
@@ -237,7 +249,11 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
                   <td className="py-3 pl-6 pr-3 whitespace-nowrap">
                     <div className="flex items-center gap-3 edit-button">
                       <UpdateInventory id={inventory.id} onClick={openModal}/>
-                      <QRGenerator id={inventory.id} onClick={qrModal} />
+                      <QRGeneratorButton 
+                        id={inventory.id} 
+                        onClick={qrModal}
+                        onSave={handleSave}
+                      />
                     </div>
                   </td>
                 </tr>
@@ -245,7 +261,7 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
             </tbody>
           </table>
           {isQRModalOpen && (
-                      <BarcodeModal tablename={gettableName} id={selectedId} onClose={closeQrModal} company={company}/>
+                      <BarcodeModal modalData={modalData} tablename={gettableName} id={selectedId} onClose={closeQrModal} company={company}/>
                     )}
           {isModalOpen && (
                         <EditModal onClose={closeModal} onSubmit={handleFormSubmit} id={selectedId} tablename={gettableName}/>

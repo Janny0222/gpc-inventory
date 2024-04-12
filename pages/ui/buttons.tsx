@@ -33,11 +33,18 @@ export function UpdateInventory({ id, onClick }: PropsForID) {
   );
 }
 
-export function QRGenerator ({ id, onClick }: PropsForID) {
+export function QRGeneratorButton ({ id, onClick, onSave }:  {id: number, onClick: (id: number, onSave: () => void) => void, onSave: () => void}) {
+  const handleSave = () => {
+    console.log('QRGeneratorButton id:', id);
+    onSave()
+    
+  }
+  
   return (
     <button 
-    onClick={() => onClick(id)}
-    className="p-2 border rounded-md hover:bg-gray-100">
+      onClick={() => onClick(id, handleSave)}
+      className="p-2 border rounded-md hover:bg-gray-100"
+    >
       <QrCodeIcon className='w-5' />  
     </button>
   )

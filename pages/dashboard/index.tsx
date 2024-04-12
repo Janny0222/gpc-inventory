@@ -9,6 +9,7 @@ import Oldunit from '../ui/tables/oldunit';
 import OldMobile from '../ui/tables/oldunit-mobile';
 import DoughnutChart from '../components/DougnutChart';
 import ToggleButton from '../components/ToggleButton';
+import BarChart from '../components/BarChart';
 
 
 export default function Page() {
@@ -18,7 +19,7 @@ export default function Page() {
   const [desktopToCount, setDesktopToCount] = useState<number | null>(null)
   const [laptopToCount, setLaptopToCount] = useState<number | null>(null)
   const [mobileCount, setMobileCount] = useState<number | null>(null)
-  const [triggerValue, setTriggerValue] = useState<string>("detail")
+  const [triggerValue, setTriggerValue] = useState<string>("graph")
   
   
   
@@ -56,7 +57,7 @@ export default function Page() {
   }, []);
   
   const handleTrigger = () =>{
-   setTriggerValue(triggerValue === 'detail' ? 'graph' : 'detail')
+   setTriggerValue(triggerValue === 'graph' ? 'detail' : 'graph')
   }
   console.log(triggerValue);
   
@@ -66,12 +67,12 @@ export default function Page() {
         <div className="p-3 mb-4 rounded-t-lg dashbord-summary">
           <h1 className={`${rubik.className} text-xl md:text-xl custom-font `}>Summary</h1>
         </div>
-        <div className="px-4 text-white bg-gray-700 rounded-lg shadow">
+        <div className="px-4  rounded-lg shadow">
             <div className='flex flex-col pb-2'>
                 <h3 className='text-2xl'>Inventory</h3>
                 <ToggleButton loading={loading} onChange={handleTrigger}/>
             </div>
-            <div className='grid gap-4 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 lg:w-auto md:w-auto'>
+            <div className='grid gap-4 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-[500px] lg:w-auto md:w-auto'>
               {triggerValue === 'detail' ? (
                 <>
                 {(desktopToCount === null || laptopToCount === null) && <><CardSkeleton /> <CardSkeleton /> <CardSkeleton /></>}
@@ -90,7 +91,7 @@ export default function Page() {
               {triggerValue === 'graph' ? (
               <>
                 <div className=''>
-                  <h6 className='text-center text-white border-b-2 border-x-2 border-b-current'>GPC</h6>
+                  <h6 className='text-center border-b-2 border-x-2 border-b-current'>GPC</h6>
                   <DoughnutChart tableName='gpc_inventory' mobileTable='gpc_mobile_inventory'/>
                 </div>
                 <div className=''>
@@ -109,29 +110,47 @@ export default function Page() {
               ): null}
           </div>
         </div>
+
+        {/* Trigger for Detail */}
+        {triggerValue === 'detail' ? (
+            <>
         <div className="p-2 my-2 rounded-t-lg dashbord-summary">
-          <h1 className={`${lusitana.className} text-white text-xl md:text-[15px]`}>Unit/s 5years old and Above</h1>
+          <h1 className={`${lusitana.className} text-white text-xl md:text-[15px]`}>Computer/Laptop Unit/s 5years old and Above</h1>
         </div>
-        <div className="p-1 bg-white rounded-lg shadow">
-          <div className="grid">
-            <Suspense fallback={<TableSkeleton />}>
-            {(desktopToCount === null || laptopToCount === null) && <TableSkeleton />}
-            {desktopToCount !== null && laptopToCount !== null && (
-              <Oldunit />
-            )}
-            </Suspense>
-          </div>
+        <div className="p-1 bg-gray-200 rounded-lg shadow">
+            <div className="grid">
+              <Suspense fallback={<TableSkeleton />}>
+              {(desktopToCount === null || laptopToCount === null) && <TableSkeleton />}
+              {desktopToCount !== null && laptopToCount !== null && (
+                <Oldunit />
+              )}
+              </Suspense>
+            </div>
         </div>
+         
         <div className="p-2 my-2 rounded-t-lg dashbord-summary">
           <h1 className={`${lusitana.className} text-white text-xl md:text-[15px]`}>Mobile Issued 5 years old and above </h1>
         </div>
-        <div className='p-1 bg-white rounded-t-lg shadow'>
+        <div className='p-1 bg-gray-200 rounded-t-lg shadow'>
           <div className='grid'>
             <OldMobile />
           </div>
-          
         </div>
-      
+        </>
+        ) : '' }
+        {/* Trigger for Graph Chart */}
+        {triggerValue === 'graph' ? (
+              <>
+            <div className="p-2 my-2 rounded-t-lg dashbord-summary">
+              <h1 className={`${lusitana.className} text-white text-xl md:text-[15px]`}>Old Units with more then 5 years of age</h1>
+            </div>
+            <div className="p-1 bg-white rounded-lg shadow">
+              <div className='flex justify-center lg:h-[400px]'>
+                <BarChart />
+              </div>
+            </div>
+            </>
+            ) : !triggerValue }
     </Layout>
   );
 }

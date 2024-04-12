@@ -11,6 +11,8 @@ import Form from "@/pages/ui/inventory/gpc-create/create-form";
 import { InventoryList } from "@/pages/lib/definition";
 import Search from "@/pages/ui/search";
 import Upload from "@/pages/components/Upload";
+import AreaChartView from "@/pages/components/AreaChart";
+
 
 
 export default function SampleRender({searchParams,}:{searchParams?: {search?: string}}) {
@@ -25,6 +27,7 @@ export default function SampleRender({searchParams,}:{searchParams?: {search?: s
     let name = tableName.find(company => company.name === sample)?.displayName || sample
         
     let table = tableName.find(company => company.name === tblName)?.name || tblName
+    let mobileTable = tableName.find(company => company.name === tblName)?.table || tblName
     // const inventories = await fetchGPCInventoryList()
     // console.log(inventories)
 
@@ -86,7 +89,7 @@ export default function SampleRender({searchParams,}:{searchParams?: {search?: s
                         <Dropdown onCompanyChange={handleCompanyChange}/>  
                     </div>
                 </div>
-                
+                    
                     { sample === table && sample !== ""  && <GPCInventoryTable query={search} gettableName={sample} onDataSubmitted={handleFormSubmit}/>}
                     
                     {isModalOpen && (
@@ -95,7 +98,8 @@ export default function SampleRender({searchParams,}:{searchParams?: {search?: s
                         </Modal>
                     )}
             </div>
-            
+            { sample === '' && <div className="flex md:flex-1 lg:flex-1 sm:flex-1"><AreaChartView tableName={table} mobileTable={mobileTable} /></div>}
         </Layout>
+        
      )
 }

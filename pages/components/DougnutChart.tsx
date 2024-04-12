@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Doughnut, Bar } from 'react-chartjs-2';
+import { Doughnut, Bar, Pie } from 'react-chartjs-2';
+
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -12,6 +13,8 @@ const [macToCount, setMacToCount] = useState(null)
 const [laptopToCount, setLaptopToCount] = useState(null)
 const [mobileCount, setMobileCount] = useState(null)
 
+
+useEffect(() => {
 const fetchData = async () => {
     try {
       const [desktop, mac, laptop, cellphone] = await Promise.all([
@@ -36,7 +39,11 @@ const fetchData = async () => {
       
     }
 }
-fetchData()
+
+  fetchData();
+}, [tableName, mobileTable]);
+
+
 const data = {
     labels: ['Desktop', 'Laptop', 'Mobile'],
     datasets: [
@@ -57,9 +64,37 @@ const data = {
         },
     ],
 };
+
+const options = {
+  animations : {
+      tension: {
+          duration: 1500,
+          loop: true,
+          from: 1,
+          to: 0,
+      },
+  },
+ 
+  responsive: true,
+  plugins: {
+      legend: {
+      position: 'top' as const,
+      },
+      title: {
+      display: true,
+      text: 'Inventory',
+      },
+      filler: {
+          propagate: true,
+      },
+  },
+  
+};
+
+
     return (
     <>
-             <Doughnut data = {data} height={311} width={311} className='' />  
+             <Pie options={options} data = {data} height={300} width={300} className='' />  
     </>
     )
 }

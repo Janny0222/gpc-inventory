@@ -2,10 +2,11 @@
 import EditMobileModal from "@/pages/components/EditMobileModal";
 import { MobileInventoryList } from "@/pages/lib/definition"
 import { useEffect, useState } from "react"
-import { QRGenerator, UpdateMobileInventory } from "../buttons";
+import { QRGeneratorButton, UpdateMobileInventory } from "../buttons";
 import CustomPagination from "@/pages/components/Pagination";
 import BarcodeModal from "@/pages/components/QRCodeModal";
-
+import BarcodeMobileModal from "@/pages/components/QRCodeMobileModal";
+import { tableName } from "@/pages/lib/company";
 
 interface MobileInventoryProps {
     getTableName: string,
@@ -20,11 +21,11 @@ const [isModalOpen, setIsModalOpen] = useState(false);
 const [isQRModalOpen, setIsQRModalOpen] = useState(false);
 const [totalPages, setTotalPages] = useState(1);
 const [currentPage, setCurrentPage] = useState(1);
-
+const [modalData, setModalData] = useState<any>(null)
 
 const getQuery = new URLSearchParams(window.location.search)
 const queryValue = getQuery.get('query')
-    
+let company = tableName.find(company => company.name === getTableName)?.company || getTableName
 async function fetchMobile () {
   try {
     if(queryValue) {
@@ -100,6 +101,17 @@ const handlePageClick = async (selected: { selected: number }) => {
   }
   
 };
+
+const handleSave = async () => {
+  try {
+      // Call any necessary functions or perform any actions here
+      console.log("Saving data...");
+      // Once everything is saved, close the QR modal
+      closeQrModal();
+  } catch (error) {
+      console.error('Error saving data:', error);
+  }
+}
 const qrModal = async (id: number) => {
   setSelectedId(id)
   setIsQRModalOpen(true)
@@ -126,7 +138,7 @@ const openModal = async (id: number) => {
       throw new Error (`Failed to fetch seleted Data`)
     }
     const data = await res.json()
-    
+    setModalData(data.results[0])
   } catch (error){
     
   }
@@ -221,16 +233,20 @@ const closeModal = () => {
                       <td className="py-3 pl-6 pr-3 whitespace-nowrap">
                         <div className="flex items-center gap-3">
                           <UpdateMobileInventory id={inventory.id} onClick={openModal}/>
-                          {/* <QRGenertor id={inventory.id} onClick={qrModal} /> */}
+                          <QRGeneratorButton 
+                        id={inventory.id} 
+                        onClick={qrModal}
+                        onSave={handleSave}
+                      />
                         </div>
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-                    {/* {isQRModalOpen && (
-                      <BarcodeModal tablename={getTableName} id={selectedId} onClose={closeQrModal} />
-                    )} */}
+                    {isQRModalOpen && (
+                      <BarcodeMobileModal modalData={modalData} company={company} tablename={getTableName} id={selectedId} onClose={closeQrModal} />
+                    )}
                     {isModalOpen && (
                             <EditMobileModal onClose={closeModal} onSubmit={handleFormSubmit} id={selectedId} tablename={getTableName}/>
                               

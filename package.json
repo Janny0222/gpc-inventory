@@ -24,6 +24,7 @@
     "dynamsoft-camera-enhancer": "^4.0.2",
     "dynamsoft-javascript-barcode": "^9.6.40",
     "formidable": "^3.5.1",
+    "html-to-image": "^1.11.11",
     "html2canvas": "^1.4.1",
     "mui-datatables": "^4.3.0",
     "multer": "^1.4.5-lts.1",
@@ -47,6 +48,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.7",
     "@types/chart.js": "^2.9.41",
     "@types/formidable": "^3.4.5",
     "@types/multer": "^1.4.11",

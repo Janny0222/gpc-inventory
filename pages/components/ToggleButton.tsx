@@ -3,7 +3,7 @@ import { HiOutlineSwitchHorizontal } from 'react-icons/hi';
 
 export default function ToggleButton({ loading, onChange} : {  loading: boolean, onChange: () => void}){
 
-    const [toggle, setToggle] = useState('detail')
+    const [toggle, setToggle] = useState('graph')
 
     const handleToggleChange = () => {
         
@@ -20,15 +20,15 @@ export default function ToggleButton({ loading, onChange} : {  loading: boolean,
             checked={toggle === 'graph'}
             onChange={handleToggleChange}
         />
-         <label
+        <label
                 htmlFor="toggle-checkbox"
-                className={`cursor-pointer relative w-14 h-6 bg-green-300 rounded-full p-1 transition-colors duration-200 ease-in-out ${loading ? 'opacity-50' : ''}`}
+                className={`cursor-pointer relative w-14 h-6  rounded-full p-1 transition-colors duration-200 ease-in-out ${toggle === 'graph' ? 'bg-green-300' : 'bg-black'}`}
             >
                 <span
-                    className={`block w-4 h-4 bg-white rounded-full shadow-md transform transition-transform duration-200 ease-in-out ${toggle === 'graph' ? 'translate-x-8' : 'translate-x-0'}`}
+                    className={`block w-4 h-4 bg-white rounded-full shadow-md transform transition-transform duration-200 ease-in-out ${toggle === 'graph' ? 'translate-x-8 ' : 'translate-x-0 '}`}
                 ></span>
-            </label>
-            <p className="ml-2">{toggle === 'graph' ? 'Graph' : 'Detail'}</p>
+        </label>
+            <p className="ml-2"><strong>{toggle === 'graph' ? 'G R A P H' : 'D E T A I L'}</strong></p>
     </div>
     )
 }

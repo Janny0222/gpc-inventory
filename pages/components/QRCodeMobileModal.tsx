@@ -1,5 +1,5 @@
 import React, { FormEvent, useState, useEffect } from 'react';
-import QRCodeGenerator from './QRCodeGenerator';
+import QRCodeMobileGenerator from './QRCodeMobileGenerator';
 import html2canvas from 'html2canvas';
 
 interface ModalProps {
@@ -10,7 +10,7 @@ interface ModalProps {
     modalData: any;
   }
 
-const BarcodeModal: React.FC<ModalProps> = ({id, tablename, onClose, company, modalData}) => {
+const BarcodeMobileModal: React.FC<ModalProps> = ({id, tablename, onClose, company, modalData}) => {
   const saveBarcodeModalAsImage = async () => {
     await new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -31,20 +31,22 @@ const BarcodeModal: React.FC<ModalProps> = ({id, tablename, onClose, company, mo
       saveBarcodeModalAsImage();
       onClose();
     }
-  }, [])
+  }, [modalData, onClose])
   console.log(modalData)
     const [formData, setFormData] = useState({
-        pc_name: '',
-        mac_address: '',
-        computer_type: '',
-        specs: '',
-        supplier: '',
-        date_purchased: ''
+        assigned_to: '',
+        department: '',
+        brand: '',
+        model_specs: '',
+        imei: '',
+        serial_number: '',
+        inclusion: '',
+        date_issued: ''
       });
 useEffect(() => {
         async function fetchInventoryItem() {
           try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/${tablename}/${id}`);
+            const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/${tablename}/cellphones/${id}`);
             if(!res.ok){
               throw new Error('Failed to fetch inventory item')
             }
@@ -75,19 +77,19 @@ return (
           </div>
         <div className="flex flex-row p-4 ">
             <div className='p2'>
-                <QRCodeGenerator pc_name={formData.pc_name} mac_address={formData.mac_address} specs={formData.specs}/>
+                <QRCodeMobileGenerator assigned_to={formData.assigned_to} imei={formData.imei} model_specs={formData.model_specs}/>
             </div>
             <div className='flex flex-col ml-8 text-sm'>
                 <span><strong>Company: </strong> {company}</span>
-                <span><strong>PC Name: </strong> {formData.pc_name}</span>
-                <span><strong>MacAddress: </strong> {formData.mac_address}</span>
-                <span><strong>PC Specs: </strong> {formData.specs?.split(",").map((specs, index) => (
-                      index > 0 && (
+                <span><strong>Assigned To: </strong> {formData.assigned_to}</span>
+                <span><strong>IMEI: </strong> {formData.imei?.split("IMEI").map((imei, index) => (
+                    index > 0 && (
                         <div key={index}>
-                          {specs.trim()}
+                            IMEI{imei.trim()}
                         </div>
-                      )
-                    ))}</span>
+                    )
+                ))}</span>
+                <span><strong>Serial Number: </strong> {formData.serial_number}</span>
                  
             </div>
           </div>
@@ -97,4 +99,4 @@ return (
 )
 };
 
-export default BarcodeModal;
+export default BarcodeMobileModal;
