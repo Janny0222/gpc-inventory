@@ -52,6 +52,7 @@ export default async function handler(req, res) {
   } else if (sheetNameTable === 'lsi_mobile_inventory' || sheetNameTable === 'lsi_inventory') {
     getSheet = 'Lamitek'
   } else {
+    
     getSheet = '';
   }
   if (req.method === 'POST') {
