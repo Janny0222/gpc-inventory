@@ -4,6 +4,7 @@ export default async function handler(req, res) {
     const tableName = req.query.tableName;
     const searchQuery = req.query.query;
     const page = req.query.page || 1
+    
     const itemPerPage = 7;
   if (req.method === 'GET') {
     try {
