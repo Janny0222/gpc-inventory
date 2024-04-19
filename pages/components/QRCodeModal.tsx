@@ -26,12 +26,7 @@ const BarcodeModal: React.FC<ModalProps> = ({id, tablename, onClose, company, mo
       link.click()
     }
   }
-  useEffect(() => {
-    if(modalData) {
-      saveBarcodeModalAsImage();
-      onClose();
-    }
-  }, [])
+
   console.log(modalData)
     const [formData, setFormData] = useState({
         pc_name: '',

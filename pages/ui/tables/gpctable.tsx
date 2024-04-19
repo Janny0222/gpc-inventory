@@ -187,26 +187,26 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
     return (  
     <div className="overflow-x-auto sm:p-2">
       <div className="inline-block min-w-full align-middle">
-        <div className="p-2 rounded-lg bg-table md:pt-0">
-          <table className="min-w-full text-gray-900 md:table">
-            <thead className="text-sm font-normal text-left rounded-lg">
+        <div className="p-2 rounded bg-black md:pt-0">
+          <table className="min-w-full   md:table">
+            <thead className="text-sm text-left text-white  rounded-lg">
               <tr>
-                <th scope="col" className="px-4 py-1 font-medium sm:pl-6">
+                <th scope="col" className="px-4 py-1  font-extrabold">
                   PC Name
                 </th>
-                <th scope="col" className="px-3 py-1 font-medium">
+                <th scope="col" className="px-3 py-1 font-extrabold">
                   Mac Address
                 </th>
-                <th scope="col" className="px-3 py-1 font-medium">
+                <th scope="col" className="px-3 py-1 font-extrabold">
                   Computer Type
                 </th>
-                <th scope="col" className="px-3 py-1 font-medium">
+                <th scope="col" className="px-3 py-1 font-extrabold">
                   Specs
                 </th>
-                <th scope="col" className="px-3 py-1 font-medium">
+                <th scope="col" className="px-3 py-1 font-extrabold">
                   Supplier
                 </th>
-                <th scope="col" className="px-3 py-1 font-medium">
+                <th scope="col" className="px-3 py-1 font-extrabold">
                   Date Purchased
                 </th>
                 <th scope="col" className="py-3 pl-6 pr-3">
@@ -214,18 +214,18 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white">
+            <tbody className="bg-white ">
               {inventories?.map((inventory) => (
                 <tr key={inventory.id}
-                  className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
+                  className="w-full shadow-md shadow-green-700 rounded border-green-500 text-sm  [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                 >
-                  <td className="py-3 pl-6 pr-3 whitespace-nowrap">
+                  <td className=" pl-6 pr-3 whitespace-nowrap">
                     <div className="flex items-center gap-3">
                       <p>{inventory.pc_name}</p>
                       
                     </div>
                   </td>
-                  <td className="px-3 py-3 whitespace-nowrap">
+                  <td className="px-3  whitespace-nowrap">
                     {inventory.mac_address}
                   </td>
                   <td className="px-3 py-3 whitespace-nowrap">

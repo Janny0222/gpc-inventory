@@ -181,5 +181,10 @@ const data = {
     },
   ],
 };
-  return <Line options={options} data={data} height={100} />;
+  return ( 
+    <div className='h-[100%] w-[100%]'>
+        <Line options={options} data={data}  />
+    </div>
+  
+)
 }

@@ -12,6 +12,7 @@ import { InventoryList } from "@/pages/lib/definition";
 import Search from "@/pages/ui/search";
 import Upload from "@/pages/components/Upload";
 import AreaChartView from "@/pages/components/AreaChart";
+import Card, { CardBody, CardHeader } from "@/pages/components/CardLayout";
 
 
 
@@ -74,12 +75,12 @@ export default function SampleRender({searchParams,}:{searchParams?: {search?: s
      return (
         
         <Layout>
-            <div className="w-full">
+            <div className="w-full border  rounded my-2">
                 <div className="flex items-center justify-between w-full">
                     <h1 className={`${lusitana.className} text-2xl`}> {name} Inventory</h1>
                     
                 </div>
-                <div className="flex items-center justify-between gap-2 mt-4 md:mt-8">
+                <div className="flex items-center justify-between gap-2 m-4 md:mt-8">
                     {table !== "" && <><Search placeholder="Search..." /> <CreateInventory onClick={openModal}/></> }
                 </div>
                     {name !== '' && (inventories?.length === 0 || inventories === undefined ) && <Upload tablename={table} onDataUploaded={dataUploaderHandler} />}
@@ -98,7 +99,17 @@ export default function SampleRender({searchParams,}:{searchParams?: {search?: s
                         </Modal>
                     )}
             </div>
-            { sample === '' && <div className="flex md:flex-1 lg:flex-1 sm:flex-1"><AreaChartView tableName={table} mobileTable={mobileTable} /></div>}
+            { sample === '' && 
+            <div className="grid grid-cols-subgrid"> 
+                <Card>
+                    <Card.Header>{name} Inventory</Card.Header>
+                    <Card.Body>
+                        <div className="lg:h-[500px] sm:h-[200px]">
+                            <AreaChartView tableName={table} mobileTable={mobileTable} />
+                        </div>
+                    </Card.Body>
+                </Card>
+            </div>}
         </Layout>
         
      )

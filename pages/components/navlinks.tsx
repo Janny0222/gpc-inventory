@@ -31,7 +31,7 @@ import ThemeToggle from '../ui/theme-toggle';
             <Link
               key={link.name}
               href={link.href}
-              className="focus:ring-2 focus:ring-black custom-font flex h-[48px] grow items-center justify-center gap-2 rounded-md  text-sm font-medium sidenav hover:text-black md:flex-none md:justify-start md:p-2 md:px-3"
+              className="focus:ring-2 border-green-400/90 focus:ring-black custom-font flex h-[48px] grow items-center justify-center gap-2 rounded-md  text-sm font-medium sidenav hover:text-black md:flex-none md:justify-start md:p-2 md:px-3"
      
             >
               <LinkIcon className="w-6" />

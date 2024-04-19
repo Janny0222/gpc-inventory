@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import { anek_latin } from '@/styles/font';
 import { lato } from '@/styles/font';
-import { rubik  } from '@/styles/font';
 
 export default function GpcLogo() {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -22,9 +21,9 @@ export default function GpcLogo() {
       <div className="p-1 ml-auto text-gray-300 sm:flex-grow custom-font">
         {/* <GlobeAltIcon className="h-12 w-12 rotate-[15deg]" /> */}
         {isSmallScreen ? (
-          <p className={`${lato.className} text-[64px] xs:text-5 text-white`}>Greenstone</p>
+          <p className={`${lato.className} sm:hidden text-[64px] xs:text-5 text-white `}>Greenstone</p>
         ) : (
-          <div className="relative flex items-center p-1">
+          <div className=" flex items-center p-1">
             <span className={`${lato.className} custom-font text-[9.2rem] text-white `}>G</span>
             <span className={`${lato.className} custom-font flex  justify-end pt-10 items-end text-[25px] text-white ` }>reenstone</span>
           </div>

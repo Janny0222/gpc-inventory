@@ -88,13 +88,12 @@ const options = {
           propagate: true,
       },
   },
-  
 };
 
 
     return (
     <>
-             <Pie options={options} data = {data} height={300} width={300} className='' />  
+             <Doughnut options={options} data = {data} height={300} width={300} className='' />  
     </>
     )
 }

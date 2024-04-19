@@ -33,12 +33,10 @@ const fetchData = async () => {
         fetch(`api/gpc_inventory/computer_type/laptop/oldunit`),
         fetch(`api/gpc_inventory/computer_type/mac/oldunit`),
         fetch(`api/gpc_mobile_inventory/mobile-oldunit`),
-
         fetch(`api/lsi_inventory/computer_type/desktop/oldunit`),
         fetch(`api/lsi_inventory/computer_type/laptop/oldunit`),
         fetch(`api/lsi_inventory/computer_type/mac/oldunit`),
         fetch(`api/lsi_mobile_inventory/mobile-oldunit`),
-
         fetch(`api/gkc_inventory/computer_type/desktop/oldunit`),
         fetch(`api/gkc_inventory/computer_type/laptop/oldunit`),
         fetch(`api/gkc_inventory/computer_type/mac/oldunit`),
@@ -94,7 +92,10 @@ const fetchData = async () => {
       
     }
 }
-fetchData()
+useEffect(() => {
+    fetchData()
+})
+
 
 
 useEffect(() => {

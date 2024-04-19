@@ -26,12 +26,7 @@ const BarcodeMobileModal: React.FC<ModalProps> = ({id, tablename, onClose, compa
       link.click()
     }
   }
-  useEffect(() => {
-    if(modalData) {
-      saveBarcodeModalAsImage();
-      onClose();
-    }
-  }, [modalData, onClose])
+ 
   console.log(modalData)
     const [formData, setFormData] = useState({
         assigned_to: '',
@@ -77,15 +72,15 @@ return (
           </div>
         <div className="flex flex-row p-4 ">
             <div className='p2'>
-                <QRCodeMobileGenerator assigned_to={formData.assigned_to} imei={formData.imei} model_specs={formData.model_specs}/>
+                <QRCodeMobileGenerator assigned_to={formData.assigned_to} department={formData.department} imei={formData.imei} serial_number={formData.serial_number}/>
             </div>
             <div className='flex flex-col ml-8 text-sm'>
                 <span><strong>Company: </strong> {company}</span>
                 <span><strong>Assigned To: </strong> {formData.assigned_to}</span>
-                <span><strong>IMEI: </strong> {formData.imei?.split("IMEI").map((imei, index) => (
+                <span> {formData.imei?.split("IMEI").map((imei, index) => (
                     index > 0 && (
                         <div key={index}>
-                            IMEI{imei.trim()}
+                            <strong>IMEI</strong>{imei.trim()}
                         </div>
                     )
                 ))}</span>

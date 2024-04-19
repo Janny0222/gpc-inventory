@@ -154,32 +154,32 @@ const closeModal = () => {
        return (  
         <div className="overflow-x-auto sm:p-2">
           <div className="inline-block min-w-full align-middle">
-            <div className="p-2 rounded-lg bg-table md:pt-0">
-              <table className="min-w-full text-gray-900 md:table">
-                <thead className="text-sm font-normal text-left rounded-lg">
+            <div className="p-2 rounded-lg bg-black md:pt-0">
+              <table className="min-w-full md:table">
+                <thead className="text-sm text-left text-white rounded-lg">
                   <tr>
-                    <th scope="col" className="px-4 py-1font-medium sm:pl-6">
+                    <th scope="col" className="px-4 py-1 font-extrabold">
                       Assigned To
                     </th>
-                    <th scope="col" className="px-3 py-1font-medium">
+                    <th scope="col" className="px-3 py-1 font-extrabold">
                       Department
                     </th>
-                    <th scope="col" className="px-3 py-1font-medium">
+                    <th scope="col" className="px-3 py-1 font-extrabold">
                       Brand
                     </th>
-                    <th scope="col" className="px-3 py-1font-medium">
+                    <th scope="col" className="px-3 py-1 font-extrabold">
                       Model / Specs
                     </th>
-                    <th scope="col" className="px-3 py-1font-medium">
+                    <th scope="col" className="px-3 py-1 font-extrabold">
                       IMEI
                     </th>
-                    <th scope="col" className="px-3 py-1font-medium">
+                    <th scope="col" className="px-3 py-1 font-extrabold">
                       Serial Number
                     </th>
-                    <th scope="col" className="px-3 py-1font-medium">
+                    <th scope="col" className="px-3 py-1 font-extrabold">
                       Inclusion
                     </th>
-                    <th scope="col" className="px-3 py-1font-medium">
+                    <th scope="col" className="px-3 py-1 font-extrabold">
                       Date Issued
                     </th>
                     <th scope="col" className="py-3 pl-6 pr-3">
@@ -190,7 +190,7 @@ const closeModal = () => {
                 <tbody className="bg-white">
                   {mobileInventory?.map((inventory) => (
                     <tr key={inventory.id}
-                      className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
+                      className="w-full shadow-md shadow-green-700 rounded border-green-500 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                     >
                       <td className="py-3 pl-6 pr-3 whitespace-nowrap">
                           <p>{inventory.assigned_to}</p>

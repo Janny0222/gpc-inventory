@@ -4,12 +4,13 @@ import html2canvas from 'html2canvas';
 
 interface Props {
     assigned_to: string;
+    department: string;
     imei: string;
-    model_specs: string;
+    serial_number: string;
 }
 
-const QRCodeMobileGenerator: React.FC<Props> = ({ assigned_to, imei, model_specs }) => {
-    const qrCodeValue: string = `Assigned To: ${assigned_to}\n IMEI: ${imei}\n Model / Specs: ${model_specs}`;
+const QRCodeMobileGenerator: React.FC<Props> = ({ assigned_to, department, imei, serial_number }) => {
+    const qrCodeValue: string = `Department: ${department}\n${imei}\nSerial Number: ${serial_number}`;
     const qrCodeRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -27,14 +28,14 @@ const QRCodeMobileGenerator: React.FC<Props> = ({ assigned_to, imei, model_specs
                         console.error('Error generating QR code image:', error);
                     });
             }
-        }, 2000); // Set a delay of 1 second
+        }, 500); 
 
         return () => clearTimeout(timer);
-    }, [assigned_to]); // Runs only once after component mounted
+    }, [assigned_to]); 
 
     return (
-        <div ref={qrCodeRef} className='p-4 bg-white rounded-lg shadow-md'>
-            <QRCode value={qrCodeValue} data-testid="qr-code-svg" />
+        <div ref={qrCodeRef} className='p-1 bg-white rounded-lg shadow-md'>
+            <QRCode value={qrCodeValue} size={99.9} data-testid="qr-code-svg" />
         </div>
     );
 };

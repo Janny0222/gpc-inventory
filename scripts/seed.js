@@ -61,8 +61,10 @@ async function handler(){
             department VARCHAR(255),
             brand VARCHAR(255),
             model_specs VARCHAR(255),
-            imei VARCHAR(255),
             serial_number VARCHAR(255),
+            imei VARCHAR(255),
+            number VARCHAR(255),
+            email_password VARCHAR(255),
             inclusion VARCHAR(255),
             date_issued VARCHAR(255)
         )
@@ -74,8 +76,10 @@ async function handler(){
             department VARCHAR(255),
             brand VARCHAR(255),
             model_specs VARCHAR(255),
-            imei VARCHAR(255),
             serial_number VARCHAR(255),
+            imei VARCHAR(255),
+            number VARCHAR(255),
+            email_password VARCHAR(255),
             inclusion VARCHAR(255),
             date_issued VARCHAR(255)
         )
@@ -87,8 +91,10 @@ async function handler(){
             department VARCHAR(255),
             brand VARCHAR(255),
             model_specs VARCHAR(255),
-            imei VARCHAR(255),
             serial_number VARCHAR(255),
+            imei VARCHAR(255),
+            number VARCHAR(255),
+            email_password VARCHAR(255),
             inclusion VARCHAR(255),
             date_issued VARCHAR(255)
         )
@@ -100,8 +106,10 @@ async function handler(){
             department VARCHAR(255),
             brand VARCHAR(255),
             model_specs VARCHAR(255),
-            imei VARCHAR(255),
             serial_number VARCHAR(255),
+            imei VARCHAR(255),
+            number VARCHAR(255),
+            email_password VARCHAR(255),
             inclusion VARCHAR(255),
             date_issued VARCHAR(255)
         )
