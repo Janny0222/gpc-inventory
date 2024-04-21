@@ -1,18 +1,18 @@
 "use client"
 import React, { useState, useEffect } from "react";
-import { tableName } from "@/pages/lib/company";
+import  {tableName} from "@/lib/company";
 import { lusitana } from "@/styles/font";
-import GPCInventoryTable from "@/pages/ui/tables/gpctable";
-import Dropdown from "@/pages/ui/inventory/dropdown";
+import GPCInventoryTable from "@/components/ui/tables/gpctable";
+import Dropdown from "@/components/ui/inventory/dropdown";
 import Layout from "../layout";
-import { CreateInventory } from "@/pages/ui/buttons";
-import Modal from "@/pages/components/modal";
-import Form from "@/pages/ui/inventory/gpc-create/create-form";
-import { InventoryList } from "@/pages/lib/definition";
-import Search from "@/pages/ui/search";
-import Upload from "@/pages/components/Upload";
-import AreaChartView from "@/pages/components/AreaChart";
-import Card, { CardBody, CardHeader } from "@/pages/components/CardLayout";
+import { CreateInventory } from "@/components/ui/buttons";
+import Modal from "@/components/modal";
+import Form from "@/components/ui/inventory/gpc-create/create-form";
+import { InventoryList } from "@/lib/definition";
+import Search from "@/components/ui/search";
+import Upload from "@/components/Upload";
+import AreaChartView from "@/components/AreaChart";
+import Card, { CardBody, CardHeader } from "@/components/CardLayout";
 
 
 

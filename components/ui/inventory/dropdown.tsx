@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { tableName } from "../../lib/company";
+import  {tableName}  from "../../../lib/company";
 import { lusitana } from "../../../styles/font";
 
 interface DropdownProps {

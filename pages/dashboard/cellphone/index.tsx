@@ -1,16 +1,16 @@
 "use client"
-import Search from "@/pages/ui/search";
+import Search from "@/components/ui/search";
 import Layout from "../layout";
 import { lusitana } from "@/styles/font";
-import { CreateInventory } from "@/pages/ui/buttons";
+import {CreateInventory} from "@/components/ui/buttons";
 import { ChangeEvent, use, useEffect, useState } from "react";
-import Dropdown from "@/pages/ui/inventory/dropdown";
-import GPCMobileInventory from "@/pages/ui/tables/mobiletable";
-import { tableName } from "@/pages/lib/company";
-import Form from "@/pages/ui/inventory/gpc-mobile-create/create-form";
-import Modal from "@/pages/components/modal";
-import { MobileInventoryList } from "@/pages/lib/definition";
-import Upload from "@/pages/components/Upload";
+import Dropdown from "@/components/ui/inventory/dropdown";
+import GPCMobileInventory from "@/components/ui/tables/mobiletable";
+import  {tableName}  from "@/lib/company";
+import Form from "@/components/ui/inventory/gpc-mobile-create/create-form";
+import Modal from "@/components/modal";
+import { MobileInventoryList } from "@/lib/definition";
+import Upload from "@/components/Upload";
 
 export default function Page(){
 const [isModalOpen, setIsModalOpen] = useState(false);

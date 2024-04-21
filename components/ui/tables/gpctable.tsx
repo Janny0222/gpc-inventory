@@ -1,13 +1,13 @@
 
 'use client'
 import { ChangeEvent, useEffect, useState } from "react";
-import { InventoryList } from "@/pages/lib/definition";
-import { QRGeneratorButton, UpdateInventory } from "../buttons";
-import { tableName } from "@/pages/lib/company";
-import EditModal from "@/pages/components/EditInventoryModal";
-import CustomPagination from "@/pages/components/Pagination";
+import { InventoryList } from "@/lib/definition";
+import { QRGeneratorButton, UpdateInventory } from "../../../components/ui/buttons";
+import  {tableName}  from "@/lib/company";
+import EditModal from "@/components/EditInventoryModal";
+import CustomPagination from "@/components/Pagination";
 import html2canvas from "html2canvas";
-import BarcodeModal from "@/pages/components/QRCodeModal";
+import BarcodeModal from "@/components/QRCodeModal";
 
 interface GPCInventoryTableProps {
   gettableName: string;

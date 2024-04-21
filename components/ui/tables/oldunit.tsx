@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from "react";
-import { FetchInventoryList, InventoryList } from "@/pages/lib/definition";
-import { tableName } from "@/pages/lib/company";
+import { FetchInventoryList, InventoryList } from "@/lib/definition";
+import { tableName } from "@/lib/company";
 
 export default function Oldunit (){
 

@@ -1,5 +1,6 @@
 import mysql, { RowDataPacket, ResultSetHeader } from 'mysql2/promise';
 import  {InventoryList}  from './definition';
+import React from 'react';
 import {z} from 'zod';
 
 // Define a custom type for the query result

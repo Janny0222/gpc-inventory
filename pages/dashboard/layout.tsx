@@ -1,8 +1,8 @@
-import {SidebarToggle} from "../components/SidebarComponent";
-import SidebarMotion from "../components/SidebarMotion";
-import Sidebar from "../components/SidebarToggle";
-import SideBar from "../components/sidebar";
-import ThemeToggle from "../ui/theme-toggle";
+import {SidebarToggle} from "@/components/SidebarComponent";
+import SidebarMotion from "@/components/SidebarMotion";
+import Sidebar from "@/components/SidebarToggle";
+import SideBar from "@/components/sidebar";
+import ThemeToggle from "@/components/ui/theme-toggle";
 import { lato } from "@/styles/font";
 
 export default function Layout({ children }: {children: React.ReactNode}){

@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { fetchGPCInventoryList } from "./data";
 
 
-export let tableName = [
+export const tableName = [
         {name: 'gpc_inventory', company: 'Greenstone Packaging Corporation.', table: 'gpc_mobile_inventory', displayName: "GPC"},
         {name: 'gkc_inventory', company: 'Greenkraft Corporation.', table: 'gkc_mobile_inventory', displayName: "GKC"},
         {name: 'lsi_inventory', company: 'Lamitek Systems Incorporated.', table: 'lsi_mobile_inventory', displayName: "LSI"},

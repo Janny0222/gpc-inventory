@@ -1,5 +1,5 @@
 'use client'
-import { CreateList } from '@/pages/lib/definition';
+import { CreateList } from '@/lib/definition';
 import { useFormState } from 'react-dom';
 import { useState, useEffect, FormEvent } from 'react';
 import { useRouter } from 'next/router';

@@ -1,5 +1,5 @@
 import { query } from '@/lib/db';
-import { tableName } from '../../../lib/company';
+import { tableName } from '../../../../lib/company';
 
 export default async function handler(req, res) {
     const computerType = req.query.computerType

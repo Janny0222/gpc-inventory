@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Layout from './layout';
 import { lusitana } from '@/styles/font';
 import { lato } from '@/styles/font';
-import TableSkeleton, { CardSkeleton } from '../ui/skeleton';
-import Card from '../ui/cards';
+import TableSkeleton, { CardSkeleton } from '@/components/ui/skeleton';
+import Card from '@/components/ui/cards';
 import { Suspense } from 'react';
-import Oldunit from '../ui/tables/oldunit';
-import OldMobile from '../ui/tables/oldunit-mobile';
-import DoughnutChart from '../components/DougnutChart';
-import ToggleButton from '../components/ToggleButton';
-import BarChart from '../components/BarChart';
+import Oldunit from '@/components/ui/tables/oldunit';
+import OldMobile from '@/components/ui/tables/oldunit-mobile';
+import DoughnutChart from '@/components/DougnutChart';
+import ToggleButton from '@/components/ToggleButton';
+import BarChart from '@/components/BarChart';
 
 
 export default function Page() {

@@ -11,7 +11,7 @@ import {
   Users,
 } from 'lucide-react';
 import { SidebarDesktop } from './sidebar-desktop';
-import { SidebarItems } from '../types';
+import { SidebarItems } from '@/types';
 import { SidebarButton } from './sidebar-button';
 import { useMediaQuery } from 'usehooks-ts';
 import { SidebarMobile } from './sidebar-mobile';

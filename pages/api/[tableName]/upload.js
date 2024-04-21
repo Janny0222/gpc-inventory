@@ -1,7 +1,7 @@
 import multer from 'multer';
 import { query } from '@/lib/db';
 import xlsx from 'xlsx'
-import { tableName } from '../../lib/company'
+import { tableName } from '../../../lib/company'
 const upload = multer();
 
 export const config = {

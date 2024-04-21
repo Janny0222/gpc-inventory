@@ -116,8 +116,10 @@ const fetchData = async () => {
         
       }
 }
+useEffect(() => {
+  fetchData();
+})
 
-fetchData();
 
 
 const options = {

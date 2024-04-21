@@ -1,9 +1,9 @@
 import Chart from 'chart.js';
 import React from 'react';
 import Link from "next/link";
-import { CardSkeleton } from './ui/skeleton';
-import  CardLineChart  from './components/CardLineChart'
-import QRCodeGenerator from './components/QRCodeGenerator';
+import { CardSkeleton } from '@/components/ui/skeleton';
+
+import QRCodeGenerator from '@/components/QRCodeGenerator';
 
 export default function Home() {
   
@@ -14,7 +14,7 @@ export default function Home() {
       <span>Go to Dashboard</span>
       </Link>
     {/* <QRCodeGenerator /> */}
-      <CardLineChart />
+      {/* <CardLineChart /> */}
     
     </main>
     </>

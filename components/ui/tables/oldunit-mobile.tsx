@@ -1,8 +1,8 @@
 'use-client'
 
 import { useEffect, useState } from "react";
-import { fetchMobileInventoryList } from "@/pages/lib/definition";
-import CustomPagination from "@/pages/components/Pagination";
+import { fetchMobileInventoryList } from "@/lib/definition";
+import CustomPagination from "@/components/Pagination";
 
 export default function OldMobile() {
     const [inventories, setInventories] = useState<fetchMobileInventoryList[]>([]);

@@ -1,12 +1,12 @@
 'use client'
-import EditMobileModal from "@/pages/components/EditMobileModal";
-import { MobileInventoryList } from "@/pages/lib/definition"
+import EditMobileModal from "@/components/EditMobileModal";
+import { MobileInventoryList } from "@/lib/definition"
 import { useEffect, useState } from "react"
-import { QRGeneratorButton, UpdateMobileInventory } from "../buttons";
-import CustomPagination from "@/pages/components/Pagination";
-import BarcodeModal from "@/pages/components/QRCodeModal";
-import BarcodeMobileModal from "@/pages/components/QRCodeMobileModal";
-import { tableName } from "@/pages/lib/company";
+import { QRGeneratorButton, UpdateMobileInventory } from "../../../components/ui/buttons";
+import CustomPagination from "@/components/Pagination";
+import BarcodeModal from "@/components/QRCodeModal";
+import BarcodeMobileModal from "@/components/QRCodeMobileModal";
+import {tableName} from "@/lib/company";
 
 interface MobileInventoryProps {
     getTableName: string,
