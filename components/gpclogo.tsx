@@ -16,6 +16,7 @@ export default function GpcLogo() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  
   return (
     <>
       <div className="p-1 ml-auto text-gray-300 sm:flex-grow custom-font">
