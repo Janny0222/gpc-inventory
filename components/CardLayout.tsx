@@ -7,7 +7,7 @@ interface CardProps {
 
 const Card = ({ children }: CardProps) => {
     return (
-        <div className="bg-white border lg:w-[800px]  border-gray-300 rounded-lg shadow-md p-4 mb-4">
+        <div className="bg-white border lg:w-[800px] shadow-xl   rounded-lg p-4 mb-4">
             {children}
         </div>
     )

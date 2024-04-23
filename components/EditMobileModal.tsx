@@ -17,6 +17,8 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
     brand: '',
     model_specs: '',
     imei: '',
+    number: '',
+    email_password: '',
     serial_number: '',
     inclusion: '',
     date_issued: ''
@@ -65,6 +67,8 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
           brand: formData.brand,
           model_specs: formData.model_specs,
           imei: formData.imei,
+          number: formData.number,
+          email_password: formData.email_password,
           serial_number: formData.serial_number,
           inclusion: formData.inclusion,
           date_issued: formData.date_issued,
@@ -83,6 +87,8 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
           brand: '',
           model_specs: '',
           imei: '',
+          number: '',
+          email_password: '',
           serial_number: '',
           inclusion: '',
           date_issued: ''
@@ -95,12 +101,14 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
     }
   }
 
+
+  
   
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none">
+    <div className="fixed top-5 inset-0 w-auto z-50 flex items-center justify-center mx-2 outline-none focus:outline-none">
       <div className="fixed inset-0 bg-black opacity-50"></div>
       <div className="relative w-full max-w-lg mx-auto my-6">
-        <div className="relative flex flex-col w-full bg-white rounded-lg shadow-lg outline-none focus:outline-none">
+        <div className="relative grid grid-flow-row md:w-[650px] w-auto bg-white rounded-lg shadow-lg outline-none focus:outline-none">
           <div className="flex items-start justify-between p-5 border-b border-solid rounded-t border-blueGray-200">
             
             <h3 className="text-3xl font-semibold">Edit</h3>
@@ -112,11 +120,11 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
             </button>
             
           </div>
-          <div className="flex-auto p-6">
+          <div className="grid p-6">
           <form onSubmit={updateInventory}>
-          
-            <div className="p-4 rounded-md bg-gray-50 md:p-6">
-              <div className="mb-4">
+            <div className="p-4 rounded-md grid grid-cols-6 border shadow-lg mx-2 gap-4 bg-gray-100 md:p-6">
+              {/* Assigned To */}
+              <div className="mb-4 col-span-4">
                 <label htmlFor="assigned_to" className="block mb-2 text-sm font-medium">
                   Assiged To
                 </label>
@@ -126,12 +134,12 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
                   name="assigned_to"
                   value={formData.assigned_to}
                   onChange={handleChange}
-                  className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500"
+                  className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
                   placeholder="Enter Assigned To"
                 />
               </div>
-      
-              <div className="mb-4">
+              {/* Department */}
+              <div className="mb-4 col-span-2">
                 <label htmlFor="department" className="block mb-2 text-sm font-medium">
                   Department
                 </label>
@@ -141,12 +149,27 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
                   name="department"
                   value={formData.department}
                   onChange={handleChange}
-                  className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500"
+                  className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
                   placeholder="Enter Department"
                 />
               </div>
-
-              <div className="mb-4">
+              {/* Number */}
+              <div className="mb-4 col-span-2">
+                <label htmlFor="number" className="block mb-2 text-sm font-medium">
+                  Number
+                </label>
+                <input
+                  type="text"
+                  id="number"
+                  name="number"
+                  value={formData.number}
+                  onChange={handleChange}
+                  className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
+                  placeholder="Enter Contact Number"
+                />
+              </div>
+              {/* Brand */}
+              <div className="mb-4 col-span-2">
                 <label htmlFor="brand" className="block mb-2 text-sm font-medium">
                   Brand
                 </label>
@@ -156,39 +179,12 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
                   name="brand"
                   value={formData.brand}
                   onChange={handleChange}
-                  className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500"
+                  className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
                   placeholder="Enter Brand"
                 />
               </div>
-
-              <div className="mb-4">
-                <label htmlFor="model_specs" className="block mb-2 text-sm font-medium">
-                  Model / Specs
-                </label>
-                <textarea
-                  id="model_specs"
-                  name="model_specs"
-                  value={formData.model_specs}
-                  onChange={handleChange}
-                  className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500"
-                  placeholder="Enter Model / Specs"
-                />
-              </div>
-              <div className="mb-4">
-                <label htmlFor="imei" className="block mb-2 text-sm font-medium">
-                  IMEI
-                </label>
-                <input
-                  type="text"
-                  id="imei"
-                  name="imei"
-                  value={formData.imei}
-                  onChange={handleChange}
-                  className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500"
-                  placeholder="Enter IMEI"
-                />
-              </div>
-              <div className="mb-4">
+              {/* Serial Number */}
+              <div className="mb-4 col-span-2">
                 <label htmlFor="serial_number" className="block mb-2 text-sm font-medium">
                   Serial Number
                 </label>
@@ -198,43 +194,85 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
                   name="serial_number"
                   value={formData.serial_number}
                   onChange={handleChange}
-                  className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500"
+                  className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
                   placeholder="Enter Serial Number"
                 />
               </div>
-              <div className="mb-4">
+              {/* Email and Password */}
+              <div className="mb-4 col-span-3">
+                <label htmlFor="email_password" className="block mb-2 text-sm font-medium">
+                  Email and Password
+                </label>
+                <textarea
+                  id="email_password"
+                  name="email_password"
+                  value={formData.email_password}
+                  onChange={handleChange}
+                  className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
+                  placeholder="Enter Email and Password"
+                />
+              </div>
+              {/* IMEI */}
+              <div className="mb-4 col-span-3">
+                <label htmlFor="imei" className="block mb-2 text-sm font-medium">
+                  IMEI
+                </label>
+                <textarea
+                  id="imei"
+                  name="imei"
+                  value={formData.imei}
+                  onChange={handleChange}
+                  className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
+                  placeholder="Enter IMEI"
+                />
+              </div>
+              
+              {/* Inclusion */}
+              <div className="mb-4 col-span-3">
                 <label htmlFor="inclusion" className="block mb-2 text-sm font-medium">
                   Inclusion
                 </label>
-                <input
-                  type="text"
+                <textarea
                   id="inclusion"
                   name="inclusion"
                   value={formData.inclusion}
                   onChange={handleChange}
-                  className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500"
+                  className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
                   placeholder="Enter Inclusion"
                 />
               </div>
-              <div className="mb-4">
-              <label htmlFor="date_issued" className="block mb-2 text-sm font-medium">
-                Date Issued
-              </label>
-              <input
-                type="date"
-                id="date_issued"
-                name="date_issued"
-                value={formData.date_issued}
-                onChange={handleChange}
-                className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500"
-              />
+              <div className="mb-4 col-span-3">
+                <label htmlFor="model_specs" className="block mb-2 text-sm font-medium">
+                  Model / Specs
+                </label>
+                <textarea
+                  id="model_specs"
+                  name="model_specs"
+                  value={formData.model_specs}
+                  onChange={handleChange}
+                  className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
+                  placeholder="Enter Model / Specs"
+                />
+              </div>
+              <div className="mb-4 col-span-6">
+                <label htmlFor="date_issued" className="block mb-2 text-sm font-medium">
+                  Date Issued
+                </label>
+                <input
+                  type="date"
+                  id="date_issued"
+                  name="date_issued"
+                  value={formData.date_issued}
+                  onChange={handleChange}
+                  className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
+                />
             </div>
             </div>
             <div className="flex justify-end gap-4 mt-6">
               <button
                 type="submit"
                 
-                className="flex items-center justify-center h-10 px-4 text-sm font-medium text-white transition-colors bg-indigo-600 rounded-lg hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="flex items-center justify-center h-10 px-4 text-sm font-medium text-white transition-colors border-4 hover:border-black bg-black rounded-lg hover:text-green-800 hover:bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 "
                 >
                 Save
               </button>
@@ -246,6 +284,7 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
       </div>
     </div>
   );
+
 };
 
 export default EditMobileModal;

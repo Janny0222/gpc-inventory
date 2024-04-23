@@ -19,8 +19,8 @@ import { SidebarMobile } from './sidebar-mobile';
 const sidebarItems: SidebarItems = {
   links: [
     { label: 'Home', href: '/dashboard', icon: Home },
-    { label: 'Inventory', href: '/dashboard/inventory', icon: Laptop },
-    { label: 'Cellphone', href: '/dashboard/cellphone', icon: Smartphone },
+    { label: 'Inventory', href: '/inventory', icon: Laptop },
+    { label: 'Cellphone', href: '/cellphone', icon: Smartphone },
     // {
     //   href: '/item/lists',
     //   icon: List,

@@ -24,7 +24,7 @@ export function SidebarDesktop(props: SidebarDesktopProps) {
                 <SidebarButton
                   variant={pathname === link.href ? 'secondary' : 'ghost'}
                   icon={link.icon}
-                  className='focus:ring-2 border-hidden hover:text-green-400 focus:ring-white px-5 w-64 border border-green-500 my-4 py-8  shadow-lg shadow-green-400/45'
+                  className='focus:ring-2 border-hidden hover:text-green-400 focus:ring-white px-5 w-64 border border-green-500 my-4 py-8  shadow-xl hover:shadow-green-500/45 shadow-gray-800'
                 >
                   {link.label}
                 </SidebarButton>

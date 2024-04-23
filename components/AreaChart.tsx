@@ -111,6 +111,7 @@ const fetchData = async () => {
         setGsrcLaptopToCount(gsrclaptopData.count)
         setGsrcMobileToCount(gsrcMobileData.count)
         
+        console.log("counter for mac", gpcmacData)
       } catch (error) {
         console.error('Error fetching data', error);
         
@@ -184,7 +185,7 @@ const data = {
   ],
 };
   return ( 
-    <div className='h-[100%] w-[100%]'>
+    <div className='h-[100%] w-[100%] shadow-lg '>
         <Line options={options} data={data}  />
     </div>
   

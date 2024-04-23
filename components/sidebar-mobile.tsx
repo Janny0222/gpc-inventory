@@ -27,11 +27,11 @@ export function SidebarMobile(props: SidebarMobileProps) {
   return (
     <Sheet>
       <SheetTrigger asChild className='bg-black'>
-        <Button size='icon' variant='ghost' className='fixed top-2 right-2 text-white bg-black'>
+        <Button size='icon' variant='ghost' className='fixed top-6 right-6 z-50 border-2 border-white text-white bg-black'>
           <Menu size={20} />
         </Button>
       </SheetTrigger>
-      <SheetContent side='left' className='text-white bg-black px-3 py-4 ' hideClose>
+      <SheetContent side='left' className='text-white bg-black px-3 py-4' hideClose>
         <SheetHeader className='flex flex-row justify-between items-center space-y-0'>
           <span className='text-3xl   font-semibold text-foreground mx-1'>
             Greenstone

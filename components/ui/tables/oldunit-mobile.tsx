@@ -98,6 +98,7 @@ export default function OldMobile() {
         return `${years} years ${remainingDays} days`
     }
     return (
+        <>
         <div className="overflow-x-auto">
             <div className="inline-block min-w-full align-middle">
                 <div className="p-2 rounded-lg bg-gray-50 md:pt-0">
@@ -161,8 +162,11 @@ export default function OldMobile() {
                 </tbody>
                     </table>
                 </div>
-                <CustomPagination pageCount={totalPages} currentPage={currentPage} onPageChange={handlePageClick}/>
+                
             </div>
+            
         </div>
+        <CustomPagination pageCount={totalPages} currentPage={currentPage} onPageChange={handlePageClick}/>
+        </>
         )
 }

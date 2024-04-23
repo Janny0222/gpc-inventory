@@ -29,13 +29,15 @@ export default async function handler(req, res) {
       const brand = req.body.brand;
       const model_specs = req.body.model_specs;
       const imei = req.body.imei;
+      const number = req.body.number;
+      const email_password = req.body.email_password;
       const serial_number = req.body.serial_number
       const inclusion = req.body.inclusion
       const date_issued = req.body.date_issued
       if (!assigned_to || !brand) {
         return res.status(400).json({ error: 'Missing required fields' });
       }
-      const addInventory = await query(`INSERT INTO ${tableName} (assigned_to, department, brand, model_specs, imei, serial_number, inclusion,  date_issued) VALUES (?, ?, ?, ?, ?, ?)`, [assigned_to, department, brand, model_specs, imei, serial_number, inclusion, date_issued],);
+      const addInventory = await query(`INSERT INTO ${tableName} (assigned_to, department, brand, model_specs, serial_number, imei, number, email_password, inclusion, date_issued) VALUES (?, ?, ?, ?, ?, ?)`, [assigned_to, department, brand, model_specs, serial_number, imei, number, email_password, inclusion, date_issued],);
       let message;
       if (addInventory.insertId) {
         message = 'success';
@@ -50,6 +52,8 @@ export default async function handler(req, res) {
         brand: brand,
         model_specs: model_specs,
         imei: imei,
+        number: number,
+        email_password: email_password,
         serial_number: serial_number,
         inclusion: inclusion,
         date_issued: date_issued,
@@ -64,14 +68,14 @@ export default async function handler(req, res) {
 
     try {
       const {id} = req.query;
-      const {assigned_to, department, brand, model_specs, imei, serial_number, inclusion, date_issued} = req.body
+      const {assigned_to, department, brand, model_specs, serial_number, imei, number, email_password, inclusion, date_issued} = req.body
 
       if(!id || !assigned_to || !brand){
         return res.status(400).json({ error: 'Missing required fields' })
       }
       const updateResult = await query
-      (`UPDATE ${tableName} SET assigned_to=?, department=?, brand=?, model_specs=?, imei=?, serial_number=?, inclusion=?, date_issued=? WHERE id=?`,
-      [assigned_to, department, brand, model_specs, imei, serial_number, inclusion, date_issued, id]);
+      (`UPDATE ${tableName} SET assigned_to=?, department=?, brand=?, model_specs=?, serial_number=?, imei=?, number=?, email_password=?,  inclusion=?, date_issued=? WHERE id=?`,
+      [assigned_to, department, brand, model_specs, serial_number, imei, number, email_password, inclusion, date_issued, id]);
       
       if(updateResult.affectedRows > 0){
         res.status(200).json({response: { message: 'success', updatedItem: id }})

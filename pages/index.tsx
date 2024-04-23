@@ -13,8 +13,6 @@ export default function Home() {
     <Link href="/dashboard">
       <span>Go to Dashboard</span>
       </Link>
-    {/* <QRCodeGenerator /> */}
-      {/* <CardLineChart /> */}
     
     </main>
     </>

@@ -1,4 +1,4 @@
-import { ArrowLongLeftIcon, ArrowLongRightIcon } from "@heroicons/react/24/outline";
+import { ArrowLongLeftIcon, ArrowLongRightIcon, ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import React from "react";
 
 
@@ -35,7 +35,9 @@ const CustomPagination: React.FC<CustomPaginationProps> = ({
             disabled={currentPage === 1}
             className="mr-2"
           >
-           <ArrowLongLeftIcon className="w-5 dashbord-summary"/>
+            {/* {currentPage === 1 && <ChevronLeftIcon className="w-5 h-5 border-gray-500 border rounded"/>} */}
+            {currentPage > 1 && <ChevronDoubleLeftIcon className="w-5 h-5 border-gray-500 border rounded"/>}
+           {/* <ArrowLongLeftIcon className="w-5 dashbord-summary"/> */}
           </button>
           {/* Total pages */}
           <p className="mx-2">{`Page ${currentPage} of ${pageCount}`}</p>
@@ -45,7 +47,9 @@ const CustomPagination: React.FC<CustomPaginationProps> = ({
             disabled={currentPage === pageCount}
             className="ml-2"
           >
-            <ArrowLongRightIcon className="w-5 dashbord-summary"/>
+            { currentPage === currentPage && currentPage != pageCount && <ChevronDoubleRightIcon className="w-5 h-5 border-gray-500 border rounded"/>}
+            {/* <ArrowLongRightIcon className="w-5 dashbord-summary"/> */}
+            {/* {currentPage === pageCount && currentPage != 1 && <ChevronRightIcon className="w-5 h-5 border-gray-500 border rounded"/> } */}
           </button>
         </div>
       );

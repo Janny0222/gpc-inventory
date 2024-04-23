@@ -7,6 +7,7 @@ import CustomPagination from "@/components/Pagination";
 import BarcodeModal from "@/components/QRCodeModal";
 import BarcodeMobileModal from "@/components/QRCodeMobileModal";
 import {tableName} from "@/lib/company";
+import MobileEditModal from "@/components/ModalEditInventory";
 
 interface MobileInventoryProps {
     getTableName: string,
@@ -190,7 +191,7 @@ const closeModal = () => {
                 <tbody className="bg-white">
                   {mobileInventory?.map((inventory) => (
                     <tr key={inventory.id}
-                      className="w-full shadow-md shadow-green-700 rounded border-green-500 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
+                      className="w-full shadow-md shadow-gray-700 rounded border-green-500 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                     >
                       <td className="py-3 pl-6 pr-3 whitespace-nowrap">
                           <p>{inventory.assigned_to}</p>
@@ -233,6 +234,7 @@ const closeModal = () => {
                       <td className="py-3 pl-6 pr-3 whitespace-nowrap">
                         <div className="flex items-center gap-3">
                           <UpdateMobileInventory id={inventory.id} onClick={openModal}/>
+                          {/* <MobileEditModal /> */}
                           <QRGeneratorButton 
                         id={inventory.id} 
                         onClick={qrModal}
@@ -248,8 +250,7 @@ const closeModal = () => {
                       <BarcodeMobileModal modalData={modalData} company={company} tablename={getTableName} id={selectedId} onClose={closeQrModal} />
                     )}
                     {isModalOpen && (
-                            <EditMobileModal onClose={closeModal} onSubmit={handleFormSubmit} id={selectedId} tablename={getTableName}/>
-                              
+                      <EditMobileModal onClose={closeModal} onSubmit={handleFormSubmit} id={selectedId} tablename={getTableName}/>  
                     )}
             </div>
             {mobileInventory?.length !== 0 && mobileInventory !== undefined && !queryValue &&

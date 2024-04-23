@@ -63,8 +63,8 @@ export default function Page() {
   
   return (
     <Layout>
-      
-        <div className="p-3 mb-4 rounded-t-lg bg-black ">
+      <div className=' p-5 border rounded shadow-2xl mx-5 relative my-5'>
+        <div className="p-3 rounded-t-lg bg-black ">
           <h1 className={`${lato.className} text-xl md:text-xl custom-font   sm:text-left`}>Summary</h1>
         </div>
         <div className="px-4 overflow-y-hidden rounded-lg shadow">
@@ -151,6 +151,7 @@ export default function Page() {
             </div>
             </>
             ) : !triggerValue }
+      </div>
     </Layout>
   );
 }

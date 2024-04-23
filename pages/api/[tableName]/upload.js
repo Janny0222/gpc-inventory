@@ -47,12 +47,13 @@ export default async function handler(req, res) {
   let getSheet;
   if(sheetNameTable === 'gkc_mobile_inventory' || sheetNameTable === 'gkc_inventory') {
     getSheet = 'Greenkraft'
-  } else if (sheetNameTable === 'gpc_mobile_inventory' || sheetNameTable === 'gpc_inventory') {
+  } else if (sheetNameTable === 'gpc_mobile_inventory' || sheetNameTable === 'gpc_inventory' || sheetNameTable === 'gpc_sq_inventory') {
     getSheet = 'Greenstone'
   } else if (sheetNameTable === 'lsi_mobile_inventory' || sheetNameTable === 'lsi_inventory') {
     getSheet = 'Lamitek'
+  } else if (sheetNameTable === 'gsrc_mobile_inventory' || sheetNameTable === 'gsrc_inventory') {
+    getSheet = 'GreenSiam'
   } else {
-    
     getSheet = '';
   }
   if (req.method === 'POST') {

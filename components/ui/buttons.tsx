@@ -1,5 +1,5 @@
 import { PencilIcon, PlusIcon, TrashIcon, QrCodeIcon } from '@heroicons/react/24/outline';
-
+import { useState } from 'react';
 import Link from 'next/link';
 
 interface CreateInventoryProps {
@@ -8,17 +8,29 @@ interface CreateInventoryProps {
 interface PropsForID {
   id: number;
   onClick: (id: number) => void;
+  
 }
 
-export function CreateInventory({onClick}: CreateInventoryProps) {
+export function CreateInventory({ onClick}: CreateInventoryProps) {
+  const [isHovered, setIsHovered] = useState(false);
   return (
+    <>
     <button
       onClick={onClick}
-      className="flex items-center h-10 px-4 text-sm font-medium text-white transition-colors rounded-lg create-button focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+      className="flex items-center h-10 px-4 text-sm font-mediu relative text-white transition-colors rounded-lg bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <span className="hidden md:block">Create New</span>{' '}
       <PlusIcon className="h-5 md:ml-4" />
     </button>
+    {isHovered && (
+      <div className='absolute z-50 top-12 right-12 bg-transparent p-2 rounded'>
+      <span>Create</span>
+    </div>
+    )}
+    
+    </>
   );
 }
 
@@ -35,9 +47,7 @@ export function UpdateInventory({ id, onClick }: PropsForID) {
 
 export function QRGeneratorButton ({ id, onClick, onSave }:  {id: number, onClick: (id: number, onSave: () => void) => void, onSave: () => void}) {
   const handleSave = () => {
-    console.log('QRGeneratorButton id:', id);
     onSave()
-    
   }
   
   return (

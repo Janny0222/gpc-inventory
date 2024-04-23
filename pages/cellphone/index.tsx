@@ -1,6 +1,6 @@
 "use client"
 import Search from "@/components/ui/search";
-import Layout from "../layout";
+import Layout from "../dashboard/layout";
 import { lusitana } from "@/styles/font";
 import {CreateInventory} from "@/components/ui/buttons";
 import { ChangeEvent, use, useEffect, useState } from "react";
@@ -60,13 +60,13 @@ const [dataUploaderHandler, setDataUploaderHandler] = useState<() => void>(() =>
     
     return (
         <Layout>
-            <div className="w-full">
+            <div className=" p-5 border border-collapse rounded shadow-2xl mx-5 relative mt-5">
                 <div className="flex items-center justify-between w-full">
                     <h1 className={`${lusitana.className} text-2xl`}> {name} Mobile</h1>
                 </div>
                 <div className="flex items-center justify-between gap-2 mt-4 md:mt-8">
                     
-                   {name !== '' && <> <Search placeholder="Search...." /><CreateInventory onClick={openModal} /> </>}
+                   {name !== '' && <> <Search placeholder="Search...." /><CreateInventory onClick={openModal}/> </>}
                 </div>
                     {name !== '' && (mobileInventory?.length === 0 || mobileInventory === undefined) && <Upload tablename={getTable} onDataUploaded={dataUploaderHandler}/>}
                 <div className="flex flex-row items-center mt-1">

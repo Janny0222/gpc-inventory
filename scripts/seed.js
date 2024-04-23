@@ -14,44 +14,90 @@ async function handler(){
         CREATE TABLE IF NOT EXISTS gpc_inventory (
             id INT AUTO_INCREMENT PRIMARY KEY,
             pc_name VARCHAR(255),
+            name VARCHAR(255),
+            ip_address VARCHAR(255),
             mac_address VARCHAR(255),
             computer_type VARCHAR(255),
+            monitor VARCHAR(255),
             specs VARCHAR(255),
+            department VARCHAR(255),
+            anydesk VARCHAR(255),
             supplier VARCHAR(255),
-            date_purchased VARCHAR(255)
+            comment VARCHAR(255),
+            date_purchased VARCHAR(255),
+            date_created TIMESTAMP
+        )
+        `,
+        `
+        CREATE TABLE IF NOT EXISTS gpc_sq_inventory (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            pc_name VARCHAR(255),
+            name VARCHAR(255),
+            ip_address VARCHAR(255),
+            mac_address VARCHAR(255),
+            computer_type VARCHAR(255),
+            monitor VARCHAR(255),
+            specs VARCHAR(255),
+            department VARCHAR(255),
+            anydesk VARCHAR(255),
+            supplier VARCHAR(255),
+            comment VARCHAR(255),
+            date_purchased VARCHAR(255),
+            date_created TIMESTAMP
         )
         `,
         `
         CREATE TABLE IF NOT EXISTS lsi_inventory (
             id INT AUTO_INCREMENT PRIMARY KEY,
             pc_name VARCHAR(255),
+            name VARCHAR(255),
+            ip_address VARCHAR(255),
             mac_address VARCHAR(255),
             computer_type VARCHAR(255),
+            monitor VARCHAR(255),
             specs VARCHAR(255),
+            department VARCHAR(255),
+            anydesk VARCHAR(255),
             supplier VARCHAR(255),
-            date_purchased VARCHAR(255)
+            comment VARCHAR(255),
+            date_purchased VARCHAR(255),
+            date_created TIMESTAMP
         )
         `,
         `
         CREATE TABLE IF NOT EXISTS gkc_inventory (
             id INT AUTO_INCREMENT PRIMARY KEY,
             pc_name VARCHAR(255),
+            name VARCHAR(255),
+            ip_address VARCHAR(255),
             mac_address VARCHAR(255),
             computer_type VARCHAR(255),
+            monitor VARCHAR(255),
             specs VARCHAR(255),
+            department VARCHAR(255),
+            anydesk VARCHAR(255),
             supplier VARCHAR(255),
-            date_purchased VARCHAR(255)
+            comment VARCHAR(255),
+            date_purchased VARCHAR(255),
+            date_created TIMESTAMP
         )
         `,
         `
         CREATE TABLE IF NOT EXISTS gsrc_inventory (
             id INT AUTO_INCREMENT PRIMARY KEY,
             pc_name VARCHAR(255),
+            name VARCHAR(255),
+            ip_address VARCHAR(255),
             mac_address VARCHAR(255),
             computer_type VARCHAR(255),
+            monitor VARCHAR(255),
             specs VARCHAR(255),
+            department VARCHAR(255),
+            anydesk VARCHAR(255),
             supplier VARCHAR(255),
-            date_purchased VARCHAR(255)
+            comment VARCHAR(255),
+            date_purchased VARCHAR(255),
+            date_created TIMESTAMP
         )
         `,
         `

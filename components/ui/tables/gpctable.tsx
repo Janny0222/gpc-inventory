@@ -217,7 +217,7 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
             <tbody className="bg-white ">
               {inventories?.map((inventory) => (
                 <tr key={inventory.id}
-                  className="w-full shadow-md shadow-green-700 rounded border-green-500 text-sm  [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
+                  className="w-full shadow-md shadow-gray-700 rounded border-green-500 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                 >
                   <td className=" pl-6 pr-3 whitespace-nowrap">
                     <div className="flex items-center gap-3">
@@ -266,7 +266,7 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
           {isModalOpen && (
                         <EditModal onClose={closeModal} onSubmit={handleFormSubmit} id={selectedId} tablename={gettableName}/>
                     )}
-        </div>{!queryvalue &&
+        </div>{!queryvalue && totalPages > 0 &&
         <CustomPagination
           pageCount={totalPages}
           currentPage={currentPage}
