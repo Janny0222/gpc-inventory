@@ -49,7 +49,7 @@ export default async function handler(req, res) {
     getSheet = 'Greenkraft'
   } else if (sheetNameTable === 'gpc_mobile_inventory' || sheetNameTable === 'gpc_inventory' || sheetNameTable === 'gpc_sq_inventory') {
     getSheet = 'Greenstone'
-  } else if (sheetNameTable === 'lsi_mobile_inventory' || sheetNameTable === 'lsi_inventory') {
+  } else if (sheetNameTable === 'lsi_mobile_inventory' || sheetNameTable === 'lsi_inventory' || sheetNameTable === 'lsi_can_inventory') {
     getSheet = 'Lamitek'
   } else if (sheetNameTable === 'gsrc_mobile_inventory' || sheetNameTable === 'gsrc_inventory') {
     getSheet = 'GreenSiam'

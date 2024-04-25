@@ -72,7 +72,7 @@ return (
           </div>
         <div className="flex flex-row p-4 ">
             <div className='p2'>
-                <QRCodeMobileGenerator isModal={true} assigned_to={formData.assigned_to} department={formData.department} imei={formData.imei} serial_number={formData.serial_number}/>
+                <QRCodeMobileGenerator date_issued={formData.date_issued} isModal={true} assigned_to={formData.assigned_to} department={formData.department} imei={formData.imei} serial_number={formData.serial_number}/>
             </div>
             <div className='flex flex-col ml-8 text-sm'>
                 <span><strong>Company: </strong> {company}</span>

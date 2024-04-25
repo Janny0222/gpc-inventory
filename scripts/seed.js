@@ -1,8 +1,28 @@
+
+
 const mysql = require('mysql2/promise')
 require('dotenv').config();
 
-async function handler(){
-    const db= await mysql.createConnection({
+async function createDatabase(){
+    const connection = await mysql.createConnection({
+        host: process.env.DB_HOST,
+        port: process.env.DB_PORT,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD
+    });
+    try {
+        await connection.execute(`CREATE DATABASE IF NOT EXISTS ${process.env.DB_DATABASE}`)
+        console.log("Successfully created a Database")
+        
+    } catch (error) {
+        console.error("Error Creating Database: ", error)
+    } finally {
+        await connection.end()
+    }
+}
+
+async function seedDatabase(){
+    const db = await mysql.createConnection({
         host: process.env.DB_HOST,
         database: process.env.DB_DATABASE,
         port: process.env.DB_PORT,
@@ -10,6 +30,10 @@ async function handler(){
         password: process.env.DB_PASSWORD
     });
     try {
+        
+
+        // await db.changeUser({database: process.env.DB_DATABASE})
+
         const queries = [`
         CREATE TABLE IF NOT EXISTS gpc_inventory (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -48,6 +72,24 @@ async function handler(){
         `,
         `
         CREATE TABLE IF NOT EXISTS lsi_inventory (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            pc_name VARCHAR(255),
+            name VARCHAR(255),
+            ip_address VARCHAR(255),
+            mac_address VARCHAR(255),
+            computer_type VARCHAR(255),
+            monitor VARCHAR(255),
+            specs VARCHAR(255),
+            department VARCHAR(255),
+            anydesk VARCHAR(255),
+            supplier VARCHAR(255),
+            comment VARCHAR(255),
+            date_purchased VARCHAR(255),
+            date_created TIMESTAMP
+        )
+        `,
+        `
+        CREATE TABLE IF NOT EXISTS lsi_can_inventory (
             id INT AUTO_INCREMENT PRIMARY KEY,
             pc_name VARCHAR(255),
             name VARCHAR(255),
@@ -112,7 +154,9 @@ async function handler(){
             number VARCHAR(255),
             email_password VARCHAR(255),
             inclusion VARCHAR(255),
-            date_issued VARCHAR(255)
+            date_issued VARCHAR(255),
+            date_purchased VARCHAR(255),
+            date_created TIMESTAMP
         )
         `,
         `
@@ -127,7 +171,9 @@ async function handler(){
             number VARCHAR(255),
             email_password VARCHAR(255),
             inclusion VARCHAR(255),
-            date_issued VARCHAR(255)
+            date_issued VARCHAR(255),
+            date_purchased VARCHAR(255),
+            date_created TIMESTAMP
         )
         `,
         `
@@ -142,7 +188,9 @@ async function handler(){
             number VARCHAR(255),
             email_password VARCHAR(255),
             inclusion VARCHAR(255),
-            date_issued VARCHAR(255)
+            date_issued VARCHAR(255),
+            date_purchased VARCHAR(255),
+            date_created TIMESTAMP
         )
         `,
         `
@@ -157,7 +205,9 @@ async function handler(){
             number VARCHAR(255),
             email_password VARCHAR(255),
             inclusion VARCHAR(255),
-            date_issued VARCHAR(255)
+            date_issued VARCHAR(255),
+            date_purchased VARCHAR(255),
+            date_created TIMESTAMP
         )
         `,
         ]
@@ -171,5 +221,10 @@ async function handler(){
     } finally {
         await db.end();
     }
+}
+
+async function handler(){
+    await createDatabase()
+    await seedDatabase() 
 }
 handler();

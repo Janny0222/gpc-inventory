@@ -22,7 +22,7 @@ export default function Layout({ children }: {children: React.ReactNode}){
                 </div>
                 
             
-            <div className={`'mx-5 sm:ml-[300px] sm:mt-16' sm:p-2 ${lato.className}`}>{children}</div>
+            <div className={` sm:ml-[240px] sm:p-2 ${lato.className}`}>{children}</div>
         {/* </div> */}
         </>
     )

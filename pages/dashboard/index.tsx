@@ -25,9 +25,11 @@ export default function Page() {
   
   const fetchData = async () => {
     try {
-      const [desktop, mac, laptop, cellphone] = await Promise.all([
+      const [desktop, mac, apple, system, laptop, cellphone] = await Promise.all([
         fetch(`api/computer_type/desktop`),
         fetch(`api/computer_type/mac`),
+        fetch(`api/computer_type/apple`),
+        fetch(`api/computer_type/system`),
         fetch(`api/computer_type/laptop`),
         fetch(`api/countMobile`)
       ]);
@@ -36,10 +38,12 @@ export default function Page() {
       }
       const desktopData = await desktop.json();
       const macData = await mac.json();
+      const appleData = await apple.json();
+      const systemData = await system.json();
       const laptopData = await laptop.json();
       const mobileData = await cellphone.json()
       
-      setDesktopToCount(desktopData.count + macData.count);
+      setDesktopToCount(desktopData.count + macData.count + systemData.count + appleData.count);
       setLaptopToCount(laptopData.count);
       setMobileCount(mobileData.count);
     } catch (error) {
@@ -63,7 +67,7 @@ export default function Page() {
   
   return (
     <Layout>
-      <div className=' p-5 border rounded shadow-2xl mx-5 relative my-5'>
+      <div className=' p-5 border rounded shadow-2xl mx-2 relative my-5'>
         <div className="p-3 rounded-t-lg bg-black ">
           <h1 className={`${lato.className} text-xl md:text-xl custom-font   sm:text-left`}>Summary</h1>
         </div>
@@ -115,15 +119,17 @@ export default function Page() {
         {triggerValue === 'detail' ? (
             <>
         <div className="p-2 my-2 rounded-t-lg bg-black">
-          <h1 className={`${lusitana.className} text-white text-xl md:text-[15px] sm:text-[10px]`}>Computer/Laptop Unit/s 5years old and Above</h1>
+          <h1 className={`${lusitana.className} text-white text-xl md:text-[15px] sm:text-[10px]`}>Desktop/Laptop Unit/s 5years old and Above</h1>
         </div>
         <div className="p-1 bg-gray-200 rounded-lg shadow">
             <div className="grid">
               <Suspense fallback={<TableSkeleton />}>
               {(desktopToCount === null || laptopToCount === null) && <TableSkeleton />}
-              {desktopToCount !== null && laptopToCount !== null && (
-                <Oldunit />
-              )}
+              {desktopToCount !== null && laptopToCount !== null ?  (
+                
+                <div className='flex justify-center items-center text-2xl'><span>***** There's no data  *****</span></div>
+                ) : <Oldunit />} 
+              
               </Suspense>
             </div>
         </div>

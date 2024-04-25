@@ -61,14 +61,14 @@ export default async function handler(req, res) {
 
     try {
       const {id} = req.query;
-      const {pc_name, mac_address, computer_type, specs, supplier, date_purchased} = req.body
+      const {pc_name, name, ip_address, mac_address, computer_type, monitor, specs, department, anydesk, supplier, comment, date_purchased} = req.body
 
       if(!id || !pc_name || !mac_address){
         return res.status(400).json({ error: 'Missing required fields' })
       }
       const updateResult = await query
-      (`UPDATE ${tableName} SET pc_name=?, mac_address=?, computer_type=?, specs=?, supplier=?, date_purchased=? WHERE id=?`,
-      [pc_name, mac_address, computer_type, specs, supplier, date_purchased, id]);
+      (`UPDATE ${tableName} SET pc_name=?, name=?, ip_address=?, mac_address=?, computer_type=?, monitor=?, specs=?, department=?, anydesk=?, supplier=?, comment=?, date_purchased=? WHERE id=?`,
+      [pc_name, name, ip_address, mac_address, computer_type, monitor, specs, department, anydesk, supplier, comment, date_purchased, id]);
       
       if(updateResult.affectedRows > 0){
         res.status(200).json({response: { message: 'success', updatedItem: id }})
@@ -82,4 +82,32 @@ export default async function handler(req, res) {
   } else {
     res.status(405).json({ error: 'Method not allowed '})
   }
+
+  
 }
+
+// else if (req.method === 'PUT'){
+
+//   try {
+//     const {id} = req.query;
+//     const {pc_name, name, ip_address, mac_address, computer_type, monitor, specs, department, anydesk, supplier, comment, date_purchased} = req.body
+
+//     if(!id || !pc_name || !mac_address){
+//       return res.status(400).json({ error: 'Missing required fields' })
+//     }
+//     const updateResult = await query
+//     (`UPDATE ${tableName} SET pc_name=?, name=?, ip_address=?, mac_address=?, computer_type=?, monitor=?, specs=?, department=?, anydesk=?, supplier=?, comment=?, date_purchased=? WHERE id=?`,
+//     [pc_name, name, ip_address, mac_address, computer_type, monitor, specs, department, anydesk, supplier, comment, date_purchased, id]);
+
+//     if(updateResult.affectedRows > 0){
+//       res.status(200).json({ message: 'success', updatedItem: id })
+//     } else {
+//       res.status(404).json({ error: 'Item not found or not updated '});
+//     }
+//   } catch (error){
+//     console.error('Error updating inventory: ', error);
+//     res.status(500).json({ error: 'Internal Server Error'})
+//   }
+// } else {
+//   res.status(405).json({ error: 'Method not allowed '})
+// }

@@ -3,7 +3,7 @@ import Search from "@/components/ui/search";
 import Layout from "../dashboard/layout";
 import { lusitana } from "@/styles/font";
 import {CreateInventory} from "@/components/ui/buttons";
-import { ChangeEvent, use, useEffect, useState } from "react";
+import { Fragment, use, useEffect, useState } from "react";
 import Dropdown from "@/components/ui/inventory/dropdown";
 import GPCMobileInventory from "@/components/ui/tables/mobiletable";
 import  {tableName}  from "@/lib/company";
@@ -11,9 +11,11 @@ import Form from "@/components/ui/inventory/gpc-mobile-create/create-form";
 import Modal from "@/components/modal";
 import { MobileInventoryList } from "@/lib/definition";
 import Upload from "@/components/Upload";
+import ModalSample from "@/components/SampleModal";
 
 export default function Page(){
 const [isModalOpen, setIsModalOpen] = useState(false);
+const [isToggleOpen, setIsToggleOpen] = useState(false);
 const [value, setValue] = useState<string>("")
 const [tablename, setTableName] = useState<string>("")
 const [mobileInventory, setMobileInventory] = useState<MobileInventoryList[]>([])
@@ -56,6 +58,9 @@ const [dataUploaderHandler, setDataUploaderHandler] = useState<() => void>(() =>
        } 
     }, [tablename, getTable])
     
+    const togglePopUp = () => {
+        setIsToggleOpen(!isToggleOpen)
+    }
     
     
     return (
@@ -82,6 +87,19 @@ const [dataUploaderHandler, setDataUploaderHandler] = useState<() => void>(() =>
                         </Modal>
                     )}
             </div>
+
+            {/* <Fragment>
+                <div className="flex justify-center items-end relative top-12">
+                    <button
+                    onClick={() => setIsToggleOpen(true)}
+                    className="border border-collapse rounded shadow-xl relative px-5 my-2 focus:outline-none font-medium">
+                        POP
+                    </button>
+                </div>
+                <ModalSample isVisible={isToggleOpen} onClose={() => 
+                    setIsToggleOpen(false)
+                }/>
+            </Fragment> */}
         </Layout>
     )
 }

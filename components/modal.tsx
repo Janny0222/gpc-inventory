@@ -1,4 +1,4 @@
-import React, { FormEvent, ReactNode } from 'react';
+import React, { FormEvent, ReactNode, useEffect } from 'react';
 
 interface ModalProps {
   onClose: () => void;
@@ -9,12 +9,23 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ onClose, companyName, onSubmit, children, tablename }) => {
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      console.log('Key pressed: ', event.key)
+      if(event.key === 'Escape'){
+        onClose()
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    };
+  }, [onClose])
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center outline-none focus:outline-none">
-      <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-lg flex items-center justify-center"></div>
-      <div className="relative max-h-full w-full max-w-lg mx-auto my-6">
-        <div className="relative flex flex-col md:w-[650px] w-auto bg-white rounded-lg shadow-lg outline-none focus:outline-none ">
-          <div className="flex items-start justify-between p-5 border-b border-solid rounded-t border-blueGray-200">
+    <div className="fixed inset-0 z-50 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
+        <div className="relative w-[680px] ">
+          <div className="relative grid grid-col md:w-[680px] w-auto bg-white rounded-lg shadow-lg outline-none focus:outline-none">
+          <div className="flex items-center justify-between p-5 border-b border-solid rounded-t border-blueGray-200">
             <h3 className="text-2xl font-semibold">{companyName} Inventory</h3>
             
             <button
@@ -25,13 +36,13 @@ const Modal: React.FC<ModalProps> = ({ onClose, companyName, onSubmit, children,
             </button>
             
           </div>
-          
-          <div className="flex-auto p-6">
+          <div className="flex-auto pt-2 px-2">
             {children }
           </div>
         </div>
       </div>
     </div>
+    
   );
 };
 

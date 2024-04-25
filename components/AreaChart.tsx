@@ -50,7 +50,7 @@ export default function AreaChartView({tableName, mobileTable}: {tableName: stri
 console.log(" Area Chart GPC Data to count", gpcDataToCount)
 const fetchData = async () => {
     try {
-        const [gpcDesktop, gpcLaptop, gpcMac, gpcMobile, lsiDesktop, lsiLaptop, lsiMac, lsiMobile, gkcDesktop, gkcLaptop, gkcMac, gkcMobile, gsrcDesktop, gsrcMac, gsrcLaptop, gsrcMobile] = await Promise.all([
+        const [gpcDesktop, gpcLaptop, gpcMac, gpcMobile, lsiDesktop, lsiLaptop, lsiMac, lsiMobile, gkcDesktop, gkcLaptop, gkcMac, gkcMobile, gsrcDesktop, gsrcLaptop, gsrcMac, gsrcMobile] = await Promise.all([
           fetch(`${process.env.NEXT_PUBLIC_URL}/api/gpc_inventory/computer_type/desktop`),
           fetch(`${process.env.NEXT_PUBLIC_URL}/api/gpc_inventory/computer_type/laptop`),
           fetch(`${process.env.NEXT_PUBLIC_URL}/api/gpc_inventory/computer_type/mac`),
@@ -152,7 +152,7 @@ const options = {
 
 
 const data = {
-  labels: ['LAPTOP', 'DESKTOP', 'MOBILE'],
+  labels: ['DESKTOP', 'LAPTOP', 'MOBILE'],
   datasets: [
     {
         fill: false,

@@ -6,11 +6,12 @@ interface Props {
     assigned_to: string;
     department: string;
     imei: string;
+    date_issued: string;
     serial_number: string;
     isModal: Boolean
 }
 
-const QRCodeMobileGenerators: React.FC<Props> = ({ assigned_to, department, imei, serial_number, isModal }) => {
+const QRCodeMobileGenerators: React.FC<Props> = ({ assigned_to, department, imei, serial_number, isModal, date_issued }) => {
     const[isModalOpen, setIsModalOpen] = useState(isModal)
     const qrCodeValue: string = `Department: ${department}\n${imei}\nSerial Number: ${serial_number}`;
     const qrCodeRef = useRef<HTMLDivElement>(null);
@@ -34,12 +35,12 @@ const QRCodeMobileGenerators: React.FC<Props> = ({ assigned_to, department, imei
         }, 500); 
 
         return () => clearTimeout(timer);
-    }, [assigned_to, isModal]); 
+    }, [assigned_to, isModal, date_issued]); 
 
     return (
-        <div ref={qrCodeRef} className='text-center p-1 bg-white rounded-lg shadow-md flex-row w-auto justify-center items-center'>
-             <div className={`mb-3  text-sm p-1 `}><span className='text-wrap'>{assigned_to}</span></div>
-            <QRCode value={qrCodeValue} size={114} data-testid="qr-code-svg" />
+        <div ref={qrCodeRef} className='text-center p-1 bg-white rounded-lg flex-row w-auto justify-center items-center'>
+             <div className={`mb-3 text-sm p-1 `}><span className=''>{date_issued}[CP01]</span></div>
+            {/* <QRCode value={qrCodeValue} size={114} data-testid="qr-code-svg" /> */}
         </div>
     );
 };

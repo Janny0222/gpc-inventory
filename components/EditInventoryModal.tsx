@@ -106,14 +106,25 @@ const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id}) => 
     }
   }
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      console.log('Key pressed: ', event.key)
+      if(event.key === 'Escape'){
+        onClose()
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    };
+  }, [onClose])
   
   return (
-    <div className=" fixed inset-2 z-50 flex items-center justify-center outline-none focus:outline-none">
-      <div className="fixed inset-0 bg-black opacity-50"></div>
-      <div className="relative max-h-full w-full max-w-lg mx-auto my-6">
-        <div className="relative flex flex-col  md:w-[650px] w-auto bg-white rounded-lg shadow-lg outline-none focus:outline-none">
+    <div className="fixed inset-0 z-50 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
+        <div className="relative w-[680px] ">
+          <div className="relative grid grid-col md:w-[680px] w-auto bg-white rounded-lg shadow-lg outline-none focus:outline-none">
           <div className="flex items-start justify-between p-5 border-b border-solid rounded-t border-blueGray-200">
-            
+              
             <h3 className="text-3xl font-semibold">Edit</h3>
             <button
               className="float-right p-1 ml-auto text-3xl font-semibold leading-none text-black bg-transparent border-0 outline-none focus:outline-none"
@@ -123,10 +134,10 @@ const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id}) => 
             </button>
             
           </div>
-          <div className="flex-auto p-6">
+          <div className="flex-auto pt-2 px-2">
           <form onSubmit={updateInventory}>
-            <div className="p-4 rounded-md grid grid-cols-6 gap-2 w-auto shadow-lg border-gray-200 border bg-gray-100 place-self-center">
-              
+          <div className="p-4 rounded-md grid grid-cols-6 border-2 border-x-gray-400 shadow-2xl mx-2 gap-1 bg-gray-200">
+        
               {/* Name */}
               <div className="mb-4 col-span-4">
                 <label htmlFor="name" className="block mb-2 text-sm font-medium">
@@ -253,7 +264,7 @@ const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id}) => 
               </div>
 
               {/* Anydesk */}
-              <div className="mb-4 col-span-3">
+              <div className="mb-4 col-span-2">
                 <label htmlFor="anydesk" className="block mb-2 text-sm font-medium">
                   Anydesk
                 </label>
@@ -267,7 +278,7 @@ const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id}) => 
                 />
               </div>
               {/* Specs */}
-              <div className="mb-4 col-span-3">
+              <div className="mb-4 col-span-2">
                 <label htmlFor="specs" className="block mb-2 text-sm font-medium">
                   Specs
                 </label>
@@ -281,7 +292,7 @@ const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id}) => 
                 />
               </div>
               {/* Comment */}
-              <div className="mb-4 col-span-6">
+              <div className="mb-4 col-span-2">
                 <label htmlFor="comment" className="block mb-2 text-sm font-medium">
                   Comment
                 </label>
@@ -309,7 +320,7 @@ const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id}) => 
                 />
               </div>
             </div>
-            <div className="flex justify-end gap-4 mt-6">
+            <div className="flex justify-end py-2 mt-2">
               <button
                 type="submit"
                 

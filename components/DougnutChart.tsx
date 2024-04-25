@@ -3,6 +3,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut, Bar, Pie } from 'react-chartjs-2';
 
 
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 
@@ -77,6 +78,13 @@ const options = {
  
   responsive: true,
   plugins: {
+    chartjs3d: {
+      enabled: true,
+      alpha: 45,
+      beta: 15,
+      depth: 100,
+      viewDistance: 25
+    },
       legend: {
       position: 'top' as const,
       },

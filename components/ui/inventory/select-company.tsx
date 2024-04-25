@@ -1,26 +1,34 @@
 "use client"
-import { useEffect } from "react";
-import  {companyBranch}  from "../../../lib/company";
+import { useEffect, useState } from "react";
+import  {branchName}  from "../../../lib/company";
 
 
 interface DropdownProps {
     onCompanyChange: (value: string) => void,
+    getCompany: string;
     
 }
 
-export default function SelectCompany({onCompanyChange}: DropdownProps){
-   
+export default function GetBranch({onCompanyChange, getCompany}: DropdownProps){
+    const [selectedCompany, setSelectedCompany] = useState<string>("")
+    
     const handleCompanyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const values = event.target.value
-    onCompanyChange(values);
-    // window.location.href = `/dashboard/inventory/${values}`;
+    const selectedValue = event.target.value
+    setSelectedCompany(selectedValue)
+    onCompanyChange(selectedValue);
    }
+
+    const getBranch = branchName.find(company => company.company === getCompany)
    
     return (
        
         <select onChange={handleCompanyChange}>
-            <option value="Balintawak">Balintawak</option>
-            <option value="SQ">SQ</option>            
+            {/* {companyBranch.map(branch => (
+            <option key={branch.name} value={branch.name}>{branch.name}</option>
+            ))}        */}
+            {getBranch?.branch.map(branch => (
+            <option key={branch.name} value={branch.name}>{branch.name}</option>
+            ))}
         </select>
           
     )

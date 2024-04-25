@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect, use } from "react";
-import  {companyBranch, tableName} from "@/lib/company";
+import  {branchName, branchTableMap, tableName} from "@/lib/company";
 import { lusitana } from "@/styles/font";
 import GPCInventoryTable from "@/components/ui/tables/gpctable";
 import Dropdown from "@/components/ui/inventory/dropdown";
@@ -13,7 +13,7 @@ import Search from "@/components/ui/search";
 import Upload from "@/components/Upload";
 import AreaChartView from "@/components/AreaChart";
 import Card, { CardBody, CardHeader } from "@/components/CardLayout";
-import SelectCompany from "@/components/ui/inventory/select-company";
+import GetBranch from "@/components/ui/inventory/select-company";
 
 
 
@@ -23,13 +23,14 @@ export default function SampleRender({searchParams,}:{searchParams?: {search?: s
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [inventories, setInventories] = useState<InventoryList[]>([]);
     const [company, setCompany] = useState<string>("");
-    const [branch, setBranch] = useState<string>("Balintawak");
+    const [branch, setBranch] = useState<string>("");
     const [tblName, setTblName] = useState<string>("");
+    const [branchTable, setBranchTable] = useState<string>("");
     const [dataUploaderHandler, setDataUploaderHandler] = useState<() => void>(() => () => {})
 
     let name = tableName.find(companyName => companyName.name === company)?.displayName || company
         
-    let table = tableName.find(company => company.name === tblName)?.name || tblName
+    let table = tableName.find(company => company.name === tblName)?.name || ''
     let mobileTable = tableName.find(company => company.name === tblName)?.table || tblName
     // const inventories = await fetchGPCInventoryList()
     // console.log(inventories)
@@ -48,27 +49,28 @@ export default function SampleRender({searchParams,}:{searchParams?: {search?: s
     const handleCompanyChange = (value: string) => {
         if(value === 'gpc_inventory'){
             setBranch('Balintawak')
+        } else if (value === 'lsi_inventory') {
+            setBranch('Valenzuela');
         }
-       search === " "
+    //    search === " "
+        
         setCompany(value)
         setTblName(value)
     }
-    
-    const handleBranchChange = (value: string) => {
-        
-        if(value === 'SQ' && table === 'gpc_inventory') {
-            let getTable = companyBranch.find(branch => branch.name === 'SQ')?.inventoryTable || ''
-            setTblName(getTable);
-            setBranch(value)
-        } else {
-            value === 'Balintawak'
-            setTblName('gpc_inventory')
-            setBranch(value)
+    const handleDataUploaded = async () =>{
+        try {
+            const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${tblName}`
+            const response = await fetch(apiUrlEndpoint);
+            const data = await response.json()
+            setInventories(data.results)
+        } catch (error){
+            console.error('Error fetching data: ', error)
         }
     }
     
     console.log(branch)
     console.log(tblName)
+    console.log(branchTable)
     // modal for add
     const handleFormSubmit = async () =>{
         closeModal();
@@ -77,9 +79,10 @@ export default function SampleRender({searchParams,}:{searchParams?: {search?: s
     }
     useEffect(() => {
         if(tblName){
+        
         const handleDataUploaded = async () =>{
             try {
-                const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${table}`
+                const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${tblName}`
                 const response = await fetch(apiUrlEndpoint);
                 const data = await response.json()
                 setInventories(data.results)
@@ -89,10 +92,16 @@ export default function SampleRender({searchParams,}:{searchParams?: {search?: s
         }
         setDataUploaderHandler(() => handleDataUploaded)
         handleDataUploaded()
-        console.log("this is the table now: ",tblName)
         }
-    }, [tblName, table])
-        
+    }, [tblName])
+
+    const handleBranchChange = (value: string) => {
+        setBranch(value)
+
+        const branchTableName = branchTableMap[value as keyof typeof branchTableMap] || company;
+        setTblName(branchTableName)
+        handleDataUploaded()
+    }
 
      return (
         
@@ -101,12 +110,12 @@ export default function SampleRender({searchParams,}:{searchParams?: {search?: s
                 <div className="grid grid-rows-1 self-end w-full">
                     <h1 className={`${lusitana.className} text-2xl`}> {name} Inventory</h1>
                     
-                    <div className="relative grid grid-flow-row w-11 top-5">
-                    {company === 'gpc_inventory' && companyBranch.length > 1 && (
+                    <div className="relative flex flex-col  w-28 top-2">
+                    {(company === 'gpc_inventory' || company === 'lsi_inventory') && branchName.length > 1 && (
                         <>
                         <span>Select Branch: </span>
-                        <div className="border border-gray-400">
-                             <SelectCompany onCompanyChange={handleBranchChange} />
+                        <div className="border w-full border-gray-400">
+                             <GetBranch onCompanyChange={handleBranchChange} getCompany={company} />
                         </div>
                         </>
                     )}
@@ -114,20 +123,23 @@ export default function SampleRender({searchParams,}:{searchParams?: {search?: s
                     
                 </div>
                 <div className="flex items-center justify-between gap-2 m-4 md:mt-8">
-                    {table !== "" && <><Search placeholder="Search..." /> <CreateInventory onClick={openModal}/></> }
+                    {tblName !== "" && <><Search placeholder="Search..." /> <CreateInventory onClick={openModal}/></> }
                 </div>
-                    {name !== '' && (inventories?.length === 0 || inventories === undefined ) && <Upload tablename={tblName} onDataUploaded={dataUploaderHandler} />}
+                    {tblName !== '' && (inventories?.length === 0 || inventories === undefined ) && <Upload tablename={tblName} onDataUploaded={dataUploaderHandler} />}
                 <div className="flex items-center mt-1">
-                    <div className="flex items-center justify-between gap-2 mt-4 md:mt-8">
+                    <div className="flex items-center justify-between gap-2 mt-2 md:mt-2">
                         <label className="mr-2">Select Company:</label>
                         <Dropdown onCompanyChange={handleCompanyChange}/>  
                     </div>
                 </div>
                     
                     {company === 'gpc_inventory' && branch === 'Balintawak' && <GPCInventoryTable query={search} gettableName={company} onDataSubmitted={handleFormSubmit}/>}
-                    {company === 'gpc_inventory' && branch === 'SQ'  && <GPCInventoryTable query={search} gettableName='gpc_sq_inventory' onDataSubmitted={handleFormSubmit}/>}
+                    {company === 'gpc_inventory' && branch === 'SQ'  && <GPCInventoryTable query={search} gettableName={tblName} onDataSubmitted={handleFormSubmit}/>}
                     
-                    {company !== 'gpc_inventory' && company !== '' && <GPCInventoryTable query={search} gettableName={company} onDataSubmitted={handleFormSubmit}/>}
+                    {company === 'lsi_inventory' && branch === 'Valenzuela' && <GPCInventoryTable query={search} gettableName={company} onDataSubmitted={handleFormSubmit}/>}
+                    {company === 'lsi_inventory' && branch === 'Canlubang'  && <GPCInventoryTable query={search} gettableName={tblName} onDataSubmitted={handleFormSubmit}/>}
+                    
+                    {(company !== 'gpc_inventory' && company !== 'lsi_inventory' ) && company !== '' && <GPCInventoryTable query={search} gettableName={company} onDataSubmitted={handleFormSubmit}/>}
                     
                     
                     

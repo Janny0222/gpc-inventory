@@ -87,8 +87,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
 
   return (
     <form onSubmit={addInventory}>
-      <div className="p-4 rounded-md grid grid-cols-6 gap-2 shadow-lg border bg-gray-100 md:p-6">
-
+      <div className="p-4 rounded-md grid grid-cols-6 border-2 border-x-gray-400 shadow-2xl mx-2 gap-1 bg-gray-200">
         {/* Name */}
         <div className="mb-4 col-span-4">
           <label htmlFor="name" className="block mb-2 text-sm font-medium">
@@ -100,7 +99,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
+            className="block w-full px-3 py-2 text-sm border border-gray-600/35 rounded-md focus:outline-none focus:border-gray-400 shadow-md"
             placeholder="Enter Name"
             required
           />
@@ -117,7 +116,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
             name="department"
             value={formData.department}
             onChange={handleChange}
-            className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
+            className="block w-full px-3 py-2 text-sm border border-gray-600/35 rounded-md focus:outline-none focus:border-gray-400 shadow-md"
             placeholder="Enter department"
           />
         </div>
@@ -133,7 +132,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
             name="pcname"
             value={formData.pcname}
             onChange={handleChange}
-            className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
+            className="block w-full px-3 py-2 text-sm border border-gray-600/35 rounded-md focus:outline-none focus:border-gray-400 shadow-md"
             placeholder="Enter PC Name"
           />
         </div>
@@ -149,7 +148,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
             name="ip_address"
             value={formData.ip_address}
             onChange={handleChange}
-            className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
+            className="block w-full px-3 py-2 text-sm border border-gray-600/35 rounded-md focus:outline-none focus:border-gray-400 shadow-md"
             placeholder="Enter IP Address"
           />
         </div>
@@ -164,7 +163,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
             name="mac_address"
             value={formData.mac_address}
             onChange={handleChange}
-            className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
+            className="block w-full px-3 py-2 text-sm border border-gray-600/35 rounded-md focus:outline-none focus:border-gray-400 shadow-md"
             placeholder="Enter Mac Address"
           />
         </div>
@@ -179,25 +178,11 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
             name="monitor"
             value={formData.monitor}
             onChange={handleChange}
-            className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
+            className="block w-full px-3 py-2 text-sm border border-gray-600/35 rounded-md focus:outline-none focus:border-gray-400 shadow-md"
             placeholder="Enter Monitor"
           />
         </div>
-        {/* Anydesk */}
-        <div className="mb-4 col-span-2">
-          <label htmlFor="anydesk" className="block mb-2 text-sm font-medium">
-            Anydesk
-          </label>
-          <input
-            type="text"
-            id="anydesk"
-            name="anydesk"
-            value={formData.anydesk}
-            onChange={handleChange}
-            className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
-            placeholder="Enter Anydesk"
-          />
-        </div>
+        
         {/* Supplier */}
         <div className="mb-4 col-span-2">
           <label htmlFor="supplier" className="block mb-2 text-sm font-medium">
@@ -209,12 +194,12 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
             name="supplier"
             value={formData.supplier}
             onChange={handleChange}
-            className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
+            className="block w-full px-3 py-2 text-sm border border-gray-600/35 rounded-md focus:outline-none focus:border-gray-400 shadow-md"
             placeholder="Enter Supplier"
           />
         </div>
         {/* Computer Type */}
-        <div className="mb-4 col-span-3">
+        <div className="mb-4 col-span-2">
           <label htmlFor="computer_type" className="block mb-2 text-sm font-medium">
             Computer Type
           </label>
@@ -224,12 +209,26 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
             name="computer_type"
             value={formData.computer_type}
             onChange={handleChange}
-            className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
+            className="block w-full px-3 py-2 text-sm border border-gray-600/35 rounded-md focus:outline-none focus:border-gray-400 shadow-md"
             placeholder="Enter Computer Type"
           />
         </div>
+        {/* Anydesk */}
+        <div className="mb-4 col-span-2">
+          <label htmlFor="anydesk" className="block mb-2 text-sm font-medium">
+            Anydesk
+          </label>
+          <textarea
+            id="anydesk"
+            name="anydesk"
+            value={formData.anydesk}
+            onChange={handleChange}
+            className="block w-full px-3 py-2 text-sm border border-gray-600/35 rounded-md focus:outline-none focus:border-gray-400 shadow-md"
+            placeholder="Enter Anydesk"
+          />
+        </div>
         {/* Specs */}
-        <div className="mb-4 col-span-3">
+        <div className="mb-4 col-span-2">
           <label htmlFor="specs" className="block mb-2 text-sm font-medium">
             Specs
           </label>
@@ -238,48 +237,47 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
             name="specs"
             value={formData.specs}
             onChange={handleChange}
-            className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
+            className="block w-full px-3 py-2 text-sm border border-gray-600/35 rounded-md focus:outline-none focus:border-gray-400 shadow-md"
             placeholder="Enter Specs"
           />
         </div>
         {/* Comments */}
-        <div className="mb-4 col-span-6">
-          <label htmlFor="comments" className="block mb-2 text-sm font-medium">
+        <div className="mb-4 col-span-2">
+          <label htmlFor="comment" className="block mb-2 text-sm font-medium">
             Comments
           </label>
           <textarea
-            id="comments"
-            name="comments"
+            id="comment"
+            name="comment"
             value={formData.comment}
             onChange={handleChange}
-            className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
-            placeholder="Enter Specs"
+            className="block w-full px-3 py-2 text-sm border border-gray-600/35 rounded-md focus:outline-none focus:border-gray-400 shadow-md"
+            placeholder="Enter Comment"
           />
         </div>
         {/* Date Purchased */}
         <div className="mb-4 col-span-6">
-        <label htmlFor="date_purchased" className="block mb-2 text-sm font-medium">
-          Date Purchased
-        </label>
-        <input
-          type="date"
-          id="date_purchased"
-          name="date_purchased"
-          value={formData.date_purchased}
-          onChange={handleChange}
-          className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
-        />
+          <label htmlFor="date_purchased" className="block mb-2 text-sm font-medium">
+            Date Purchased
+          </label>
+          <input
+            type="date"
+            id="date_purchased"
+            name="date_purchased"
+            value={formData.date_purchased}
+            onChange={handleChange}
+            className="block w-full px-3 py-2 text-sm border border-gray-600/35 rounded-md focus:outline-none focus:border-gray-400 shadow-md"
+          />
+        </div>
       </div>
-      </div>
-      <div className="flex justify-end gap-4 mt-6">
-        <button
-          type="submit"
-          
-          className="flex items-center justify-center h-10 px-4 text-sm font-medium text-white transition-colors bg-indigo-600 rounded-lg hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-          Save
-        </button>
-      </div>
+          <div className="flex justify-end py-2 mt-2">
+              <button
+                type="submit"
+                className="flex items-center justify-center h-10 px-4 text-sm font-medium text-white transition-colors border-4 hover:border-black bg-black rounded-lg hover:text-green-800 hover:bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 "
+                >
+                Save
+              </button>
+          </div>
     </form>
   );
 }

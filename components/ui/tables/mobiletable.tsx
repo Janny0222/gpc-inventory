@@ -126,9 +126,14 @@ const qrModal = async (id: number) => {
     const data = await res.json()
     
   } catch (error){
-    
+  
   }
 }
+
+const viewDetails = async (id: number) => {
+  console.log(id)
+}
+
 const openModal = async (id: number) => {
   setSelectedId(id)
   setIsModalOpen(true)
@@ -144,6 +149,7 @@ const openModal = async (id: number) => {
     
   }
 }
+
 const closeQrModal = () => {
   setIsQRModalOpen(false);
   setSelectedId(null)
@@ -188,12 +194,14 @@ const closeModal = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white">
+                
+                <tbody className="bg-white cursor-pointer">
+                  
                   {mobileInventory?.map((inventory) => (
                     <tr key={inventory.id}
                       className="w-full shadow-md shadow-gray-700 rounded border-green-500 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                     >
-                      <td className="py-3 pl-6 pr-3 whitespace-nowrap">
+                      <td className="py-3 pl-6 pr-3 whitespace-nowrap" onClick={() => viewDetails(inventory.id)}>
                           <p>{inventory.assigned_to}</p>
                       </td>
                       <td className="px-3 py-3 whitespace-nowrap">

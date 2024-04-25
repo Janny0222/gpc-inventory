@@ -78,7 +78,8 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
 
   return (
     <form onSubmit={addMobileInventory}>
-      <div className="p-4 rounded-md grid grid-cols-6 border shadow-lg mx-2 gap-4 bg-gray-100 md:p-6">
+      <div className="p-4 rounded-md grid grid-cols-6 border-2 border-x-gray-400 shadow-2xl mx-2 gap-1 bg-gray-200">
+       
         {/* Assigned To */}
         <div className="mb-4 col-span-4">
           <label htmlFor="assigned_to" className="block mb-2 text-sm font-semibold">
@@ -215,6 +216,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
             placeholder="Enter Specs"
           />
         </div>
+        {/* Date Issued */}
         <div className="mb-4 col-span-6">
           <label htmlFor="date_issued" className="block mb-2 text-sm font-semibold">
             Date Issued
@@ -229,14 +231,14 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
           />
         </div>
       </div>
-      <div className="flex justify-end gap-4 mt-6">
-        <button
-          type="submit"
-          className="flex items-center justify-center h-10 px-4 text-sm font-medium text-white transition-colors border-4 hover:border-black bg-black rounded-lg hover:text-green-800 hover:bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 "
-          >
-          Save
-        </button>
-      </div>
+      <div className="flex justify-end py-2 mt-2">
+          <button
+            type="submit"
+            className="flex items-center justify-center h-10 px-4 text-sm font-medium text-white transition-colors border-4 hover:border-black bg-black rounded-lg hover:text-green-800 hover:bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 "
+            >
+            Save
+          </button>
+        </div>
     </form>
   );
 }
