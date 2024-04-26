@@ -1,6 +1,16 @@
-import { query } from '@/lib/db';
+import { query } from '../../../lib/db';
+import Cors from 'cors'
+import initMiddleware from '../../../lib/init-middleware'
+
+const cors = initMiddleware(
+  Cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  })
+);
 
 export default async function handler(req, res) {
+  // await cors(req, res)
     const tableName = req.query.tableName;
     const searchQuery = req.query.query;
     const page = req.query.page || 1
@@ -79,7 +89,7 @@ export default async function handler(req, res) {
       console.error('Error adding inventory:', error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
-  } else if (method === 'PUT'){
+  } else if (req.method === 'PUT'){
 
     try {
       const {id} = req.query;

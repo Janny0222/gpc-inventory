@@ -125,10 +125,9 @@ export default function Page() {
             <div className="grid">
               <Suspense fallback={<TableSkeleton />}>
               {(desktopToCount === null || laptopToCount === null) && <TableSkeleton />}
-              {desktopToCount !== null && laptopToCount !== null ?  (
-                
+              {desktopToCount === null && laptopToCount === null ?  (
                 <div className='flex justify-center items-center text-2xl'><span>***** There's no data  *****</span></div>
-                ) : <Oldunit />} 
+                ) : ( <Oldunit />)} 
               
               </Suspense>
             </div>

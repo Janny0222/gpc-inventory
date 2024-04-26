@@ -1,7 +1,8 @@
 import React, { FormEvent, useState, useEffect } from 'react';
 import QRCodeMobileGenerator from './QRCodeMobileGenerator';
 import html2canvas from 'html2canvas';
-
+import QRCode from 'react-qr-code';
+// import { QrCode } from 'lucide-react';
 interface ModalProps {
     onClose: () => void;
     id: number | null;
@@ -11,6 +12,7 @@ interface ModalProps {
   }
 
 const BarcodeMobileModal: React.FC<ModalProps> = ({id, tablename, onClose, company, modalData}) => {
+  
   const saveBarcodeModalAsImage = async () => {
     await new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -41,7 +43,7 @@ const BarcodeMobileModal: React.FC<ModalProps> = ({id, tablename, onClose, compa
 useEffect(() => {
         async function fetchInventoryItem() {
           try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/${tablename}/cellphones/${id}`);
+            const res = await fetch(`/api/${tablename}/cellphones/${id}`);
             if(!res.ok){
               throw new Error('Failed to fetch inventory item')
             }
@@ -71,8 +73,9 @@ return (
             
           </div>
         <div className="flex flex-row p-4 ">
-            <div className='p2'>
+            <div className='p-2'>
                 <QRCodeMobileGenerator date_issued={formData.date_issued} isModal={true} assigned_to={formData.assigned_to} department={formData.department} imei={formData.imei} serial_number={formData.serial_number}/>
+                <QRCode value={`${formData.department}\n${formData.imei}\nSerial Number: ${formData.serial_number}`} size={101} />
             </div>
             <div className='flex flex-col ml-8 text-sm'>
                 <span><strong>Company: </strong> {company}</span>

@@ -1,4 +1,6 @@
 import React, { FormEvent, useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
+import { useTimeout } from 'usehooks-ts';
 
 interface ModalProps {
   onClose: () => void;
@@ -37,7 +39,7 @@ const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id}) => 
   useEffect(() => {
     async function fetchInventoryItem() {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/${tablename}/${id}`);
+        const res = await fetch(`/api/${tablename}/${id}`);
         if(!res.ok){
           throw new Error('Failed to fetch inventory item')
         }
@@ -55,6 +57,7 @@ const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id}) => 
   
   async function updateInventory(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const editInventoryToast = toast.loading('Updating data. Please wait...', {duration: 3500, position: "top-center"})
     try {
       const formattedDate = formData.date_purchased ? new Date(formData.date_purchased).toISOString().split('T')[0]: '';
       const putInventory = {
@@ -78,7 +81,7 @@ const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id}) => 
           // tableName: gettableName
         }),
       };
-      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/${tablename}/${id}`, putInventory);
+      const res = await fetch(`/api/${tablename}/${id}`, putInventory);
       if(!res.ok){
         throw new Error('Failed to update inventory')
       }
@@ -98,11 +101,16 @@ const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id}) => 
           supplier: '',
           date_purchased: ''
         });
-        onSubmit();
         
+        setTimeout(() => {
+        onSubmit();
+        toast.success('Data has been successfully updated.', {id: editInventoryToast})
+        
+        }, 3000)
       }
     } catch (error) {
       console.error('Error adding inventory:', error);
+      toast.error('Unable to update the data')
     }
   }
 

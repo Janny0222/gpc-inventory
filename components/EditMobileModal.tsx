@@ -1,4 +1,5 @@
 import React, { FormEvent, useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 interface ModalProps {
   onClose: () => void;
@@ -21,7 +22,8 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
     email_password: '',
     serial_number: '',
     inclusion: '',
-    date_issued: ''
+    date_issued: '',
+    date_purchased: ''
   });
   // handle for changing the value in inputs
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -36,7 +38,7 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
   useEffect(() => {
     async function fetchInventoryItem() {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/${tablename}/${id}`);
+        const res = await fetch(`/api/${tablename}/${id}`);
         if(!res.ok){
           throw new Error('Failed to fetch inventory item')
         }
@@ -54,6 +56,7 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
   
   async function updateInventory(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const editMobileToast = toast.loading('Update the data. Please wait...', {duration: 3500, position: "top-center"})
     try {
       const formattedDate = formData.date_issued ? new Date(formData.date_issued).toLocaleDateString('en-US', {month: '2-digit', day: '2-digit', year: 'numeric'}): ''
       const putInventory = {
@@ -72,10 +75,11 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
           serial_number: formData.serial_number,
           inclusion: formData.inclusion,
           date_issued: formData.date_issued,
+          date_purchased: formData.date_purchased
           // tableName: gettableName
         }),
       };
-      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/${tablename}/cellphones/${id}`, putInventory);
+      const res = await fetch(`/api/${tablename}/cellphones/${id}`, putInventory);
       if(!res.ok){
         throw new Error('Failed to update inventory')
       }
@@ -91,13 +95,17 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
           email_password: '',
           serial_number: '',
           inclusion: '',
-          date_issued: ''
+          date_issued: '',
+          date_purchased: ''
         });
-        onSubmit();
-        
+        setTimeout(() => {
+          onSubmit();
+          toast.success('Data has been successfully updated.', {id: editMobileToast})
+          }, 3000)
       }
     } catch (error) {
       console.error('Error adding inventory:', error);
+      toast.error('Unable to update the data')
     }
   }
   useEffect(() => {
@@ -253,6 +261,7 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
                     placeholder="Enter Inclusion"
                   />
                 </div>
+                {/* Model and Specs */}
                 <div className="mb-4 col-span-3">
                   <label htmlFor="model_specs" className="block mb-2 text-sm font-medium">
                     Model / Specs
@@ -266,7 +275,8 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
                     placeholder="Enter Model / Specs"
                   />
                 </div>
-                <div className="mb-4 col-span-6">
+                {/* Date Issued */}
+                <div className="mb-4 col-span-3">
                   <label htmlFor="date_issued" className="block mb-2 text-sm font-medium">
                     Date Issued
                   </label>
@@ -278,7 +288,21 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
                     onChange={handleChange}
                     className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
                   />
-              </div>
+                </div>
+                {/* Date Issued */}
+                <div className="mb-4 col-span-3">
+                  <label htmlFor="date_purchased" className="block mb-2 text-sm font-medium">
+                    Date Purchased
+                  </label>
+                  <input
+                    type="date"
+                    id="date_purchased"
+                    name="date_purchased"
+                    value={formData.date_purchased}
+                    onChange={handleChange}
+                    className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
+                  />
+                </div>
               </div>
               <div className="flex justify-end py-2 mt-2">
                 <button

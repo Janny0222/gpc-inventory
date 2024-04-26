@@ -30,13 +30,13 @@ let company = tableName.find(company => company.name === getTableName)?.company 
 async function fetchMobile () {
   try {
     if(queryValue) {
-      const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${getTableName}/cellphones/?query=${queryValue}`
+      const apiUrlEndpoint = `/api/${getTableName}/cellphones/?query=${queryValue}`
       const response = await fetch(apiUrlEndpoint);
       const data = await response.json();
       setMobileInventory(data.results)
       setTotalPages(data.totalPages);
     } else {
-      const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${getTableName}/cellphones/?page=${currentPage}`;
+      const apiUrlEndpoint = `/api/${getTableName}/cellphones/?page=${currentPage}`;
       const response = await fetch(apiUrlEndpoint);
       const data = await response.json()
       setMobileInventory(data.results);
@@ -51,13 +51,13 @@ useEffect(() => {
   async function fetchMobileInventory () {
     try {
       if(queryValue) {
-        const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${getTableName}/cellphones/?query=${queryValue}`
+        const apiUrlEndpoint = `/api/${getTableName}/cellphones/?query=${queryValue}`
         const response = await fetch(apiUrlEndpoint);
         const data = await response.json();
         setMobileInventory(data.results)
         setTotalPages(data.totalPages);
       } else {
-        const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${getTableName}/cellphones`;
+        const apiUrlEndpoint = `/api/${getTableName}/cellphones`;
         const response = await fetch(apiUrlEndpoint);
         const data = await response.json()
         setMobileInventory(data.results);
@@ -82,13 +82,13 @@ const handlePageClick = async (selected: { selected: number }) => {
     const newPage = selected.selected + 1
     
     if (newPage > currentPage) {
-    const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${getTableName}/cellphones?page=${newPage}`;
+    const apiUrlEndpoint = `/api/${getTableName}/cellphones?page=${newPage}`;
     const response = await fetch(apiUrlEndpoint);
     const data = await response.json()
     setMobileInventory(data.results)
     setTotalPages(data.totalPages)
     } else if (newPage < currentPage) {
-    const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${getTableName}/cellphones?page=${newPage}`;
+    const apiUrlEndpoint = `/cellphones?page=${newPage}`;
     const response = await fetch(apiUrlEndpoint);
     const data = await response.json()
     setMobileInventory(data.results)
@@ -119,7 +119,7 @@ const qrModal = async (id: number) => {
 
   console.log("Generate QR Code Button, Getting id: ",selectedId)
   try {
-    const res = await fetch (`${process.env.NEXT_PUBLIC_URL}/api/${getTableName}/cellphones/${id}`)
+    const res = await fetch (`/api/${getTableName}/cellphones/${id}`)
     if(!res.ok){
       throw new Error (`Failed to fetch seleted Data`)
     }
@@ -139,7 +139,7 @@ const openModal = async (id: number) => {
   setIsModalOpen(true)
   console.log(selectedId)
   try {
-    const res = await fetch (`${process.env.NEXT_PUBLIC_URL}/api/${getTableName}/cellphones/${id}`)
+    const res = await fetch (`/api/${getTableName}/cellphones/${id}`)
     if(!res.ok){
       throw new Error (`Failed to fetch seleted Data`)
     }

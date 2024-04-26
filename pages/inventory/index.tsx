@@ -14,7 +14,7 @@ import Upload from "@/components/Upload";
 import AreaChartView from "@/components/AreaChart";
 import Card, { CardBody, CardHeader } from "@/components/CardLayout";
 import GetBranch from "@/components/ui/inventory/select-company";
-
+import { Toaster } from "react-hot-toast";
 
 
 export default function SampleRender({searchParams,}:{searchParams?: {search?: string}}) {
@@ -59,7 +59,7 @@ export default function SampleRender({searchParams,}:{searchParams?: {search?: s
     }
     const handleDataUploaded = async () =>{
         try {
-            const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${tblName}`
+            const apiUrlEndpoint = `/api/${tblName}`
             const response = await fetch(apiUrlEndpoint);
             const data = await response.json()
             setInventories(data.results)
@@ -82,7 +82,7 @@ export default function SampleRender({searchParams,}:{searchParams?: {search?: s
         
         const handleDataUploaded = async () =>{
             try {
-                const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${tblName}`
+                const apiUrlEndpoint = `/api/${tblName}`
                 const response = await fetch(apiUrlEndpoint);
                 const data = await response.json()
                 setInventories(data.results)
@@ -102,7 +102,7 @@ export default function SampleRender({searchParams,}:{searchParams?: {search?: s
         setTblName(branchTableName)
         handleDataUploaded()
     }
-
+    console.log("result for console: ", company, tblName);
      return (
         
         <Layout>
@@ -125,7 +125,7 @@ export default function SampleRender({searchParams,}:{searchParams?: {search?: s
                 <div className="flex items-center justify-between gap-2 m-4 md:mt-8">
                     {tblName !== "" && <><Search placeholder="Search..." /> <CreateInventory onClick={openModal}/></> }
                 </div>
-                    {tblName !== '' && (inventories?.length === 0 || inventories === undefined ) && <Upload tablename={tblName} onDataUploaded={dataUploaderHandler} />}
+                    {(tblName !== '' || company !=='') && (inventories?.length === 0 || inventories === undefined ) && <Upload tablename={tblName} onDataUploaded={dataUploaderHandler} />}
                 <div className="flex items-center mt-1">
                     <div className="flex items-center justify-between gap-2 mt-2 md:mt-2">
                         <label className="mr-2">Select Company:</label>
@@ -148,6 +148,7 @@ export default function SampleRender({searchParams,}:{searchParams?: {search?: s
                             <Form gettableName={tblName} onDataSubmitted={handleFormSubmit}/>
                         </Modal>
                     )}
+                     
             </div>
             { company === '' && 
             <div className=" p-6 mt-2"> 

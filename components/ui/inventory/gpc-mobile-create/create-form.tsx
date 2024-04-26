@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect, FormEvent } from 'react';
-
+import toast from 'react-hot-toast';
 
 interface FormProps {
   gettableName: string;
@@ -19,7 +19,8 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
     email_password: '',
     serial_number: '',
     inclusion: '',
-    date_issued: ''
+    date_issued: '',
+    date_purchased: ''
   });
   // const [create, setCreated] = useState(false);
 
@@ -33,6 +34,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
   
   async function addMobileInventory(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const addToastLoading = toast.loading('Adding new data. Please wait...', {duration: 3500, position: "top-center"})
     try {
       const postInventory = {
         method: "POST",
@@ -50,12 +52,14 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
         serial_number: formData.serial_number,
         inclusion: formData.inclusion,
         date_issued: formData.date_issued,
+        date_purchased: formData.date_purchased
           // tableName: gettableName
         }),
       };
-      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/${gettableName}/cellphones`, postInventory);
+      const res = await fetch(`/api/${gettableName}/cellphones`, postInventory);
       const response = await res.json();
       if (response && response.response && response.response.message === "success") {
+        
         setFormData({
         assigned_to: '',
         department: '',
@@ -66,13 +70,18 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
         email_password: '',
         serial_number: '',
         inclusion: '',
-        date_issued: ''
+        date_issued: '',
+        date_purchased: ''
         });
-        console.log("successfully trigger");
-        onDataSubmitted();
+        setTimeout(() => {
+          onDataSubmitted();
+          toast.success("Data has been successfully added", {id: addToastLoading});
+        }, 3000)
+        
       }
     } catch (error) {
       console.error('Error adding inventory:', error);
+      toast.error('Unable to add new data')
     }
   }
 
@@ -217,7 +226,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
           />
         </div>
         {/* Date Issued */}
-        <div className="mb-4 col-span-6">
+        <div className="mb-4 col-span-3">
           <label htmlFor="date_issued" className="block mb-2 text-sm font-semibold">
             Date Issued
           </label>
@@ -226,6 +235,20 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
             id="date_issued"
             name="date_issued"
             value={formData.date_issued}
+            onChange={handleChange}
+            className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
+          />
+        </div>
+        {/* Date Purchased */}
+        <div className="mb-4 col-span-3">
+          <label htmlFor="date_purchased" className="block mb-2 text-sm font-semibold">
+            Date Purchased
+          </label>
+          <input
+            type="date"
+            id="date_purchased"
+            name="date_purchased"
+            value={formData.date_purchased}
             onChange={handleChange}
             className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
           />

@@ -44,7 +44,7 @@ const [dataUploaderHandler, setDataUploaderHandler] = useState<() => void>(() =>
         if(tablename) {
         const handleDataUploaded = async () => {
         try {
-            const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${getTable}/cellphones`
+            const apiUrlEndpoint = `/api/${getTable}/cellphones`
             const response = await fetch(apiUrlEndpoint);
             const data = await response.json();
             setMobileInventory(data.results)
@@ -73,7 +73,7 @@ const [dataUploaderHandler, setDataUploaderHandler] = useState<() => void>(() =>
                     
                    {name !== '' && <> <Search placeholder="Search...." /><CreateInventory onClick={openModal}/> </>}
                 </div>
-                    {name !== '' && (mobileInventory?.length === 0 || mobileInventory === undefined) && <Upload tablename={getTable} onDataUploaded={dataUploaderHandler}/>}
+                    {getTable !== '' && (mobileInventory?.length === 0 || mobileInventory === undefined) && <Upload tablename={getTable} onDataUploaded={dataUploaderHandler}/>}
                 <div className="flex flex-row items-center mt-1">
                     <div className="flex items-center justify-between gap-2 mt-2 md:mt-4">
                         <label className="mr-2">Select Company:</label>

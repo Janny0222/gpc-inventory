@@ -1,8 +1,7 @@
 'use client'
 
 import { useState, useEffect, FormEvent } from 'react';
-import { date } from 'zod';
-
+import toast from 'react-hot-toast';
 
 interface FormProps {
   gettableName: string;
@@ -37,6 +36,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
   
   async function addInventory(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const addInventoryToast = toast.loading('Adding new data...', { duration: 3500, position: "top-center"})
     try {
       const postInventory = {
         method: "POST",
@@ -60,7 +60,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
           // tableName: gettableName
         }),
       };
-      const res = await fetch(`http://localhost:3000/api/${gettableName}`, postInventory);
+      const res = await fetch(`/api/${gettableName}`, postInventory);
       const response = await res.json();
       if (response && response.response && response.response.message === "success") {
         setFormData({
@@ -77,11 +77,15 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
           comment: '',
           date_purchased: ''
         });
-        onDataSubmitted();
-        console.log("successfully trigger");
+        setTimeout(() => {
+          onDataSubmitted();
+          toast.success('Data has been successfully added', {id: addInventoryToast})
+        }, 3000)
+        
       }
     } catch (error) {
       console.error('Error adding inventory:', error);
+      toast.error('Unable to add a new data!')
     }
   }
 

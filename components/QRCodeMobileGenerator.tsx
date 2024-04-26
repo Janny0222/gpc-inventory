@@ -38,7 +38,7 @@ const QRCodeMobileGenerators: React.FC<Props> = ({ assigned_to, department, imei
     }, [assigned_to, isModal, date_issued]); 
 
     return (
-        <div ref={qrCodeRef} className='text-center p-1 bg-white rounded-lg flex-row w-auto justify-center items-center'>
+        <div ref={qrCodeRef} className='text-center p-1 bg-white rounded-lg flex-row w-auto justify-center items-center' >
              <div className={`mb-3 text-sm p-1 `}><span className=''>{date_issued}[CP01]</span></div>
             {/* <QRCode value={qrCodeValue} size={114} data-testid="qr-code-svg" /> */}
         </div>

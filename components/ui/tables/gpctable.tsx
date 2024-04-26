@@ -34,14 +34,14 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
     async function fetchInventoryData() {
       try {
         if(queryvalue) {
-          const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}?query=${queryvalue}`;
+          const apiUrlEndpoint = `/api/${gettableName}?query=${queryvalue}`;
           const response = await fetch(apiUrlEndpoint);
           const data = await response.json();
           setTotalPages(data.totalPages)
           setInventories(data.results);
           
         } else {
-          const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}`;
+          const apiUrlEndpoint = `/api/${gettableName}`;
           const response = await fetch(apiUrlEndpoint);
           const data = await response.json();
           setInventories(data.results);
@@ -61,13 +61,13 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
       const newPage = selected.selected + 1
       
       if (newPage > currentPage) {
-      const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}?page=${newPage}`;
+      const apiUrlEndpoint = `/api/${gettableName}?page=${newPage}`;
       const response = await fetch(apiUrlEndpoint);
       const data = await response.json()
       setInventories(data.results)
       setTotalPages(data.totalPages)
       } else if (newPage < currentPage) {
-      const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}?page=${newPage}`;
+      const apiUrlEndpoint = `/api/${gettableName}?page=${newPage}`;
       const response = await fetch(apiUrlEndpoint);
       const data = await response.json()
       setInventories(data.results)
@@ -91,7 +91,7 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
     setIsModalOpen(true);
     console.log(selectedId)
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/${gettableName}/${id}`)
+        const res = await fetch(`/api/${gettableName}/${id}`)
         if(!res.ok){
           throw new Error('Failed to fetch inventory item');
         }
@@ -135,7 +135,7 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
   
     console.log("Generate QR Code Button, Getting id: ", selectedId);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/${gettableName}/${id}`);
+      const res = await fetch(`/api/${gettableName}/${id}`);
       if (!res.ok) {
         throw new Error('Failed to fetch inventory item');
       }
@@ -173,7 +173,7 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
                 "Content-Type": "application/json"
             }
         }
-        const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/${gettableName}`;
+        const apiUrlEndpoint = `/api/${gettableName}`;
         const response = await fetch(apiUrlEndpoint, pageData);
         const res = await response.json();
         

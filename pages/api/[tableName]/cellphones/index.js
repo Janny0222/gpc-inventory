@@ -17,7 +17,7 @@ export default async function handler (req, res) {
               values = [`%${searchQuery}%`, `%${searchQuery}%`, `%${searchQuery}%`, itemPerPage, (page - 1) * itemPerPage]
             
             } else {
-              data = `SELECT * FROM ${tableName} LIMIT ? OFFSET ?`;
+              data = `SELECT * FROM ${tableName} ORDER BY date_created desc LIMIT ? OFFSET ?`;
               values = [itemPerPage, (page - 1) * itemPerPage]
               }
             const [inventory, totalCountRows] = await Promise.all([

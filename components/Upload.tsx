@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ChangeEvent } from "react";
+import toast from "react-hot-toast";
 
 export default function Upload({tablename, onDataUploaded}:{tablename: string, onDataUploaded: () => void}){
 
@@ -13,6 +14,7 @@ export default function Upload({tablename, onDataUploaded}:{tablename: string, o
     
     const handleUpload = async () => {
         if (file) {
+          const uploadingToast = toast.loading("Uploading file...", {duration: 6000, position: "top-center"})
           try {
             const formData = new FormData();
             formData.append('file', file);
@@ -23,17 +25,20 @@ export default function Upload({tablename, onDataUploaded}:{tablename: string, o
             });
       
             if (response.ok) {
-              alert('File uploaded successfully!');
+              setTimeout(() => {
+                toast.success('File uploaded successfully!', {id: uploadingToast});
               onDataUploaded()
+              }, 5000)
+              
             } else {
               throw new Error('Failed to upload file');
             }
           } catch (error) {
             console.error('Error uploading file:', error);
-            alert('Error uploading file');
+            toast.error('Error uploading file');
           }
         } else {
-          alert('Please select a file to upload');
+          toast.error('Please select a file to upload');
         }
     };
 

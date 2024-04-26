@@ -39,7 +39,7 @@ const BarcodeModal: React.FC<ModalProps> = ({id, tablename, onClose, company, mo
 useEffect(() => {
         async function fetchInventoryItem() {
           try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/${tablename}/${id}`);
+            const res = await fetch(`/api/${tablename}/${id}`);
             if(!res.ok){
               throw new Error('Failed to fetch inventory item')
             }

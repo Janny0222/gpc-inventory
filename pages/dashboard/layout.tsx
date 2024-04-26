@@ -4,6 +4,7 @@ import Sidebar from "@/components/SidebarToggle";
 import SideBar from "@/components/sidebar";
 import ThemeToggle from "@/components/ui/theme-toggle";
 import { lato } from "@/styles/font";
+import { Toaster } from 'react-hot-toast'
 
 export default function Layout({ children }: {children: React.ReactNode}){
     return (
@@ -21,8 +22,11 @@ export default function Layout({ children }: {children: React.ReactNode}){
                     <SidebarToggle />
                 </div>
                 
-            
-            <div className={` sm:ml-[240px] sm:p-2 ${lato.className}`}>{children}</div>
+
+            <div className={` sm:ml-[240px] sm:p-2 ${lato.className}`}>
+               <Toaster position="bottom-left" reverseOrder={false} />
+            {children}
+            </div>
         {/* </div> */}
         </>
     )
