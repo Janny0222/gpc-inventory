@@ -24,7 +24,7 @@ export default function Layout({ children }: {children: React.ReactNode}){
                 
 
             <div className={` sm:ml-[240px] sm:p-2 ${lato.className}`}>
-               <Toaster position="bottom-left" reverseOrder={false} />
+               <Toaster position="top-center" reverseOrder={false} />
             {children}
             </div>
         {/* </div> */}

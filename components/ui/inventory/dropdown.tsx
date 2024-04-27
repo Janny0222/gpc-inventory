@@ -21,7 +21,7 @@ export default function Dropdown({onCompanyChange}: DropdownProps){
             <option value="">Select</option>
             {tableName.map(company => (
                 
-            <option key={company.name} value={company.name}>{company.name}</option>
+            <option key={company.name} value={company.name}>{company.company}</option>
             
             ))}
         </select>

@@ -49,6 +49,7 @@ async function seedDatabase(){
             supplier VARCHAR(255),
             comment VARCHAR(255),
             date_purchased VARCHAR(255),
+            date_installed VARCHAR(255),
             date_created TIMESTAMP
         )
         `,
@@ -67,6 +68,7 @@ async function seedDatabase(){
             supplier VARCHAR(255),
             comment VARCHAR(255),
             date_purchased VARCHAR(255),
+            date_installed VARCHAR(255),
             date_created TIMESTAMP
         )
         `,
@@ -85,6 +87,7 @@ async function seedDatabase(){
             supplier VARCHAR(255),
             comment VARCHAR(255),
             date_purchased VARCHAR(255),
+            date_installed VARCHAR(255),
             date_created TIMESTAMP
         )
         `,
@@ -103,6 +106,7 @@ async function seedDatabase(){
             supplier VARCHAR(255),
             comment VARCHAR(255),
             date_purchased VARCHAR(255),
+            date_installed VARCHAR(255),
             date_created TIMESTAMP
         )
         `,
@@ -121,6 +125,7 @@ async function seedDatabase(){
             supplier VARCHAR(255),
             comment VARCHAR(255),
             date_purchased VARCHAR(255),
+            date_installed VARCHAR(255),
             date_created TIMESTAMP
         )
         `,
@@ -139,6 +144,7 @@ async function seedDatabase(){
             supplier VARCHAR(255),
             comment VARCHAR(255),
             date_purchased VARCHAR(255),
+            date_installed VARCHAR(255),
             date_created TIMESTAMP
         )
         `,

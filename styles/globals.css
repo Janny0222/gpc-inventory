@@ -21,3 +21,30 @@
 .button-bg {
   background: rgb(166, 187, 141)
 }
+.tooltipText {
+  position: absolute;
+  left: 50%;
+  top: 1;
+  transform: translateX(-62%);
+  color: black;
+  padding: 10px 15px;
+  border-radius: 7px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5 ease;
+}
+
+.tooltipText::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  
+}
+
+.tooltip:hover .tooltipText {
+  top: 0%;
+  visibility: visible;
+  opacity: 1;
+}

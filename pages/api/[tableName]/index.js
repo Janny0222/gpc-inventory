@@ -22,8 +22,8 @@ export default async function handler(req, res) {
       let values = [];
         if(searchQuery){
           data = `SELECT * FROM ${tableName} 
-          WHERE pc_name LIKE ? OR name LIKE ? OR computer_type LIKE ? LIMIT 7`;
-          values = [`%${searchQuery}%`, `%${searchQuery}%`, `%${searchQuery}%`, itemPerPage, (page - 1) * itemPerPage]
+          WHERE pc_name LIKE ? OR name LIKE ? OR mac_address LIKE ? OR computer_type LIKE ? LIMIT 7`;
+          values = [`%${searchQuery}%`, `%${searchQuery}%`, `%${searchQuery}%`, `%${searchQuery}%`, itemPerPage, (page - 1) * itemPerPage]
         } else {
           data = `SELECT * FROM ${tableName} ORDER BY date_created desc LIMIT ? OFFSET ?`
           values = [itemPerPage, (page - 1) * itemPerPage]
@@ -55,10 +55,11 @@ export default async function handler(req, res) {
       const comment = req.body.comment
       const anydesk = req.body.anydesk
       const date_purchased = req.body.date_purchased
+      const date_installed = req.body.date_installed
       // if (!pc_name || !mac_address) {
       //   return res.status(400).json({ error: 'Missing required fields' });
       // }
-      const addInventory = await query(`INSERT INTO ${tableName} (pc_name, name, ip_address, mac_address, computer_type, monitor, specs, department, anydesk, supplier, comment, date_purchased) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [pc_name, name, ip_address, mac_address, computer_type, monitor, specs, department, anydesk, supplier, comment, date_purchased]);
+      const addInventory = await query(`INSERT INTO ${tableName} (pc_name, name, ip_address, mac_address, computer_type, monitor, specs, department, anydesk, supplier, comment, date_purchased, date_installed) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [pc_name, name, ip_address, mac_address, computer_type, monitor, specs, department, anydesk, supplier, comment, date_purchased, date_installed]);
       console.log("this will be shown if success: ",addInventory.insertId)
       let message;
       if (addInventory.insertId) {
@@ -81,7 +82,8 @@ export default async function handler(req, res) {
         anydesk: anydesk,
         supplier: supplier,
         comment: comment,
-        date_purchased: date_purchased
+        date_purchased: date_purchased,
+        date_installed: date_installed
       };
 
       res.status(200).json({ response: { message: message, results: inventory } });
@@ -93,14 +95,14 @@ export default async function handler(req, res) {
 
     try {
       const {id} = req.query;
-      const {pc_name, name, ip_address, mac_address, computer_type, monitor, specs, department, anydesk, supplier, comment, date_purchased} = req.body
+      const {pc_name, name, ip_address, mac_address, computer_type, monitor, specs, department, anydesk, supplier, comment, date_purchased, date_installed} = req.body
 
       if(!id || !pc_name || !mac_address){
         return res.status(400).json({ error: 'Missing required fields' })
       }
       const updateResult = await query
-      (`UPDATE ${tableName} SET pc_name=?, name=?, ip_address=?, mac_address=?, computer_type=?, monitor=?, specs=?, department=?, anydesk=?, supplier=?, comment=?, date_purchased=? WHERE id=?`,
-      [pc_name, name, ip_address, mac_address, computer_type, monitor, specs, department, anydesk, supplier, comment, date_purchased, id]);
+      (`UPDATE ${tableName} SET pc_name=?, name=?, ip_address=?, mac_address=?, computer_type=?, monitor=?, specs=?, department=?, anydesk=?, supplier=?, comment=?, date_purchased=?, date_installed=? WHERE id=?`,
+      [pc_name, name, ip_address, mac_address, computer_type, monitor, specs, department, anydesk, supplier, comment, date_purchased, date_installed, id]);
 
       if(updateResult.affectedRows > 0){
         res.status(200).json({ message: 'success', updatedItem: id })

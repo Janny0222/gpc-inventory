@@ -14,10 +14,11 @@ import Upload from "@/components/Upload";
 import AreaChartView from "@/components/AreaChart";
 import Card, { CardBody, CardHeader } from "@/components/CardLayout";
 import GetBranch from "@/components/ui/inventory/select-company";
-import { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
+import { duration } from "html2canvas/dist/types/css/property-descriptors/duration";
 
 
-export default function SampleRender({searchParams,}:{searchParams?: {search?: string}}) {
+export default function Page({searchParams,}:{searchParams?: {search?: string}}) {
     let search = searchParams?.search || ''
     
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,6 +48,7 @@ export default function SampleRender({searchParams,}:{searchParams?: {search?: s
 
     // Handle selecting company
     const handleCompanyChange = (value: string) => {
+        
         if(value === 'gpc_inventory'){
             setBranch('Balintawak')
         } else if (value === 'lsi_inventory') {
@@ -54,8 +56,10 @@ export default function SampleRender({searchParams,}:{searchParams?: {search?: s
         }
     //    search === " "
         
-        setCompany(value)
-        setTblName(value)
+            setCompany(value)
+            setTblName(value)
+        
+        
     }
     const handleDataUploaded = async () =>{
         try {
@@ -96,11 +100,15 @@ export default function SampleRender({searchParams,}:{searchParams?: {search?: s
     }, [tblName])
 
     const handleBranchChange = (value: string) => {
-        setBranch(value)
-
+        const companyChange = toast.loading('Please wait...', {duration: 3000})
+        
         const branchTableName = branchTableMap[value as keyof typeof branchTableMap] || company;
+    setTimeout(() => {
+        toast.success('Loading successful!', {id: companyChange})
+        setBranch(value)
         setTblName(branchTableName)
         handleDataUploaded()
+    }, 2000)
     }
     console.log("result for console: ", company, tblName);
      return (
@@ -161,6 +169,7 @@ export default function SampleRender({searchParams,}:{searchParams?: {search?: s
                     </Card.Body>
                 </Card>
             </div>}
+            
         </Layout>
         
      )

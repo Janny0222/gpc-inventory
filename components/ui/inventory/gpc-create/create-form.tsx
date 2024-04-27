@@ -22,7 +22,8 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
     anydesk: '',
     supplier: '',
     comment: '',
-    date_purchased: ''
+    date_purchased: '',
+    date_installed: '',
   });
   // const [create, setCreated] = useState(false);
   
@@ -55,7 +56,8 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
           anydesk: formData.anydesk,
           supplier: formData.supplier,
           comment: formData.comment,
-          date_purchased: formData.date_purchased
+          date_purchased: formData.date_purchased,
+          date_installed: formData.date_installed
           
           // tableName: gettableName
         }),
@@ -75,7 +77,8 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
           anydesk: '',
           supplier: '',
           comment: '',
-          date_purchased: ''
+          date_purchased: '',
+          date_installed: '',
         });
         setTimeout(() => {
           onDataSubmitted();
@@ -95,7 +98,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
         {/* Name */}
         <div className="mb-4 col-span-4">
           <label htmlFor="name" className="block mb-2 text-sm font-medium">
-            Name
+            Name:
           </label>
           <input
             type="text"
@@ -112,7 +115,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
         {/* Department */}
         <div className="mb-4 col-span-2">
           <label htmlFor="department" className="block mb-2 text-sm font-medium">
-            Department
+            Department:
           </label>
           <input
             type="text"
@@ -128,7 +131,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
         {/* PC Name */}
         <div className="mb-4 col-span-2">
           <label htmlFor="pcname" className="block mb-2 text-sm font-medium">
-            PC Name
+            PC Name:
           </label>
           <input
             type="text"
@@ -144,7 +147,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
         {/* IP Address*/}
         <div className="mb-4 col-span-2">
           <label htmlFor="ip_address" className="block mb-2 text-sm font-medium">
-            IP Address
+            IP Address:
           </label>
           <input
             type="text"
@@ -159,7 +162,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
         {/* Mac Address */}
         <div className="mb-4 col-span-2">
           <label htmlFor="mac_address" className="block mb-2 text-sm font-medium">
-            Mac Address
+            Mac Address:
           </label>
           <input
             type="text"
@@ -174,7 +177,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
         {/* Monitor */}
         <div className="mb-4 col-span-2">
           <label htmlFor="monitor" className="block mb-2 text-sm font-medium">
-            Monitor
+            Monitor:
           </label>
           <input
             type="text"
@@ -190,7 +193,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
         {/* Supplier */}
         <div className="mb-4 col-span-2">
           <label htmlFor="supplier" className="block mb-2 text-sm font-medium">
-            Supplier
+            Supplier:
           </label>
           <input
             type="text"
@@ -205,7 +208,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
         {/* Computer Type */}
         <div className="mb-4 col-span-2">
           <label htmlFor="computer_type" className="block mb-2 text-sm font-medium">
-            Computer Type
+            Computer Type:
           </label>
           <input
             type="text"
@@ -220,7 +223,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
         {/* Anydesk */}
         <div className="mb-4 col-span-2">
           <label htmlFor="anydesk" className="block mb-2 text-sm font-medium">
-            Anydesk
+            Anydesk:
           </label>
           <textarea
             id="anydesk"
@@ -234,7 +237,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
         {/* Specs */}
         <div className="mb-4 col-span-2">
           <label htmlFor="specs" className="block mb-2 text-sm font-medium">
-            Specs
+            Specs:
           </label>
           <textarea
             id="specs"
@@ -247,8 +250,8 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
         </div>
         {/* Comments */}
         <div className="mb-4 col-span-2">
-          <label htmlFor="comment" className="block mb-2 text-sm font-medium">
-            Comments
+          <label htmlFor="comment" className="block  mb-2 text-sm font-medium">
+            Comments:
           </label>
           <textarea
             id="comment"
@@ -260,15 +263,29 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
           />
         </div>
         {/* Date Purchased */}
-        <div className="mb-4 col-span-6">
+        <div className="mb-4 col-span-3">
           <label htmlFor="date_purchased" className="block mb-2 text-sm font-medium">
-            Date Purchased
+            Date Purchased:
           </label>
           <input
             type="date"
             id="date_purchased"
             name="date_purchased"
             value={formData.date_purchased}
+            onChange={handleChange}
+            className="block w-full px-3 py-2 text-sm border border-gray-600/35 rounded-md focus:outline-none focus:border-gray-400 shadow-md"
+          />
+        </div>
+        {/* Date Installed */}
+        <div className="mb-4 col-span-3">
+          <label htmlFor="date_installed" className="block mb-2 text-sm font-medium">
+            Date Installed:
+          </label>
+          <input
+            type="date"
+            id="date_installed"
+            name="date_installed"
+            value={formData.date_installed}
             onChange={handleChange}
             className="block w-full px-3 py-2 text-sm border border-gray-600/35 rounded-md focus:outline-none focus:border-gray-400 shadow-md"
           />

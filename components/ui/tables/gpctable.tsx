@@ -2,12 +2,13 @@
 'use client'
 import { ChangeEvent, useEffect, useState } from "react";
 import { InventoryList } from "@/lib/definition";
-import { QRGeneratorButton, UpdateInventory } from "../../../components/ui/buttons";
+import { QRGeneratorButton, UpdateInventory, ViewInventory } from "../../../components/ui/buttons";
 import  {tableName}  from "@/lib/company";
 import EditModal from "@/components/EditInventoryModal";
 import CustomPagination from "@/components/Pagination";
 import html2canvas from "html2canvas";
 import BarcodeModal from "@/components/QRCodeModal";
+import ViewModal from "@/components/ViewInventoryModal";
 
 interface GPCInventoryTableProps {
   gettableName: string;
@@ -21,6 +22,7 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null)
   const [modalData, setModalData] = useState<any>(null)
   const [isQRModalOpen, setIsQRModalOpen] = useState(false);
@@ -127,8 +129,12 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
   const closeModal = () => {
       setIsModalOpen(false)
       setSelectedId(null)
+      setIsViewModalOpen(false)
   }
-
+  const viewModal = (id: number) => {
+    setIsViewModalOpen(true)
+    setSelectedId(id);
+  }
   const qrModal = async (id: number) => {
     setSelectedId(id);
     setIsQRModalOpen(true);
@@ -207,11 +213,12 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
                   Supplier
                 </th>
                 <th scope="col" className="px-3 py-1 font-extrabold">
-                  Date Purchased
+                  Date Installed
                 </th>
-                <th scope="col" className="py-3 pl-6 pr-3">
+                <th scope="col" className="py-3 pl-6 pr-3 text-center">
                   Action
                 </th>
+                
               </tr>
             </thead>
             <tbody className="bg-white ">
@@ -219,7 +226,8 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
                 <tr key={inventory.id}
                   className="w-full shadow-md shadow-gray-700 rounded border-green-500 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                 >
-                  <td className=" pl-6 pr-3 whitespace-nowrap">
+                  <td className=" pl-6 pr-3 whitespace-nowrap relative cursor-pointer tooltip" data-tooltip="Text Here!">
+                    <span className="tooltipText">View</span>
                     <div className="flex items-center gap-3">
                       <p>{inventory.pc_name}</p>
                       
@@ -244,11 +252,12 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
                     {inventory.supplier}
                   </td>
                   <td className="px-3 py-3 whitespace-nowrap">
-                    {inventory.date_purchased}
+                    {inventory.date_installed}
                   </td>
-                  <td className="py-3 pl-6 pr-3 whitespace-nowrap">
-                    <div className="flex items-center gap-3 edit-button">
+                  <td className="px-3 py-3 whitespace-nowrap">
+                    <div className="flex items-center justify-center gap-3 edit-button">
                       <UpdateInventory id={inventory.id} onClick={openModal}/>
+                      <ViewInventory id={inventory.id} onClick={viewModal} />
                       <QRGeneratorButton 
                         id={inventory.id} 
                         onClick={qrModal}
@@ -258,14 +267,20 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
                   </td>
                 </tr>
               ))}
+              
             </tbody>
           </table>
+         
+          {isModalOpen && (
+                        <EditModal onClose={closeModal} onSubmit={handleFormSubmit} id={selectedId} tablename={gettableName}/>
+                    )} 
+          {isViewModalOpen && (
+                        <ViewModal onClose={closeModal} id={selectedId} tablename={gettableName}/>
+          )} 
           {isQRModalOpen && (
                       <BarcodeModal modalData={modalData} tablename={gettableName} id={selectedId} onClose={closeQrModal} company={company}/>
                     )}
-          {isModalOpen && (
-                        <EditModal onClose={closeModal} onSubmit={handleFormSubmit} id={selectedId} tablename={gettableName}/>
-                    )}
+
         </div>{!queryvalue && totalPages > 0 &&
         <CustomPagination
           pageCount={totalPages}

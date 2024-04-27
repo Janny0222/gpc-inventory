@@ -24,7 +24,8 @@ const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id}) => 
     anydesk: '',
     comment: '',
     supplier: '',
-    date_purchased: ''
+    date_purchased: '',
+    date_installed: ''
   });
   // handle for changing the value in inputs
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -78,6 +79,7 @@ const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id}) => 
           comment: formData.comment,
           supplier: formData.supplier,
           date_purchased: formattedDate,
+          date_installed: formData.date_installed,
           // tableName: gettableName
         }),
       };
@@ -99,7 +101,8 @@ const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id}) => 
           anydesk: '',
           comment: '',
           supplier: '',
-          date_purchased: ''
+          date_purchased: '',
+          date_installed: '',
         });
         
         setTimeout(() => {
@@ -314,7 +317,7 @@ const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id}) => 
                 />
               </div>
               {/* Date Purchased */}
-              <div className="mb-4 col-span-6">
+              <div className="mb-4 col-span-3">
                 <label htmlFor="date_purchased" className="block mb-2 text-sm font-medium">
                   Date Purchased
                 </label>
@@ -323,6 +326,20 @@ const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id}) => 
                   id="date_purchased"
                   name="date_purchased"
                   value={formData.date_purchased}
+                  onChange={handleChange}
+                  className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
+                />
+              </div>
+              {/* Date Purchased */}
+              <div className="mb-4 col-span-3">
+                <label htmlFor="date_installed" className="block mb-2 text-sm font-medium">
+                  Date Installed
+                </label>
+                <input
+                  type="date"
+                  id="date_installed"
+                  name="date_installed"
+                  value={formData.date_installed}
                   onChange={handleChange}
                   className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
                 />
