@@ -1,11 +1,12 @@
 import React from 'react';
 import { BanknotesIcon, ClockIcon, UserGroupIcon, InboxIcon, ComputerDesktopIcon, DevicePhoneMobileIcon } from '@heroicons/react/24/outline';
+import { Laptop2, Computer, Smartphone } from 'lucide-react';
 import { lusitana } from '@/styles/font';
 
 const iconMap = {
-  laptop: BanknotesIcon,
-  desktop: ComputerDesktopIcon,
-  cellphone: DevicePhoneMobileIcon
+  laptop: Laptop2,
+  desktop: Computer,
+  cellphone: Smartphone
 };
 
 const Card = ({

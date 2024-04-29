@@ -47,7 +47,7 @@ export default function AreaChartView({tableName, mobileTable}: {tableName: stri
     const [gsrcMobileToCount, setGsrcMobileToCount] = useState(null)
 
 
-console.log(" Area Chart GPC Data to count", gpcDataToCount)
+// console.log(" Area Chart GPC Data to count", gpcDataToCount)
 const fetchData = async () => {
     try {
         const [gpcDesktop, gpcLaptop, gpcMac, gpcMobile, lsiDesktop, lsiLaptop, lsiMac, lsiMobile, gkcDesktop, gkcLaptop, gkcMac, gkcMobile, gsrcDesktop, gsrcLaptop, gsrcMac, gsrcMobile] = await Promise.all([
@@ -111,7 +111,7 @@ const fetchData = async () => {
         setGsrcLaptopToCount(gsrclaptopData.count)
         setGsrcMobileToCount(gsrcMobileData.count)
         
-        console.log("counter for mac", gpcmacData)
+        // console.log("counter for mac", gpcmacData) 
       } catch (error) {
         console.error('Error fetching data', error);
         

@@ -85,20 +85,20 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
       }
       const response = await res.json();
       if (response.response.message === "success") {
-        setFormData({
-          assigned_to: '',
-          department: '',
-          brand: '',
-          model_specs: '',
-          imei: '',
-          number: '',
-          email_password: '',
-          serial_number: '',
-          inclusion: '',
-          date_issued: '',
-          date_purchased: ''
-        });
         setTimeout(() => {
+          setFormData({
+            assigned_to: '',
+            department: '',
+            brand: '',
+            model_specs: '',
+            imei: '',
+            number: '',
+            email_password: '',
+            serial_number: '',
+            inclusion: '',
+            date_issued: '',
+            date_purchased: ''
+          });
           onSubmit();
           toast.success('Data has been successfully updated.', {id: editMobileToast})
           }, 3000)
@@ -110,7 +110,7 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
   }
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      console.log('Key pressed: ', event.key)
+      // console.log('Key pressed: ', event.key)
       if(event.key === 'Escape'){
         onClose()
       }

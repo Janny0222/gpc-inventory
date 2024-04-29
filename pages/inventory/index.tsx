@@ -72,9 +72,6 @@ export default function Page({searchParams,}:{searchParams?: {search?: string}})
         }
     }
     
-    console.log(branch)
-    console.log(tblName)
-    console.log(branchTable)
     // modal for add
     const handleFormSubmit = async () =>{
         closeModal();
@@ -100,17 +97,17 @@ export default function Page({searchParams,}:{searchParams?: {search?: string}})
     }, [tblName])
 
     const handleBranchChange = (value: string) => {
-        const companyChange = toast.loading('Please wait...', {duration: 3000})
-        
         const branchTableName = branchTableMap[value as keyof typeof branchTableMap] || company;
-    setTimeout(() => {
-        toast.success('Loading successful!', {id: companyChange})
-        setBranch(value)
-        setTblName(branchTableName)
-        handleDataUploaded()
-    }, 2000)
+        const companyChange = toast.loading('Please wait...', {duration: 3000})
+        console.log(inventories)
+        console.log(branchTableName)
+        setTimeout(() => {
+            toast.success('Loading successful!', {id: companyChange})
+            setBranch(value)
+            setTblName(branchTableName)
+            dataUploaderHandler()
+        }, 2000)
     }
-    console.log("result for console: ", company, tblName);
      return (
         
         <Layout>

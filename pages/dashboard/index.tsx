@@ -63,7 +63,6 @@ export default function Page() {
   const handleTrigger = () =>{
    setTriggerValue(triggerValue === 'graph' ? 'detail' : 'graph')
   }
-  console.log(triggerValue);
   
   return (
     <Layout>

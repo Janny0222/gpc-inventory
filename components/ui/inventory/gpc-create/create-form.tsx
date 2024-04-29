@@ -9,7 +9,7 @@ interface FormProps {
 }
 
 export default function Form({ gettableName, onDataSubmitted }: FormProps) {
-  console.log("This is from create-form", gettableName)
+  // console.log("This is from create-form", gettableName)
   const [formData, setFormData] = useState({
     pcname: '',
     name: '',
@@ -65,22 +65,22 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
       const res = await fetch(`/api/${gettableName}`, postInventory);
       const response = await res.json();
       if (response && response.response && response.response.message === "success") {
-        setFormData({
-          pcname: '',
-          name: '',
-          ip_address: '',
-          mac_address: '',
-          computer_type: '',
-          monitor: '',
-          department: '',
-          specs: '',
-          anydesk: '',
-          supplier: '',
-          comment: '',
-          date_purchased: '',
-          date_installed: '',
-        });
         setTimeout(() => {
+          setFormData({
+            pcname: '',
+            name: '',
+            ip_address: '',
+            mac_address: '',
+            computer_type: '',
+            monitor: '',
+            department: '',
+            specs: '',
+            anydesk: '',
+            supplier: '',
+            comment: '',
+            date_purchased: '',
+            date_installed: '',
+          });
           onDataSubmitted();
           toast.success('Data has been successfully added', {id: addInventoryToast})
         }, 3000)

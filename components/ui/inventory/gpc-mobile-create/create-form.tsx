@@ -59,21 +59,20 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
       const res = await fetch(`/api/${gettableName}/cellphones`, postInventory);
       const response = await res.json();
       if (response && response.response && response.response.message === "success") {
-        
-        setFormData({
-        assigned_to: '',
-        department: '',
-        brand: '',
-        model_specs: '',
-        imei: '',
-        number: '',
-        email_password: '',
-        serial_number: '',
-        inclusion: '',
-        date_issued: '',
-        date_purchased: ''
-        });
         setTimeout(() => {
+          setFormData({
+          assigned_to: '',
+          department: '',
+          brand: '',
+          model_specs: '',
+          imei: '',
+          number: '',
+          email_password: '',
+          serial_number: '',
+          inclusion: '',
+          date_issued: '',
+          date_purchased: ''
+          });
           onDataSubmitted();
           toast.success("Data has been successfully added", {id: addToastLoading});
         }, 3000)

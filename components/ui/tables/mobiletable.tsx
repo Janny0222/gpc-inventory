@@ -88,7 +88,7 @@ const handlePageClick = async (selected: { selected: number }) => {
     setMobileInventory(data.results)
     setTotalPages(data.totalPages)
     } else if (newPage < currentPage) {
-    const apiUrlEndpoint = `/cellphones?page=${newPage}`;
+    const apiUrlEndpoint = `/api/${getTableName}/cellphones?page=${newPage}`;
     const response = await fetch(apiUrlEndpoint);
     const data = await response.json()
     setMobileInventory(data.results)

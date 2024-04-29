@@ -91,7 +91,7 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
   const openModal = async (id: number) =>{
     setSelectedId(id);
     setIsModalOpen(true);
-    console.log(selectedId)
+    // console.log(selectedId)
       try {
         const res = await fetch(`/api/${gettableName}/${id}`)
         if(!res.ok){
@@ -139,7 +139,6 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
     setSelectedId(id);
     setIsQRModalOpen(true);
   
-    console.log("Generate QR Code Button, Getting id: ", selectedId);
     try {
       const res = await fetch(`/api/${gettableName}/${id}`);
       if (!res.ok) {
@@ -222,12 +221,15 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
               </tr>
             </thead>
             <tbody className="bg-white ">
+              {inventories.length === null ? (
+                <span> No data found... </span>
+              ) : (
+                <>
               {inventories?.map((inventory) => (
                 <tr key={inventory.id}
                   className="w-full shadow-md shadow-gray-700 rounded border-green-500 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                 >
-                  <td className=" pl-6 pr-3 whitespace-nowrap relative cursor-pointer tooltip" data-tooltip="Text Here!">
-                    <span className="tooltipText">View</span>
+                  <td className=" pl-6 pr-3 whitespace-nowrap relative cursor-pointer">
                     <div className="flex items-center gap-3">
                       <p>{inventory.pc_name}</p>
                       
@@ -267,7 +269,8 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
                   </td>
                 </tr>
               ))}
-              
+              </>
+            )}
             </tbody>
           </table>
          
@@ -281,7 +284,8 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
                       <BarcodeModal modalData={modalData} tablename={gettableName} id={selectedId} onClose={closeQrModal} company={company}/>
                     )}
 
-        </div>{!queryvalue && totalPages > 0 &&
+        </div>
+        {!queryvalue && totalPages > 0 &&
         <CustomPagination
           pageCount={totalPages}
           currentPage={currentPage}

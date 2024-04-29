@@ -11,7 +11,7 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ onClose, companyName, onSubmit, children, tablename }) => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      console.log('Key pressed: ', event.key)
+      // console.log('Key pressed: ', event.key)
       if(event.key === 'Escape'){
         onClose()
       }

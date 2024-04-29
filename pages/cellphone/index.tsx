@@ -11,11 +11,9 @@ import Form from "@/components/ui/inventory/gpc-mobile-create/create-form";
 import Modal from "@/components/modal";
 import { MobileInventoryList } from "@/lib/definition";
 import Upload from "@/components/Upload";
-import ModalSample from "@/components/SampleModal";
 
 export default function Page(){
 const [isModalOpen, setIsModalOpen] = useState(false);
-const [isToggleOpen, setIsToggleOpen] = useState(false);
 const [value, setValue] = useState<string>("")
 const [tablename, setTableName] = useState<string>("")
 const [mobileInventory, setMobileInventory] = useState<MobileInventoryList[]>([])
@@ -58,10 +56,6 @@ const [dataUploaderHandler, setDataUploaderHandler] = useState<() => void>(() =>
        } 
     }, [tablename, getTable])
     
-    const togglePopUp = () => {
-        setIsToggleOpen(!isToggleOpen)
-    }
-    
     
     return (
         <Layout>
@@ -87,19 +81,6 @@ const [dataUploaderHandler, setDataUploaderHandler] = useState<() => void>(() =>
                         </Modal>
                     )}
             </div>
-
-            {/* <Fragment>
-                <div className="flex justify-center items-end relative top-12">
-                    <button
-                    onClick={() => setIsToggleOpen(true)}
-                    className="border border-collapse rounded shadow-xl relative px-5 my-2 focus:outline-none font-medium">
-                        POP
-                    </button>
-                </div>
-                <ModalSample isVisible={isToggleOpen} onClose={() => 
-                    setIsToggleOpen(false)
-                }/>
-            </Fragment> */}
         </Layout>
     )
 }

@@ -27,11 +27,10 @@ export default function OldMobile() {
             }
         }
         fetchOldUnit(currentPage)
-        console.log("this is current page inside useEffect: ", currentPage)
+        // console.log("this is current page inside useEffect: ", currentPage)
     }, [currentPage])
     
     const handlePageClick = async (selected: { selected: number }) => {
-        console.log("this is current page inside handlePageClick: ", currentPage);
         try {
             const newPage = selected.selected + 1;
             const apiUrlEndpoint = `/api/mobile-oldunit?page=${newPage}`; // Changed

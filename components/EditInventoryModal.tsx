@@ -89,26 +89,24 @@ const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id}) => 
       }
       const response = await res.json();
       if (response.response.message === "success") {
-        setFormData({
-          pc_name: '',
-          name: '',
-          ip_address: '',
-          mac_address: '',
-          computer_type: '',
-          monitor: '',
-          specs: '',
-          department: '',
-          anydesk: '',
-          comment: '',
-          supplier: '',
-          date_purchased: '',
-          date_installed: '',
-        });
-        
         setTimeout(() => {
+          setFormData({
+            pc_name: '',
+            name: '',
+            ip_address: '',
+            mac_address: '',
+            computer_type: '',
+            monitor: '',
+            specs: '',
+            department: '',
+            anydesk: '',
+            comment: '',
+            supplier: '',
+            date_purchased: '',
+            date_installed: '',
+          });
         onSubmit();
         toast.success('Data has been successfully updated.', {id: editInventoryToast})
-        
         }, 3000)
       }
     } catch (error) {
@@ -119,7 +117,7 @@ const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id}) => 
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      console.log('Key pressed: ', event.key)
+      // console.log('Key pressed: ', event.key)
       if(event.key === 'Escape'){
         onClose()
       }
