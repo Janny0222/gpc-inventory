@@ -195,7 +195,7 @@ const closeModal = () => {
                     </div>
                   </td>
                   <td className="px-3 py-3 whitespace-nowrap">
-                    {accounts.notes}
+                    <div className="flex items-center justify-center gap-3">{accounts.notes}</div>
                   </td>
                   <td className="px-3 py-3 whitespace-nowrap">
                     <div className="flex items-center justify-center edit-button">

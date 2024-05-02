@@ -42,14 +42,12 @@ const EditAccountModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, i
         const data = await res.json();
         const accountData = data.results[0];
         setFormData(data.results[0])
-
-        setGetStatus(accountData.is_active_id.toString() || '' )
       } catch(error) {
         console.error('Error fetching inventory item:', error)
       }
     }
     fetchAccountTable()
-    console.log("Result of the status inside fetchAccount: ", status)
+    console.log("Result of the status inside fetchAccount: ", getstatus)
   }, [tablename, id, getstatus])
 
   // this function to be called upon clicking the save button in edit modal and automaticall save in the database and show in the table
@@ -68,7 +66,7 @@ const EditAccountModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, i
           department: formData.department,
           username: formData.username,
           password: formData.password,
-          is_active_id: status,
+          is_active_id: formData.is_active_id,
           notes: formData.notes
         }),
       };
@@ -221,7 +219,7 @@ const EditAccountModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, i
                 onChange={handleChangeStatus}
                 className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
                 >
-                  {status.map(status => (
+                  {status.map((status) => (
                   <option key={status.name} value={status.value}>{status.name}</option>
                   ))}
                 </select>
