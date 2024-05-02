@@ -1,9 +1,9 @@
 
 export const tableName = [
-        {name: 'gpc_inventory', company: 'Greenstone Packaging Corporation.', table: 'gpc_mobile_inventory', displayName: "GPC"},
-        {name: 'gkc_inventory', company: 'Greenkraft Corporation.', table: 'gkc_mobile_inventory', displayName: "GKC"},
-        {name: 'lsi_inventory', company: 'Lamitek Systems Incorporated.', table: 'lsi_mobile_inventory', displayName: "LSI"},
-        {name: 'gsrc_inventory', company: 'Green Siam Resources Corporation.', table: 'gsrc_mobile_inventory', displayName: "GSRC"},
+        {name: 'gpc_inventory', accounts: 'gpc_accounts', company: 'Greenstone Packaging Corporation.', table: 'gpc_mobile_inventory', displayName: "GPC"},
+        {name: 'gkc_inventory', accounts: 'gkc_accounts',company: 'Greenkraft Corporation.', table: 'gkc_mobile_inventory', displayName: "GKC"},
+        {name: 'lsi_inventory', accounts: 'lsi_accounts',company: 'Lamitek Systems Incorporated.', table: 'lsi_mobile_inventory', displayName: "LSI"},
+        {name: 'gsrc_inventory', accounts: 'gsrc_accounts',company: 'Green Siam Resources Corporation.', table: 'gsrc_mobile_inventory', displayName: "GSRC"},
     ]
 
 export const allTables = [
@@ -30,3 +30,8 @@ export const branchTableMap: { [key: string]: string } = {
     Valenzuela: 'lsi_inventory',
     Canlubang: 'lsi_can_inventory'
 };
+
+export const status = [
+    {name: "Active", value: 1},
+    {name: "Inactive", value: 2}
+]

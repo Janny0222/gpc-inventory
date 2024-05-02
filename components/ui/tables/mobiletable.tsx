@@ -1,5 +1,5 @@
 'use client'
-import EditMobileModal from "@/components/EditMobileModal";
+import EditMobileModal from "@/components/ui/inventory/edit-data/EditMobileModal";
 import { MobileInventoryList } from "@/lib/definition"
 import { useEffect, useState } from "react"
 import { QRGeneratorButton, UpdateMobileInventory } from "../../../components/ui/buttons";
@@ -14,7 +14,7 @@ interface MobileInventoryProps {
     onDataSubmitted: () => void;
 }
 
-export default function GPCMobileInventory ({getTableName, onDataSubmitted}: MobileInventoryProps) {
+export default function MobileTableInventory ({getTableName, onDataSubmitted}: MobileInventoryProps) {
 
 const [mobileInventory, setMobileInventory] = useState<MobileInventoryList[]>([])
 const [selectedId, setSelectedId] = useState<number | null>(null)
@@ -22,6 +22,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
 const [isQRModalOpen, setIsQRModalOpen] = useState(false);
 const [totalPages, setTotalPages] = useState(1);
 const [currentPage, setCurrentPage] = useState(1);
+const [duplicate, setDuplicate] = useState<MobileInventoryList[]>([])
 const [modalData, setModalData] = useState<any>(null)
 
 const getQuery = new URLSearchParams(window.location.search)
@@ -39,6 +40,7 @@ async function fetchMobile () {
       const apiUrlEndpoint = `/api/${getTableName}/cellphones/?page=${currentPage}`;
       const response = await fetch(apiUrlEndpoint);
       const data = await response.json()
+      
       setMobileInventory(data.results);
       setCurrentPage(1);
       setTotalPages(data.totalPages)
@@ -60,6 +62,8 @@ useEffect(() => {
         const apiUrlEndpoint = `/api/${getTableName}/cellphones`;
         const response = await fetch(apiUrlEndpoint);
         const data = await response.json()
+        const get_serial = data.data?.map((res: { serial_number: any; }) => res.serial_number)
+        setDuplicate(get_serial)
         setMobileInventory(data.results);
         setCurrentPage(1);
         setTotalPages(data.totalPages)
@@ -70,7 +74,7 @@ useEffect(() => {
   }
         fetchMobileInventory()
 }, [getTableName, onDataSubmitted, queryValue])
-
+console.log("Result for duplicate: ", duplicate)
 const handleFormSubmit = async () => {
   closeModal();
   fetchMobile();
@@ -161,10 +165,10 @@ const closeModal = () => {
        return (  
         <div className="overflow-x-auto sm:p-2">
           <div className="inline-block min-w-full align-middle">
-            <div className="p-2 rounded-lg bg-black md:pt-0">
+            <div className="p-2 rounded-lg md:pt-0">
               <table className="min-w-full md:table">
-                <thead className="text-sm text-left text-white rounded-lg">
-                  <tr>
+                <thead className="text-sm text-left bg-black text-white rounded-lg">
+                  <tr className="">
                     <th scope="col" className="px-4 py-1 font-extrabold">
                       Assigned To
                     </th>
@@ -184,7 +188,7 @@ const closeModal = () => {
                       Serial Number
                     </th>
                     <th scope="col" className="px-3 py-1 font-extrabold">
-                      Inclusion
+                      Number
                     </th>
                     <th scope="col" className="px-3 py-1 font-extrabold">
                       Date Issued
@@ -196,62 +200,63 @@ const closeModal = () => {
                 </thead>
                 
                 <tbody className="bg-white cursor-pointer">
-                  
-                  {mobileInventory?.map((inventory) => (
-                    <tr key={inventory.id}
-                      className="w-full shadow-md shadow-gray-700 rounded border-green-500 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
-                    >
-                      <td className="py-3 pl-6 pr-3 whitespace-nowrap" onClick={() => viewDetails(inventory.id)}>
-                          <p>{inventory.assigned_to}</p>
-                      </td>
-                      <td className="px-3 py-3 whitespace-nowrap">
-                        {inventory.department}
-                      </td>
-                      <td className="px-3 py-3 whitespace-nowrap">
-                        {inventory.brand}
-                      </td>
-                      <td className="px-3 py-3 whitespace-nowrap">
-                        {inventory.model_specs?.split(",").map((item, index) => (
-                          <div key={index}>
-                            {item.trim()}
-                          </div>
-                        ))}
-                      </td>
-                      <td className="px-3 py-3 whitespace-nowrap">
-                      {inventory.imei?.split("IMEI").map((imei, index) => (
-                          index > 0 && (
-                              <div key={index}>
-                                  IMEI{imei.trim()}
-                              </div>
-                          )
-                      ))}
-                      </td>
-                      <td className="px-3 py-3 whitespace-nowrap">
-                        {inventory.serial_number}
-                      </td>
-                      <td className="px-3 py-3 whitespace-nowrap">
-                      {inventory.inclusion?.split(",").map((item, index) => (
-                          <div key={index}>
+                  {mobileInventory.length === null || mobileInventory.length === 0 ? (
+                    <span> No data found... </span>
+                  ): (
+                    <>
+                    {mobileInventory?.map((inventory) => (
+                      <tr key={inventory.id}
+                        className="w-full shadow-md shadow-gray-700 rounded border-green-500 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg hover:bg-gray-200 hover:border-t-0"
+                      >
+                        <td className="py-3 pl-6 pr-3 whitespace-nowrap" onClick={() => viewDetails(inventory.id)}>
+                            <p>{inventory.assigned_to}</p>
+                        </td>
+                        <td className="px-3 py-3 whitespace-nowrap">
+                          {inventory.department}
+                        </td>
+                        <td className="px-3 py-3 whitespace-nowrap">
+                          {inventory.brand}
+                        </td>
+                        <td className="px-3 py-3 whitespace-nowrap">
+                          {inventory.model_specs?.split(",").map((item, index) => (
+                            <div key={index}>
                               {item.trim()}
+                            </div>
+                          ))}
+                        </td>
+                        <td className="px-3 py-3 whitespace-nowrap">
+                        {inventory.imei?.split("IMEI").map((imei, index) => (
+                            index > 0 && (
+                                <div key={index}>
+                                    IMEI{imei.trim()}
+                                </div>
+                            )
+                        ))}
+                        </td>
+                        <td className="px-3 py-3 whitespace-nowrap">
+                          {inventory.serial_number}
+                        </td>
+                        <td className="px-3 py-3 whitespace-nowrap">
+                        {inventory.number}
+                        </td>
+                        <td className="px-3 py-3 whitespace-nowrap">
+                          {inventory.date_issued}
+                        </td>
+                        <td className="py-3 pl-6 pr-3 whitespace-nowrap">
+                          <div className="flex items-center gap-3">
+                            <UpdateMobileInventory id={inventory.id} onClick={openModal}/>
+                            {/* <MobileEditModal /> */}
+                            <QRGeneratorButton 
+                          id={inventory.id} 
+                          onClick={qrModal}
+                          onSave={handleSave}
+                        />
                           </div>
-                      ))}
-                      </td>
-                      <td className="px-3 py-3 whitespace-nowrap">
-                        {inventory.date_issued}
-                      </td>
-                      <td className="py-3 pl-6 pr-3 whitespace-nowrap">
-                        <div className="flex items-center gap-3">
-                          <UpdateMobileInventory id={inventory.id} onClick={openModal}/>
-                          {/* <MobileEditModal /> */}
-                          <QRGeneratorButton 
-                        id={inventory.id} 
-                        onClick={qrModal}
-                        onSave={handleSave}
-                      />
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
+                        </td>
+                      </tr>
+                    ))}
+                    </>
+                  )}
                 </tbody>
               </table>
                     {isQRModalOpen && (

@@ -8,6 +8,7 @@ export default function OldMobile() {
     const [inventories, setInventories] = useState<fetchMobileInventoryList[]>([]);
     const [totalPages, setTotalPages] = useState(1);
     const [currentPage, setCurrentPage] = useState(1);
+    const [isValid, setIsValid] = useState(false);
 
    
     useEffect(() => {
@@ -16,6 +17,8 @@ export default function OldMobile() {
                 const response = await fetch(`/api/mobile-oldunit?page=${page}`)
                 if(response.ok){
                     const data = await response.json()
+                    const get_date = data?.inventory.map((date: any) => date.date_issued)
+                    console.log(get_date);
                     setInventories(data.results)
                     setTotalPages(data.totalPages)
                     setCurrentPage(page)
@@ -126,6 +129,7 @@ export default function OldMobile() {
                             </tr>
                         </thead>
                         <tbody className="bg-white">
+                          
                   {inventories.map((inventory) => (
                     <tr key={inventory.id + inventory.source_table}
                       className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
@@ -154,7 +158,7 @@ export default function OldMobile() {
                         {inventory.date_issued}
                       </td>
                       <td className="px-3 py-3 whitespace-nowrap">
-                        {calculateYearsAge(inventory.date_issued)}
+                        {calculateYearsAge(inventory.date_issued)} 
                       </td>
                     </tr>
                   ))}

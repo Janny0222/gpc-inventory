@@ -8,7 +8,8 @@ interface FormProps {
 }
 
 export default function Form({ gettableName, onDataSubmitted }: FormProps) {
-  
+  const [isDuplicate, setIsDuplicate] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [formData, setFormData] = useState({
     assigned_to: '',
     department: '',
@@ -20,6 +21,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
     serial_number: '',
     inclusion: '',
     date_issued: '',
+    comment: '',
     date_purchased: ''
   });
   // const [create, setCreated] = useState(false);
@@ -30,6 +32,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
       ...prevState,
       [name]: value,
     }));
+   
   };
   
   async function addMobileInventory(e: FormEvent<HTMLFormElement>) {
@@ -51,6 +54,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
         email_password: formData.email_password,
         serial_number: formData.serial_number,
         inclusion: formData.inclusion,
+        comment: formData.comment,
         date_issued: formData.date_issued,
         date_purchased: formData.date_purchased
           // tableName: gettableName
@@ -70,6 +74,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
           email_password: '',
           serial_number: '',
           inclusion: '',
+          comment: '',
           date_issued: '',
           date_purchased: ''
           });
@@ -77,6 +82,10 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
           toast.success("Data has been successfully added", {id: addToastLoading});
         }, 3000)
         
+      } else {
+        setIsDuplicate(true)
+        setErrorMessage(response.error)
+        toast.error('Duplicate Serial Number', {id: addToastLoading})
       }
     } catch (error) {
       console.error('Error adding inventory:', error);
@@ -160,9 +169,12 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
             name="serial_number"
             value={formData.serial_number}
             onChange={handleChange}
-            className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
+            className={`block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md ${!isDuplicate ? 'text-black' : 'text-red-700'}`}
             placeholder="Enter Serial Number"
           />
+           {isDuplicate && (
+            <span className='text-red-700 text-sm'>{errorMessage} Department</span>
+          )}
         </div>
 
         {/* Email and Password */}
@@ -196,7 +208,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
         </div>
         
         {/* Inclusion */}
-        <div className="mb-4 col-span-3">
+        <div className="mb-4 col-span-2">
           <label htmlFor="inclusion" className="block mb-2 text-sm font-semibold">
             Inclusion
           </label>
@@ -211,7 +223,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
         </div>
 
         {/* Model Specs */}
-        <div className="mb-4 col-span-3">
+        <div className="mb-4 col-span-2">
           <label htmlFor="model_specs" className="block mb-2 text-sm font-semibold">
             Model / Specs
           </label>
@@ -222,6 +234,20 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
             onChange={handleChange}
             className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
             placeholder="Enter Specs"
+          />
+        </div>
+        {/* Comment */}
+        <div className="mb-4 col-span-2">
+          <label htmlFor="comment" className="block mb-2 text-sm font-semibold">
+            Comment
+          </label>
+          <textarea
+            id="comment"
+            name="comment"
+            value={formData.comment}
+            onChange={handleChange}
+            className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
+            placeholder="Enter Comment"
           />
         </div>
         {/* Date Issued */}

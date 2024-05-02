@@ -2,18 +2,18 @@
 import React, { useState, useEffect, use } from "react";
 import  {branchName, branchTableMap, tableName} from "@/lib/company";
 import { lusitana } from "@/styles/font";
-import GPCInventoryTable from "@/components/ui/tables/gpctable";
-import Dropdown from "@/components/ui/inventory/dropdown";
-import Layout from "../dashboard/layout";
+import GPCInventoryTable from "@/components/ui/tables/inventorytable";
+import Dropdown from "@/components/ui/dropdowns/dropdown";
+import Layout from "../layout";
 import { CreateInventory } from "@/components/ui/buttons";
 import Modal from "@/components/modal";
-import Form from "@/components/ui/inventory/gpc-create/create-form";
+import Form from "@/components/ui/inventory/create-data/CreateInventory";
 import { InventoryList } from "@/lib/definition";
 import Search from "@/components/ui/search";
 import Upload from "@/components/Upload";
 import AreaChartView from "@/components/AreaChart";
 import Card, { CardBody, CardHeader } from "@/components/CardLayout";
-import GetBranch from "@/components/ui/inventory/select-company";
+import GetBranch from "@/components/ui/dropdowns/select-company";
 import toast from "react-hot-toast";
 import { duration } from "html2canvas/dist/types/css/property-descriptors/duration";
 
@@ -60,16 +60,6 @@ export default function Page({searchParams,}:{searchParams?: {search?: string}})
             setTblName(value)
         
         
-    }
-    const handleDataUploaded = async () =>{
-        try {
-            const apiUrlEndpoint = `/api/${tblName}`
-            const response = await fetch(apiUrlEndpoint);
-            const data = await response.json()
-            setInventories(data.results)
-        } catch (error){
-            console.error('Error fetching data: ', error)
-        }
     }
     
     // modal for add

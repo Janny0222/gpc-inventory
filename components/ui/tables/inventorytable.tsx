@@ -2,9 +2,9 @@
 'use client'
 import { ChangeEvent, useEffect, useState } from "react";
 import { InventoryList } from "@/lib/definition";
-import { QRGeneratorButton, UpdateInventory, ViewInventory } from "../../../components/ui/buttons";
+import { QRGeneratorButton, UpdateInventory, ViewInventory } from "../buttons";
 import  {tableName}  from "@/lib/company";
-import EditModal from "@/components/EditInventoryModal";
+import EditInventoryModal from "@/components/ui/inventory/edit-data/EditInventoryModal";
 import CustomPagination from "@/components/Pagination";
 import html2canvas from "html2canvas";
 import BarcodeModal from "@/components/QRCodeModal";
@@ -46,6 +46,7 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
           const apiUrlEndpoint = `/api/${gettableName}`;
           const response = await fetch(apiUrlEndpoint);
           const data = await response.json();
+          
           setInventories(data.results);
           setTotalPages(data.totalPages)
           setCurrentPage(1)
@@ -57,7 +58,7 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
     
     fetchInventoryData();
   }, [gettableName, onDataSubmitted, queryvalue, totalPages]);
-
+  
   const handlePageClick = async (selected: { selected: number }) => {
     try {
       const newPage = selected.selected + 1
@@ -192,9 +193,9 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
     return (  
     <div className="overflow-x-auto sm:p-2">
       <div className="inline-block min-w-full align-middle">
-        <div className="p-2 rounded bg-black md:pt-0">
+        <div className="p-2 rounded  md:pt-0">
           <table className="min-w-full   md:table">
-            <thead className="text-sm text-left text-white  rounded-lg">
+            <thead className="text-sm text-left bg-black text-white border rounded-lg">
               <tr>
                 <th scope="col" className="px-4 py-1  font-extrabold">
                   PC Name
@@ -221,13 +222,13 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
               </tr>
             </thead>
             <tbody className="bg-white ">
-              {inventories.length === null ? (
+              {inventories.length === null || inventories.length === 0? (
                 <span> No data found... </span>
               ) : (
                 <>
               {inventories?.map((inventory) => (
                 <tr key={inventory.id}
-                  className="w-full shadow-md shadow-gray-700 rounded border-green-500 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
+                  className="w-full shadow-md shadow-gray-700 rounded border-green-500 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg  hover:bg-gray-200 hover:border-t-0"
                 >
                   <td className=" pl-6 pr-3 whitespace-nowrap relative cursor-pointer">
                     <div className="flex items-center gap-3">
@@ -243,7 +244,7 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
                   </td>
                   <td className="px-3 py-3 whitespace-nowrap">
                     {inventory.specs?.split(",").map((specs, index) => (
-                      index > 0 && (
+                      index >= 0 && (
                         <div key={index}>
                           {specs.trim()}
                         </div>
@@ -275,7 +276,7 @@ export default function GPCInventoryTable ({ gettableName, onDataSubmitted, quer
           </table>
          
           {isModalOpen && (
-                        <EditModal onClose={closeModal} onSubmit={handleFormSubmit} id={selectedId} tablename={gettableName}/>
+                        <EditInventoryModal onClose={closeModal} onSubmit={handleFormSubmit} id={selectedId} tablename={gettableName}/>
                     )} 
           {isViewModalOpen && (
                         <ViewModal onClose={closeModal} id={selectedId} tablename={gettableName}/>

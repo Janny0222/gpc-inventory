@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Layout from './layout';
+import Layout from '../layout';
 import { lusitana } from '@/styles/font';
 import { lato } from '@/styles/font';
 import TableSkeleton, { CardSkeleton } from '@/components/ui/skeleton';

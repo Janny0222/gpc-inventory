@@ -22,6 +22,7 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
     email_password: '',
     serial_number: '',
     inclusion: '',
+    comment: '',
     date_issued: '',
     date_purchased: ''
   });
@@ -74,6 +75,7 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
           email_password: formData.email_password,
           serial_number: formData.serial_number,
           inclusion: formData.inclusion,
+          comment: formData.comment,
           date_issued: formData.date_issued,
           date_purchased: formData.date_purchased
           // tableName: gettableName
@@ -96,6 +98,7 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
             email_password: '',
             serial_number: '',
             inclusion: '',
+            comment: '',
             date_issued: '',
             date_purchased: ''
           });
@@ -248,7 +251,7 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
                 </div>
                 
                 {/* Inclusion */}
-                <div className="mb-4 col-span-3">
+                <div className="mb-4 col-span-2">
                   <label htmlFor="inclusion" className="block mb-2 text-sm font-medium">
                     Inclusion
                   </label>
@@ -262,7 +265,7 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
                   />
                 </div>
                 {/* Model and Specs */}
-                <div className="mb-4 col-span-3">
+                <div className="mb-4 col-span-2">
                   <label htmlFor="model_specs" className="block mb-2 text-sm font-medium">
                     Model / Specs
                   </label>
@@ -273,6 +276,20 @@ const EditMobileModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id
                     onChange={handleChange}
                     className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
                     placeholder="Enter Model / Specs"
+                  />
+                </div>
+                {/* Comment */}
+                <div className="mb-4 col-span-2">
+                  <label htmlFor="comment" className="block mb-2 text-sm font-medium">
+                    Comment
+                  </label>
+                  <textarea
+                    id="comment"
+                    name="comment"
+                    value={formData.comment}
+                    onChange={handleChange}
+                    className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
+                    placeholder="Enter Comment"
                   />
                 </div>
                 {/* Date Issued */}

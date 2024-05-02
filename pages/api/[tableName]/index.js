@@ -15,14 +15,14 @@ export default async function handler(req, res) {
     const searchQuery = req.query.query;
     const page = req.query.page || 1
     
-    const itemPerPage = 7;
+    const itemPerPage = 5;
   if (req.method === 'GET') {
     try {
       let data;
       let values = [];
         if(searchQuery){
           data = `SELECT * FROM ${tableName} 
-          WHERE pc_name LIKE ? OR name LIKE ? OR mac_address LIKE ? OR computer_type LIKE ? LIMIT 7`;
+          WHERE pc_name LIKE ? OR name LIKE ? OR mac_address LIKE ? OR computer_type LIKE ? LIMIT 5`;
           values = [`%${searchQuery}%`, `%${searchQuery}%`, `%${searchQuery}%`, `%${searchQuery}%`, itemPerPage, (page - 1) * itemPerPage]
         } else {
           data = `SELECT * FROM ${tableName} ORDER BY date_created desc LIMIT ? OFFSET ?`

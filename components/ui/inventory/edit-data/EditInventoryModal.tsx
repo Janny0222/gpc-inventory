@@ -11,7 +11,7 @@ interface ModalProps {
 
 
 
-const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id}) => {
+const EditInventoryModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id}) => {
   const [formData, setFormData] = useState({
     pc_name: '',
     name: '',
@@ -361,4 +361,4 @@ const EditModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id}) => 
   );
 };
 
-export default EditModal;
+export default EditInventoryModal;

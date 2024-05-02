@@ -17,6 +17,7 @@ export interface MobileInventoryList {
     brand: string;
     model_specs: string;
     imei: string;
+    number: string;
     serial_number: string;
     inclusion: string;
     date_issued: string;
@@ -51,4 +52,14 @@ export type CreateList = {
     specs: string;
     supplier: string;
     date_purchased: string;
+}
+
+export interface ServerAccountsInventory {
+    id: number;
+    name: string;
+    department: string;
+    username: string;
+    password: string;
+    is_active_id: number;
+    notes: string;
 }

@@ -85,6 +85,17 @@ export function UpdateMobileInventory({ id, onClick }: PropsForID) {
   );
 }
 
+export function UpdateAccountInventory ({id, onClick} : PropsForID) {
+  return (
+    <button 
+    onClick={() => onClick(id)}
+    className='p-2 border rounded-md hover:bg-gray-100'
+    >
+      <PencilIcon className='w-5' />
+    </button>
+  )
+}
+
 // export function DeleteInventory({ id }: { id: string }) {
 //   const deleteInvoiceWithId = deleteInvoice.bind(null,id);
 //   return (

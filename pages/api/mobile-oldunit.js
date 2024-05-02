@@ -27,7 +27,7 @@ export default async function handler(req, res) {
                 const tableInventory = await query(`SELECT *, '${table.displayName}' AS source_table FROM ${table.table} WHERE date_issued <= DATE_SUB(NOW(), INTERVAL 5 YEAR) ORDER BY date_issued DESC LIMIT ? OFFSET ?`, [itemPerPage, offset]);
                 inventory = inventory.concat(tableInventory);
             }
-
+            console.log(inventory)
             res.status(200).json({ results: inventory, totalPages });
         } catch (error) {
             console.error("Error:", error);

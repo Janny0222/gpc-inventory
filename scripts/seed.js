@@ -12,6 +12,7 @@ async function createDatabase(){
     });
     try {
         await connection.execute(`CREATE DATABASE IF NOT EXISTS ${process.env.DB_DATABASE}`)
+        
         console.log("Successfully created a Database")
         
     } catch (error) {
@@ -34,6 +35,7 @@ async function seedDatabase(){
 
         // await db.changeUser({database: process.env.DB_DATABASE})
 
+        // Creating table for GPC CCP Inventory
         const queries = [`
         CREATE TABLE IF NOT EXISTS gpc_inventory (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -53,6 +55,7 @@ async function seedDatabase(){
             date_created TIMESTAMP
         )
         `,
+        // Creating table for GPC SQ Inventory
         `
         CREATE TABLE IF NOT EXISTS gpc_sq_inventory (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -72,6 +75,7 @@ async function seedDatabase(){
             date_created TIMESTAMP
         )
         `,
+        // Creating table for LSI Valenzuela Inventory
         `
         CREATE TABLE IF NOT EXISTS lsi_inventory (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -91,6 +95,7 @@ async function seedDatabase(){
             date_created TIMESTAMP
         )
         `,
+        // Creating table for LSI Canlubang Inventory
         `
         CREATE TABLE IF NOT EXISTS lsi_can_inventory (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -110,6 +115,7 @@ async function seedDatabase(){
             date_created TIMESTAMP
         )
         `,
+        // Creating table for GKC Inventory
         `
         CREATE TABLE IF NOT EXISTS gkc_inventory (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -129,6 +135,7 @@ async function seedDatabase(){
             date_created TIMESTAMP
         )
         `,
+        // Creating table for GSRC Inventory
         `
         CREATE TABLE IF NOT EXISTS gsrc_inventory (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -148,6 +155,7 @@ async function seedDatabase(){
             date_created TIMESTAMP
         )
         `,
+        // Creating table for GPC Mobile
         `
         CREATE TABLE IF NOT EXISTS gpc_mobile_inventory (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -165,6 +173,7 @@ async function seedDatabase(){
             date_created TIMESTAMP
         )
         `,
+        // Creating table for GKC Mobile
         `
         CREATE TABLE IF NOT EXISTS gkc_mobile_inventory (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -182,6 +191,7 @@ async function seedDatabase(){
             date_created TIMESTAMP
         )
         `,
+        // Creating table for LSI Mobile
         `
         CREATE TABLE IF NOT EXISTS lsi_mobile_inventory (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -199,6 +209,7 @@ async function seedDatabase(){
             date_created TIMESTAMP
         )
         `,
+        // Creating table for GSRC Mobile
         `
         CREATE TABLE IF NOT EXISTS gsrc_mobile_inventory (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -216,6 +227,119 @@ async function seedDatabase(){
             date_created TIMESTAMP
         )
         `,
+        // Creating table for "Users"
+        `
+        CREATE TABLE IF NOT EXISTS users (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            username VARCHAR(255),
+            email VARCHAR(255),
+            password VARCHAR(255),
+            date_created TIMESTAMP
+        )
+        `,
+        // Creating table for "Users"
+        `
+        CREATE TABLE IF NOT EXISTS statuses (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255)
+        )
+        `,
+        // Creating table for GPC CCP Server Accounts
+        `
+        CREATE TABLE IF NOT EXISTS gpc_accounts (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255),
+            department VARCHAR(255),
+            username VARCHAR(255),
+            password VARCHAR(255),
+            is_active_id INT(11),
+            CONSTRAINT fk_is_active_id_gpc_ccp
+                FOREIGN KEY(is_active_id) REFERENCES statuses(id)
+                ON UPDATE CASCADE
+                ON DELETE RESTRICT,
+            date_created TIMESTAMP
+        )   
+        `,
+        // Creating table for GPC SQ Server Accounts
+        `
+        CREATE TABLE IF NOT EXISTS gpc_sq_accounts (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255),
+            department VARCHAR(255),
+            username VARCHAR(255),
+            password VARCHAR(255),
+            is_active_id INT,
+            CONSTRAINT fk_is_active_id_gpc_sq
+                FOREIGN KEY(is_active_id) REFERENCES statuses(id)
+                ON UPDATE CASCADE
+                ON DELETE RESTRICT,
+            date_created TIMESTAMP
+        )
+        `,
+        // Creating table for LSI Valenzuela Server Accounts
+        `
+        CREATE TABLE IF NOT EXISTS lsi_accounts (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255),
+            department VARCHAR(255),
+            username VARCHAR(255),
+            password VARCHAR(255),
+            is_active_id INT,
+            CONSTRAINT fk_is_active_id_lsi_val
+                FOREIGN KEY(is_active_id) REFERENCES statuses(id)
+                ON UPDATE CASCADE
+                ON DELETE RESTRICT,
+            date_created TIMESTAMP
+        )
+        `,
+        // Creating table for LSI Canlubang Server Accounts
+        `
+        CREATE TABLE IF NOT EXISTS lsi_can_accounts (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255),
+            department VARCHAR(255),
+            username VARCHAR(255),
+            password VARCHAR(255),
+            is_active_id INT,
+            CONSTRAINT fk_is_active_id_lsi_can
+                FOREIGN KEY(is_active_id) REFERENCES statuses(id)
+                ON UPDATE CASCADE
+                ON DELETE RESTRICT,
+            date_created TIMESTAMP
+        )
+        `,
+        // Creating table for GKC Server Accounts
+        `
+        CREATE TABLE IF NOT EXISTS gkc_accounts (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255),
+            department VARCHAR(255),
+            username VARCHAR(255),
+            password VARCHAR(255),
+            is_active_id INT,
+            CONSTRAINT fk_is_active_id_gkc
+                FOREIGN KEY(is_active_id) REFERENCES statuses(id)
+                ON UPDATE CASCADE
+                ON DELETE RESTRICT,
+            date_created TIMESTAMP
+        )
+        `,
+        // Creating table for GSRC Server Accounts
+        `
+        CREATE TABLE IF NOT EXISTS gsrc_accounts (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255),
+            department VARCHAR(255),
+            username VARCHAR(255),
+            password VARCHAR(255),
+            is_active_id INT,
+            CONSTRAINT fk_is_active_id_gsrc
+                FOREIGN KEY(is_active_id) REFERENCES statuses(id)
+                ON UPDATE CASCADE
+                ON DELETE RESTRICT,
+            date_created TIMESTAMP
+        )
+        `
         ]
         for(const query of queries){
             await db.query(query);

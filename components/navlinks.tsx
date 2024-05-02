@@ -1,7 +1,7 @@
 import {
     UserGroupIcon,
     HomeIcon,
-    DocumentDuplicateIcon,
+    ServerStackIcon,
     ComputerDesktopIcon,
     DevicePhoneMobileIcon
   } from '@heroicons/react/24/outline';
@@ -18,6 +18,7 @@ import ThemeToggle from '@/components/ui/theme-toggle';
       icon: ComputerDesktopIcon,
     },
     {name: 'Cellphone', href: '/dashboard/cellphone', icon: DevicePhoneMobileIcon},
+    {name: 'Server Accounts', href: '/dashboard/cellphone', icon: DevicePhoneMobileIcon},
   ];
   
   export default function NavLinks() {

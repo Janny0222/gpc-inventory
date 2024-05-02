@@ -4,11 +4,7 @@ import {
   Laptop,
   Smartphone,
   Home,
-  List,
-  Mail,
-  MoreHorizontal,
-  User,
-  Users,
+  Server,
 } from 'lucide-react';
 import { SidebarDesktop } from './sidebar-desktop';
 import { SidebarItems } from '@/types';
@@ -21,6 +17,7 @@ const sidebarItems: SidebarItems = {
     { label: 'Home', href: '/dashboard', icon: Home },
     { label: 'Inventory', href: '/inventory', icon: Laptop },
     { label: 'Cellphone', href: '/cellphone', icon: Smartphone },
+    { label: 'Server Accounts', href: '/accounts', icon: Server },
     // {
     //   href: '/item/lists',
     //   icon: List,

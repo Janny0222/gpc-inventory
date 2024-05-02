@@ -23,22 +23,22 @@ export default async function handler(req, res) {
       }
   } else if (req.method === 'POST') {
     try {
-      const assigned_to = req.body.assigned_to;
+      const name = req.body.name;
       const department = req.body.department
-      const brand = req.body.brand;
-      const model_specs = req.body.model_specs;
-      const imei = req.body.imei;
-      const number = req.body.number;
-      const email_password = req.body.email_password;
-      const serial_number = req.body.serial_number
-      const inclusion = req.body.inclusion
-      const comment = req.body.comment
-      const date_issued = req.body.date_issued
-      const date_purchased = req.body.date_purchased
-      if (!assigned_to || !brand) {
+      const username = req.body.username;
+      const password = req.body.password;
+      const is_active_id = req.body.is_active_id;
+      const notes = req.body.notes;
+      
+      if (!name || !username) {
         return res.status(400).json({ error: 'Missing required fields' });
       }
-      const addInventory = await query(`INSERT INTO ${tableName} (assigned_to, department, brand, model_specs, serial_number, imei, number, email_password, inclusion, comment, date_issued, date_purchased) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [assigned_to, department, brand, model_specs, serial_number, imei, number, email_password, inclusion, date_issued, date_purchased],);
+      const duplicateCheck = await query(`SELECT * FROM ${tableName} WHERE username = ?`, [username])
+      const seperate = duplicateCheck.map(data => data.username)
+      if(duplicateCheck.length > 0){
+        return res.status(400).json({ error: `Username is already exists`})
+      }
+      const addInventory = await query(`INSERT INTO ${tableName} (name, department, username, password, is_active_id, notes) VALUES (?, ?, ?, ?, ?)`, [name, department, username, password, is_active_id, notes],);
       let message;
       if (addInventory.insertId) {
         message = 'success';
@@ -48,18 +48,12 @@ export default async function handler(req, res) {
 
       let inventory = {
         id: addInventory.insertId,
-        assigned_to: assigned_to,
+        name: name,
         department: department,
-        brand: brand,
-        model_specs: model_specs,
-        imei: imei,
-        number: number,
-        email_password: email_password,
-        serial_number: serial_number,
-        inclusion: inclusion,
-        comment: comment,
-        date_issued: date_issued,
-        date_purchased: date_purchased
+        username: username,
+        password: password,
+        is_active_id: is_active_id,
+        notes: notes
       };
 
       res.status(200).json({ response: { message: message, results: inventory } });
@@ -71,19 +65,19 @@ export default async function handler(req, res) {
 
     try {
       const {id} = req.query;
-      const {assigned_to, department, brand, model_specs, serial_number, imei, number, email_password, inclusion, comment, date_issued, date_purchased} = req.body
+      const {name, department, username, password, is_active_id, notes} = req.body
 
-      if(!id || !assigned_to || !brand){
+      if(!id || !name || !username){
         return res.status(400).json({ error: 'Missing required fields' })
       }
       const updateResult = await query
-      (`UPDATE ${tableName} SET assigned_to=?, department=?, brand=?, model_specs=?, serial_number=?, imei=?, number=?, email_password=?,  inclusion=?, comment=?, date_issued=?, date_purchased=? WHERE id=?`,
-      [assigned_to, department, brand, model_specs, serial_number, imei, number, email_password, inclusion, comment, date_issued, date_purchased, id]);
+      (`UPDATE ${tableName} SET name=?, department=?, username=?, password=?, is_active_id=?, notes=? WHERE id=?`,
+      [name, department, username, password, is_active_id, notes, id]);
       
       if(updateResult.affectedRows > 0){
         res.status(200).json({response: { message: 'success', updatedItem: id }})
       } else {
-        res.status(404).json({ error: 'Item not found or not updated '});
+        res.status(404).json({ error: 'Data not found or not updated '});
       }
     } catch (error){
       console.error('Error updating inventory: ', error);
