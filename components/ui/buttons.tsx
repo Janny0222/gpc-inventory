@@ -1,4 +1,4 @@
-import { PencilIcon, PlusIcon, TrashIcon, QrCodeIcon, EyeIcon } from '@heroicons/react/24/outline';
+import { PencilIcon, PlusIcon, TrashIcon, QrCodeIcon, EyeIcon,  } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 import Link from 'next/link';
 
@@ -81,6 +81,17 @@ export function UpdateMobileInventory({ id, onClick }: PropsForID) {
       className="p-2 border rounded-md hover:bg-gray-100"
     >
       <PencilIcon className="w-5" />
+    </button>
+  );
+}
+
+export function DeleteInventory({ id, onClick }: PropsForID) {
+  return (
+    <button
+      onClick={() => onClick(id)}
+      className="p-2 border rounded-md hover:bg-gray-100"
+    >
+      <TrashIcon className="w-5" />
     </button>
   );
 }

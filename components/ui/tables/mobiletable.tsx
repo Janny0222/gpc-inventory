@@ -2,12 +2,13 @@
 import EditMobileModal from "@/components/ui/inventory/edit-data/EditMobileModal";
 import { MobileInventoryList } from "@/lib/definition"
 import { useEffect, useState } from "react"
-import { QRGeneratorButton, UpdateMobileInventory } from "../../../components/ui/buttons";
+import { QRGeneratorButton, UpdateMobileInventory, DeleteInventory } from "../../../components/ui/buttons";
 import CustomPagination from "@/components/Pagination";
 import BarcodeModal from "@/components/QRCodeModal";
 import BarcodeMobileModal from "@/components/QRCodeMobileModal";
 import {tableName} from "@/lib/company";
 import MobileEditModal from "@/components/ModalEditInventory";
+import DeleteMobileModal from "../inventory/delete-data/DeleteMobileInventory";
 
 interface MobileInventoryProps {
     getTableName: string,
@@ -19,6 +20,7 @@ export default function MobileTableInventory ({getTableName, onDataSubmitted}: M
 const [mobileInventory, setMobileInventory] = useState<MobileInventoryList[]>([])
 const [selectedId, setSelectedId] = useState<number | null>(null)
 const [isModalOpen, setIsModalOpen] = useState(false);
+const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 const [isQRModalOpen, setIsQRModalOpen] = useState(false);
 const [totalPages, setTotalPages] = useState(1);
 const [currentPage, setCurrentPage] = useState(1);
@@ -75,11 +77,14 @@ useEffect(() => {
         fetchMobileInventory()
 }, [getTableName, onDataSubmitted, queryValue])
 console.log("Result for duplicate: ", duplicate)
-const handleFormSubmit = async () => {
-  closeModal();
+const handleEditSubmit = async () => {
+  closeEditModal();
   fetchMobile();
 }
-
+const handleDeleteSubmit = async () => {
+  closeDeleteModal();
+  fetchMobile();
+}
 
 const handlePageClick = async (selected: { selected: number }) => {
   try {
@@ -117,6 +122,7 @@ const handleSave = async () => {
       console.error('Error saving data:', error);
   }
 }
+// function for opening QR Modal
 const qrModal = async (id: number) => {
   setSelectedId(id)
   setIsQRModalOpen(true)
@@ -137,10 +143,26 @@ const qrModal = async (id: number) => {
 const viewDetails = async (id: number) => {
   console.log(id)
 }
-
+// function for edit Modal
 const openModal = async (id: number) => {
   setSelectedId(id)
   setIsModalOpen(true)
+  console.log(selectedId)
+  try {
+    const res = await fetch (`/api/${getTableName}/cellphones/${id}`)
+    if(!res.ok){
+      throw new Error (`Failed to fetch seleted Data`)
+    }
+    const data = await res.json()
+    setModalData(data.results[0])
+  } catch (error){
+    
+  }
+}
+// function for opening a modal confirmation
+const openDeleteModal = async (id: number) => {
+  setSelectedId(id)
+  setIsDeleteModalOpen(true)
   console.log(selectedId)
   try {
     const res = await fetch (`/api/${getTableName}/cellphones/${id}`)
@@ -158,8 +180,12 @@ const closeQrModal = () => {
   setIsQRModalOpen(false);
   setSelectedId(null)
 }
-const closeModal = () => {
+const closeEditModal = () => {
   setIsModalOpen(false);
+  setSelectedId(null)
+}
+const closeDeleteModal = () => {
+  setIsDeleteModalOpen(false);
   setSelectedId(null)
 }
        return (  
@@ -193,7 +219,7 @@ const closeModal = () => {
                     <th scope="col" className="px-3 py-1 font-extrabold">
                       Date Issued
                     </th>
-                    <th scope="col" className="py-3 pl-6 pr-3">
+                    <th scope="col" className="py-3 pl-6 pr-3 text-center">
                       Action
                     </th>
                   </tr>
@@ -242,15 +268,16 @@ const closeModal = () => {
                         <td className="px-3 py-3 whitespace-nowrap">
                           {inventory.date_issued}
                         </td>
-                        <td className="py-3 pl-6 pr-3 whitespace-nowrap">
+                        <td className="py-3 pl-6 whitespace-nowrap">
                           <div className="flex items-center gap-3">
                             <UpdateMobileInventory id={inventory.id} onClick={openModal}/>
-                            {/* <MobileEditModal /> */}
+                            
                             <QRGeneratorButton 
-                          id={inventory.id} 
-                          onClick={qrModal}
-                          onSave={handleSave}
-                        />
+                              id={inventory.id} 
+                              onClick={qrModal}
+                              onSave={handleSave}
+                            />
+                            <DeleteInventory id={inventory.id} onClick={openDeleteModal}/>
                           </div>
                         </td>
                       </tr>
@@ -263,7 +290,10 @@ const closeModal = () => {
                       <BarcodeMobileModal modalData={modalData} company={company} tablename={getTableName} id={selectedId} onClose={closeQrModal} />
                     )}
                     {isModalOpen && (
-                      <EditMobileModal onClose={closeModal} onSubmit={handleFormSubmit} id={selectedId} tablename={getTableName}/>  
+                      <EditMobileModal onClose={closeEditModal} onSubmit={handleEditSubmit} id={selectedId} tablename={getTableName}/>  
+                    )}
+                    {isDeleteModalOpen && (
+                      <DeleteMobileModal onClose={closeDeleteModal} onSubmit={handleDeleteSubmit} id={selectedId} tablename={getTableName} />
                     )}
             </div>
             {mobileInventory?.length !== 0 && mobileInventory !== undefined && !queryValue &&

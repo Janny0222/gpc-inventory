@@ -11,6 +11,7 @@ import Form from "@/components/ui/inventory/create-data/CreateMobile";
 import Modal from "@/components/modal";
 import { MobileInventoryList } from "@/lib/definition";
 import Upload from "@/components/Upload";
+import toast from "react-hot-toast";
 
 export default function Page(){
 const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,9 +23,15 @@ const [dataUploaderHandler, setDataUploaderHandler] = useState<() => void>(() =>
     let name = tableName.find(company => company.name === value)?.displayName || value
     let getName = tableName.find(company => company.name === tablename)?.name || tablename
     let getTable = tableName.find(company => company.name === tablename)?.table || tablename
+
     const handleDropdown = (value: string) => {
-        setTableName(value)
-        setValue(value)
+        const pageLoading = toast.loading(`Selecting company, Please wait...`, {duration: 2500})
+        setTimeout(() => {
+        toast.success(`Loading Successful`, {id: pageLoading})
+            setTableName(value)
+            setValue(value)
+        }, 2000)
+        console.log("current table: ", tableName)
     }
     
     const openModal = () => {
@@ -69,15 +76,15 @@ const [dataUploaderHandler, setDataUploaderHandler] = useState<() => void>(() =>
                 </div>
                     {getTable !== '' && (mobileInventory?.length === 0 || mobileInventory === undefined) && <Upload tablename={getTable} onDataUploaded={dataUploaderHandler}/>}
                 <div className="flex flex-row items-center mt-1">
-                    <div className="flex items-center justify-between gap-2 mt-2 md:mt-4">
-                        <label className="mr-2 relative">Select Company:</label>
+                    <div className="relative flex flex-col items-center justify-between md:mt-2">
+                        <label className="">Select Company:</label>
                         <Dropdown onCompanyChange={handleDropdown} />
                     </div>
                 </div>
-                {name !== '' && <AccountTableInventory getTableName={getTable} onDataSubmitted={handleFormSubmit}/>}
+                {name !== '' && <AccountTableInventory getTableName={tablename} onDataSubmitted={handleFormSubmit}/>}
                 {isModalOpen && (
-                        <Modal onClose={closeModal} companyName={name} onSubmit={handleFormSubmit} tablename={getTable}>
-                            <Form gettableName={getTable} onDataSubmitted={handleFormSubmit}/>
+                        <Modal onClose={closeModal} title="Mobile" companyName={name} onSubmit={handleFormSubmit} tablename={getTable}>
+                            <Form gettableName={tablename} onDataSubmitted={handleFormSubmit}/>
                         </Modal>
                     )}
             </div>

@@ -252,6 +252,7 @@ async function seedDatabase(){
             department VARCHAR(255),
             username VARCHAR(255),
             password VARCHAR(255),
+            notes VARCHAR(255),
             is_active_id INT(11),
             CONSTRAINT fk_is_active_id_gpc_ccp
                 FOREIGN KEY(is_active_id) REFERENCES statuses(id)
@@ -268,6 +269,7 @@ async function seedDatabase(){
             department VARCHAR(255),
             username VARCHAR(255),
             password VARCHAR(255),
+            notes VARCHAR(255),
             is_active_id INT,
             CONSTRAINT fk_is_active_id_gpc_sq
                 FOREIGN KEY(is_active_id) REFERENCES statuses(id)
@@ -284,6 +286,7 @@ async function seedDatabase(){
             department VARCHAR(255),
             username VARCHAR(255),
             password VARCHAR(255),
+            notes VARCHAR(255),
             is_active_id INT,
             CONSTRAINT fk_is_active_id_lsi_val
                 FOREIGN KEY(is_active_id) REFERENCES statuses(id)
@@ -300,6 +303,7 @@ async function seedDatabase(){
             department VARCHAR(255),
             username VARCHAR(255),
             password VARCHAR(255),
+            notes VARCHAR(255),
             is_active_id INT,
             CONSTRAINT fk_is_active_id_lsi_can
                 FOREIGN KEY(is_active_id) REFERENCES statuses(id)
@@ -316,6 +320,7 @@ async function seedDatabase(){
             department VARCHAR(255),
             username VARCHAR(255),
             password VARCHAR(255),
+            notes VARCHAR(255),
             is_active_id INT,
             CONSTRAINT fk_is_active_id_gkc
                 FOREIGN KEY(is_active_id) REFERENCES statuses(id)
@@ -332,6 +337,7 @@ async function seedDatabase(){
             department VARCHAR(255),
             username VARCHAR(255),
             password VARCHAR(255),
+            notes VARCHAR(255),
             is_active_id INT,
             CONSTRAINT fk_is_active_id_gsrc
                 FOREIGN KEY(is_active_id) REFERENCES statuses(id)

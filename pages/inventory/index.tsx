@@ -53,13 +53,14 @@ export default function Page({searchParams,}:{searchParams?: {search?: string}})
             setBranch('Balintawak')
         } else if (value === 'lsi_inventory') {
             setBranch('Valenzuela');
+        } else {
+            setBranch('')
         }
     //    search === " "
         
             setCompany(value)
             setTblName(value)
-        
-        
+
     }
     
     // modal for add
@@ -89,8 +90,7 @@ export default function Page({searchParams,}:{searchParams?: {search?: string}})
     const handleBranchChange = (value: string) => {
         const branchTableName = branchTableMap[value as keyof typeof branchTableMap] || company;
         const companyChange = toast.loading('Please wait...', {duration: 3000})
-        console.log(inventories)
-        console.log(branchTableName)
+        
         setTimeout(() => {
             toast.success('Loading successful!', {id: companyChange})
             setBranch(value)
@@ -109,7 +109,7 @@ export default function Page({searchParams,}:{searchParams?: {search?: string}})
                     {(company === 'gpc_inventory' || company === 'lsi_inventory') && branchName.length > 1 && (
                         <>
                         <span>Select Branch: </span>
-                        <div className="border w-full border-gray-400">
+                        <div className=" border-gray-400">
                              <GetBranch onCompanyChange={handleBranchChange} getCompany={company} />
                         </div>
                         </>
@@ -121,10 +121,10 @@ export default function Page({searchParams,}:{searchParams?: {search?: string}})
                     {tblName !== "" && <><Search placeholder="Search..." /> <CreateInventory onClick={openModal}/></> }
                 </div>
                     {(tblName !== '' || company !=='') && (inventories?.length === 0 || inventories === undefined ) && <Upload tablename={tblName} onDataUploaded={dataUploaderHandler} />}
-                <div className="flex items-center mt-1">
-                    <div className="flex items-center justify-between gap-2 mt-2 md:mt-2">
-                        <label className="mr-2">Select Company:</label>
-                        <Dropdown onCompanyChange={handleCompanyChange}/>  
+                <div className="flex flex-row items-center mt-1">
+                    <div className="relative flex flex-col items-center justify-between md:mt-2">
+                        <label className="">Select Company:</label>
+                        <Dropdown onCompanyChange={handleCompanyChange} />
                     </div>
                 </div>
                     
@@ -139,7 +139,7 @@ export default function Page({searchParams,}:{searchParams?: {search?: string}})
                     
                     
                     {isModalOpen && (
-                        <Modal onClose={closeModal} companyName={name} onSubmit={handleFormSubmit} tablename={tblName}>
+                        <Modal onClose={closeModal} title={branch} companyName={name} onSubmit={handleFormSubmit} tablename={tblName}>
                             <Form gettableName={tblName} onDataSubmitted={handleFormSubmit}/>
                         </Modal>
                     )}

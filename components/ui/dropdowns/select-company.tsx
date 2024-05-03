@@ -22,7 +22,9 @@ export default function GetBranch({onCompanyChange, getCompany}: DropdownProps){
    
     return (
        
-        <select onChange={handleCompanyChange}>
+        <select 
+            onChange={handleCompanyChange} 
+            className="block w-full px-2 py-2 text-sm border border-gray-100 rounded-md focus:outline-none focus:border-black shadow-md">
             {/* {companyBranch.map(branch => (
             <option key={branch.name} value={branch.name}>{branch.name}</option>
             ))}        */}

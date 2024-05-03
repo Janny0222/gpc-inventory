@@ -30,6 +30,15 @@ const EditAccountModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, i
       [name]: value,
     }));
   };
+  // handle for changing the value of dropdown
+  const handleChangeStatus = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValue = event.target.value
+    setFormData(prevState => ({
+      ...prevState,
+      is_active_id: selectedValue
+    }));
+   }
+
   // handle for getting the specific data in database using the unique id
   
   useEffect(() => {
@@ -115,15 +124,6 @@ const EditAccountModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, i
       window.removeEventListener('keydown', handleKeyDown)
     };
   }, [onClose])
-
-  const handleChangeStatus = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedValue = event.target.value
-    setFormData(prevState => ({
-      ...prevState,
-      is_active_id: selectedValue
-    }));
-   }
-   console.log("Selected Status Value: ", getstatus)
   
   return (
     <div className="fixed inset-0 z-50 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
@@ -131,7 +131,7 @@ const EditAccountModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, i
           <div className="relative grid grid-col md:w-[680px] w-auto bg-white rounded-lg shadow-lg outline-none focus:outline-none">
           <div className="flex items-start justify-between p-5 border-b border-solid rounded-t border-blueGray-200">
               
-            <h3 className="text-xl font-semibold">Edit Accounts for {formData.name}</h3>
+            <h3 className="text-xl font-semibold">Edit Account for {formData.name}</h3>
             <button
               className="float-right p-1 ml-auto text-3xl font-semibold leading-none text-black bg-transparent border-0 outline-none focus:outline-none"
               onClick={onClose}
@@ -146,14 +146,14 @@ const EditAccountModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, i
         
               {/* Name */}
               <div className="mb-4 col-span-4">
-                <label htmlFor="name" className="block mb-2 text-sm font-medium">
+                <label htmlFor="name" className="block mb-2 text-sm font-semibold">
                   Name
                 </label>
                 <input
                   type="text"
                   id="name"
                   name="name"
-                  value={formData.name || ''}
+                  value={formData.name}
                   onChange={handleChange}
                   className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
                   placeholder="Enter Name"
@@ -162,89 +162,90 @@ const EditAccountModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, i
 
               {/* Department */}
               <div className="mb-4 col-span-2">
-                <label htmlFor="department" className="block mb-2 text-sm font-medium">
+                <label htmlFor="department" className="block mb-2 text-sm font-semibold">
                   Department
                 </label>
                 <input
                   type="text"
                   id="department"
                   name="department"
-                  value={formData.department || ''}
+                  value={formData.department}
                   onChange={handleChange}
                   className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
                   placeholder="Enter Department"
                 />
               </div>
 
-              {/* Username */}
-              <div className="mb-4 col-span-2">
-                <label htmlFor="username" className="block mb-2 text-sm font-medium">
-                  Username
-                </label>
-                <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  value={formData.username || ''}
-                  onChange={handleChange}
-                  className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
-                  placeholder="Enter Username"
-                />
+              <div className='col-span-2'>
+                {/* Username */}
+                <div className="mb-2 col-span-2">
+                  <label htmlFor="username" className="block mb-2 text-sm font-semibold">
+                    Username
+                  </label>
+                  <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    value={formData.username}
+                    onChange={handleChange}
+                    className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
+                    placeholder="Enter Username"
+                  />
+                </div>
+                {/* Password */}
+                <div className="mb-4 col-span-2">
+                  <label htmlFor="password" className="block mb-2 text-sm font-semibold">
+                    Password
+                  </label>
+                  <input
+                    type="text"
+                    id="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
+                    placeholder="Enter Password"
+                  />
+                </div>
               </div>
-
-              {/* Password */}
-              <div className="mb-4 col-span-2">
-                <label htmlFor="password" className="block mb-2 text-sm font-medium">
-                  Password
+              {/* Notes */}
+              <div className="mb-4 col-span-4">
+                <label htmlFor="notes" className="block mb-2 text-sm font-semibold">
+                  Notes
                 </label>
-                <input
-                  type="text"
-                  id="password"
-                  name="password"
-                  value={formData.password || ''}
+                <textarea
+                  rows={5}
+                  id="notes"
+                  name="notes"
+                  value={formData.notes}
                   onChange={handleChange}
                   className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
-                  placeholder="Enter IP Address"
+                  placeholder="Add Notes"
                 />
               </div>
               {/* Status */}
-              <div className="mb-4 col-span-2">
-                <label htmlFor="is_active_id" className="block mb-2 text-sm font-medium">
-                  Status
+              <div className="mb-4 col-span-3 flex flex-row sm:col-start-5 justify-center items-center">
+                <label htmlFor="is_active_id" className="block mb-1 mx-2 text-sm font-semibold">
+                  Status:
                 </label>
                 <select 
                 id='is_active_id'
                 name='is_active_id'
                 value={formData.is_active_id}
                 onChange={handleChangeStatus}
-                className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
+                className="block w-full px-2 py-2 text-sm border border-gray-100 rounded-md focus:outline-none focus:border-black shadow-md"
                 >
                   {status.map((status) => (
                   <option key={status.name} value={status.value}>{status.name}</option>
                   ))}
                 </select>
               </div>
-              {/* Notes */}
-              <div className="mb-4 col-span-2">
-                <label htmlFor="notes" className="block mb-2 text-sm font-medium">
-                  Notes
-                </label>
-                <input
-                  type="text"
-                  id="notes"
-                  name="notes"
-                  value={formData.notes}
-                  onChange={handleChange}
-                  className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
-                  placeholder="Enter monitor"
-                />
-              </div>
             </div>
             <div className="flex justify-end py-2 mt-2">
               <button
                 type="submit"
                 
-                className="flex items-center justify-center h-10 px-4 text-sm font-medium text-white transition-colors border-4 hover:border-black bg-black rounded-lg hover:text-green-800 hover:bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 "
+                className="flex items-center justify-center h-10 px-4 text-sm font-semibold text-white transition-colors border-4 hover:border-black bg-black rounded-lg hover:text-green-800 hover:bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 "
                 >
                 Save
               </button>

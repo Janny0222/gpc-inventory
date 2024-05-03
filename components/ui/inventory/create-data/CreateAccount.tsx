@@ -18,7 +18,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
     department: '',
     username: '',
     password: '',
-    is_active_id: '',
+    is_active_id: 1,
     notes: ''
   });
   // const [create, setCreated] = useState(false);
@@ -40,7 +40,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
     }
   }
   
-  async function addMobileInventory(e: FormEvent<HTMLFormElement>) {
+  async function addAccountInventory(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const addToastLoading = toast.loading('Adding new data. Please wait...', {duration: 3500, position: "top-center"})
     try {
@@ -54,7 +54,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
         department: formData.department,
         username: formData.username,
         password: formData.password,
-        is_active_id: status,
+        is_active_id: formData.is_active_id,
         notes: formData.notes,
           // tableName: gettableName
         }),
@@ -68,7 +68,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
           department: '',
           username: '',
           password: '',
-          is_active_id: '',
+          is_active_id: 0,
           notes: '',
           });
           onDataSubmitted();
@@ -85,7 +85,7 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
   }
 
   return (
-    <form onSubmit={addMobileInventory}>
+    <form onSubmit={addAccountInventory}>
       <div className="p-4 rounded-md grid grid-cols-6 border-2 border-x-gray-400 shadow-2xl mx-2 gap-1 bg-gray-200">
        
         {/* Name */}
@@ -115,64 +115,72 @@ export default function Form({ gettableName, onDataSubmitted }: FormProps) {
             value={formData.department}
             onChange={handleChange}
             className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
-            placeholder="Enter Department"
+            placeholder=""
           />
         </div>
 
-        {/* Username */}
-        <div className="mb-4 col-span-2">
-          <label htmlFor="username" className="block mb-2 text-sm font-semibold">
-            Username
-          </label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
-            placeholder="Enter Username"
-          />
+        <div className='col-span-2'>
+          {/* Username */}
+          <div className="mb-2 col-span-2">
+            <label htmlFor="username" className="block mb-2 text-sm font-semibold">
+              Username
+            </label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
+              placeholder="Enter Username"
+            />
+          </div>
+          {/* Password */}
+          <div className="mb-4 col-span-2">
+            <label htmlFor="password" className="block mb-2 text-sm font-semibold">
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
+              placeholder="Enter Password"
+            />
+          </div>
         </div>
-        {/* Brand */}
-        <div className="mb-4 col-span-2">
-          <label htmlFor="password" className="block mb-2 text-sm font-semibold">
-            Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
-            placeholder="Enter Password"
-          />
-        </div>
-        {/* Status */}
-        <div className="mb-4 col-span-2">
-          <label htmlFor="" className="block mb-2 text-sm font-semibold">
-            Status
-          </label>
-          <Status onStatusChange={statusChange} value={getValue}/>
-           {/* {isDuplicate && (
-            <span className='text-red-700 text-sm'>{errorMessage} Department</span>
-          )} */}
-        </div>
-
-        {/* Email and Password */}
-        <div className="mb-4 col-span-3">
+        {/* Notes */}
+        <div className="m3-4 col-span-4">
           <label htmlFor="notes" className="block mb-2 text-sm font-semibold">
             Notes
           </label>
-          <input
-            type="text"
+          <textarea
+            rows={5}
             id="notes"
             name="notes"
             value={formData.notes}
             onChange={handleChange}
             className="block w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-black shadow-md"
             placeholder="Add Notes"
+          />
+        </div>
+
+        {/* Status */}
+        
+        <div className="mb-4 col-span-3 flex flex-row sm:col-start-5">
+          <label htmlFor="status" className="block m-2 text-sm font-semibold">
+            Status:
+          </label>
+          <input
+            type="text"
+            id="status"
+            name="status"
+            value={formData.is_active_id === 1 ? 'Active' : 'Inactive'}
+            disabled
+            className="block w-full px-3 py-2 text-sm border bg-green-200 rounded-md focus:outline-none focus:border-black shadow-md"
+            placeholder="Enter Password"
           />
         </div>
       </div>

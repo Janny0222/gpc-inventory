@@ -26,9 +26,16 @@ export const branchName = [
 ]
 export const branchTableMap: { [key: string]: string } = {
     Balintawak: 'gpc_inventory',
-    SQ: 'gpc_sq_inventory',
+    SQ: 'gpc_sq_inventory' || 'gpc_sq_accounts',
     Valenzuela: 'lsi_inventory',
-    Canlubang: 'lsi_can_inventory'
+    Canlubang: 'lsi_can_inventory' || 'lsi_can_accounts'
+};
+
+export const accountTableMap: { [key: string]: string } = {
+    Balintawak: 'gpc_accounts',
+    SQ: 'gpc_sq_accounts',
+    Valenzuela: 'lsi_accounts',
+    Canlubang: 'lsi_can_accounts'
 };
 
 export const status = [

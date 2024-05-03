@@ -22,6 +22,7 @@ async function parseExcel(filebuffer, sheetName) {
   const headers = data[0];
 
   const rows = data.slice(1).map(row => {
+    
     return headers.map((header, index) => {
       // Check if the value is a numeric date (45302 is a common representation for Excel date values)
       if (typeof row[index] === 'number' && row[index] > 1 && row[index] < 50000) {
@@ -45,13 +46,13 @@ export default async function handler(req, res) {
   const tablename = req.query.tableName;
   const sheetNameTable = tablename;
   let getSheet;
-  if(sheetNameTable === 'gkc_mobile_inventory' || sheetNameTable === 'gkc_inventory') {
+  if(sheetNameTable === 'gkc_mobile_inventory' || sheetNameTable === 'gkc_inventory' || sheetNameTable === 'gkc_accounts') {
     getSheet = 'Greenkraft'
-  } else if (sheetNameTable === 'gpc_mobile_inventory' || sheetNameTable === 'gpc_inventory' || sheetNameTable === 'gpc_sq_inventory') {
+  } else if (sheetNameTable === 'gpc_mobile_inventory' || sheetNameTable === 'gpc_inventory' || sheetNameTable === 'gpc_sq_inventory' || sheetNameTable === 'gpc_accounts' | sheetNameTable === 'gpc_sq_accounts') {
     getSheet = 'Greenstone'
-  } else if (sheetNameTable === 'lsi_mobile_inventory' || sheetNameTable === 'lsi_inventory' || sheetNameTable === 'lsi_can_inventory') {
+  } else if (sheetNameTable === 'lsi_mobile_inventory' || sheetNameTable === 'lsi_inventory' || sheetNameTable === 'lsi_can_inventory' || sheetNameTable === 'lsi_accounts' || sheetNameTable === 'lsi_can_accounts') {
     getSheet = 'Lamitek'
-  } else if (sheetNameTable === 'gsrc_mobile_inventory' || sheetNameTable === 'gsrc_inventory') {
+  } else if (sheetNameTable === 'gsrc_mobile_inventory' || sheetNameTable === 'gsrc_inventory' || sheetNameTable === 'gsrc_accounts') {
     getSheet = 'GreenSiam'
   } else {
     getSheet = '';
@@ -64,13 +65,27 @@ export default async function handler(req, res) {
           return res.status(500).send('Error uploading file');
         }
         const fileBuffer = req.file.buffer;
-
         try {
           const {headers, rows} = await parseExcel(fileBuffer, getSheet)
-          console.log(headers)
-          const insertQuery = `INSERT INTO ${tablename} (${headers.join(', ')}) VALUES ?`;
-          const result = await query(insertQuery, [rows]);
+          let insertQuery;
+          let values;
+        if(sheetNameTable === 'gkc_accounts' || sheetNameTable === 'gpc_accounts' || sheetNameTable === 'gpc_sq_accounts' || sheetNameTable === 'lsi_accounts' || sheetNameTable === 'lsi_can_accounts' || sheetNameTable === 'gsrc_accounts') {
+          
+          const is_active_id = 1
+          headers.push('is_active_id')
+          const valuePlaceholders = rows.map(() => '(?)').join(',')
 
+          console.log("result for header:", headers)
+          console.log("result for rows: ", rows)
+          insertQuery = `INSERT INTO ${tablename} (${headers.join(', ')}) VALUES ${valuePlaceholders}`;
+          values = rows.map((row) => [...row, is_active_id])
+          console.log("result for insert query: ", insertQuery)
+        } else {
+          console.log(headers)
+          insertQuery = `INSERT INTO ${tablename} (${headers.join(', ')}) VALUES ?`;
+          values = [rows];
+        }
+        const result = await query(insertQuery, values);
         return res.status(200).send('File uploaded successfully');
       } catch (error) {
       console.error('Error uploading file:', error);
