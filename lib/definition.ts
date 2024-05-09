@@ -10,6 +10,13 @@ export interface InventoryList {
     date_installed: string;
 }
 
+export type User = {
+    id: string;
+    name: string;
+    email: string;
+    password: string;
+  };
+
 export interface MobileInventoryList {
     id: number;
     assigned_to: string;
@@ -21,6 +28,7 @@ export interface MobileInventoryList {
     serial_number: string;
     inclusion: string;
     date_issued: string;
+    is_active_id: number;
 }
 
 export interface fetchMobileInventoryList {

@@ -52,14 +52,15 @@ export default function Page() {
     }
     const openModal = () => {
         setIsModalOpen(true)
+        console.log("result for clicking add new data: " ,gettable ,branch)
     }
     const closeModal = () => {
         setIsModalOpen(false)
     }
     const handleFormSubmit = () => {
-        dataUploaderHandler()
         closeModal()
     }
+    
 
     useEffect(() => {
         if(tablename) {
@@ -93,7 +94,7 @@ export default function Page() {
 
     return (
         <Layout>
-            <div className=" p-5 border border-collapse rounded shadow-2xl mx-5 relative mt-5">
+            <div className=" p-5 border border-collapse rounded shadow-2xl shadow-black mx-5 relative mt-5 bg-white">
                 <div className="grid grid-rows-1 self-end w-full">
                     <h1 className={`${lato.className} text-2xl`}> {name} Server Accounts</h1>
                     <div className="relative flex flex-col  w-28 top-2">
@@ -111,7 +112,7 @@ export default function Page() {
                     
                    {name !== '' && <> <Search placeholder="Search...." /><CreateInventory onClick={openModal}/> </>}
                 </div>
-                    {gettable !== '' && (tableAccounts?.length === 0 || tableAccounts === null) && <Upload tablename={gettable} onDataUploaded={dataUploaderHandler}/>}
+                    {gettable !== '' && (tableAccounts?.length === 0 || tableAccounts === null || tableAccounts === undefined) && <Upload tablename={gettable} onDataUploaded={dataUploaderHandler}/>}
                 <div className="flex flex-row items-center mt-1">
                     <div className="relative flex flex-col items-center justify-between md:mt-2">
                         <label className="">Select Company:</label>
