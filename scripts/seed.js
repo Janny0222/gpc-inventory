@@ -345,7 +345,146 @@ async function seedDatabase(){
                 ON DELETE RESTRICT,
             date_created TIMESTAMP
         )
+        `,
+        // Creating table for GPC Printer
         `
+        CREATE TABLE IF NOT EXISTS gpc_printer (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            printer_name VARCHAR(255),
+            assigned_to VARCHAR(255),
+            manufacturer VARCHAR(255),
+            model VARCHAR(255),
+            ink_type VARCHAR(255),
+            serial_number VARCHAR(255),
+            description VARCHAR(255),
+            department VARCHAR(255),
+            comment VARCHAR(255),
+            is_active_id INT,
+            date_installed VARCHAR(255),
+            date_pullout VARCHAR(255),
+            date_purchased VARCHAR(255),
+            CONSTRAINT fk_gpc_printer_status
+                FOREIGN KEY(is_active_id) REFERENCES statuses(id)
+                ON UPDATE CASCADE
+                ON DELETE RESTRICT,
+            date_created TIMESTAMP
+        )
+        `,
+        `
+        CREATE TABLE IF NOT EXISTS gpc_sq_printer (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            printer_name VARCHAR(255),
+            assigned_to VARCHAR(255),
+            manufacturer VARCHAR(255),
+            model VARCHAR(255),
+            ink_type VARCHAR(255),
+            serial_number VARCHAR(255),
+            description VARCHAR(255),
+            department VARCHAR(255),
+            comment VARCHAR(255),
+            is_active_id INT,
+            date_installed VARCHAR(255),
+            date_pullout VARCHAR(255),
+            date_purchased VARCHAR(255),
+            CONSTRAINT fk_gpcsq_printer_status
+                FOREIGN KEY(is_active_id) REFERENCES statuses(id)
+                ON UPDATE CASCADE
+                ON DELETE RESTRICT,
+            date_created TIMESTAMP
+        )
+        `,
+        `
+        CREATE TABLE IF NOT EXISTS lsi_printer (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            printer_name VARCHAR(255),
+            assigned_to VARCHAR(255),
+            manufacturer VARCHAR(255),
+            model VARCHAR(255),
+            ink_type VARCHAR(255),
+            serial_number VARCHAR(255),
+            description VARCHAR(255),
+            department VARCHAR(255),
+            comment VARCHAR(255),
+            is_active_id INT,
+            date_installed VARCHAR(255),
+            date_pullout VARCHAR(255),
+            date_purchased VARCHAR(255),
+            CONSTRAINT fk_lsi_printer_status
+                FOREIGN KEY(is_active_id) REFERENCES statuses(id)
+                ON UPDATE CASCADE
+                ON DELETE RESTRICT,
+            date_created TIMESTAMP
+        )
+        `,
+        `
+        CREATE TABLE IF NOT EXISTS lsi_can_printer (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            printer_name VARCHAR(255),
+            assigned_to VARCHAR(255),
+            manufacturer VARCHAR(255),
+            model VARCHAR(255),
+            ink_type VARCHAR(255),
+            serial_number VARCHAR(255),
+            description VARCHAR(255),
+            department VARCHAR(255),
+            comment VARCHAR(255),
+            is_active_id INT,
+            date_installed VARCHAR(255),
+            date_pullout VARCHAR(255),
+            date_purchased VARCHAR(255),
+            CONSTRAINT fk_gpccan_printer_status
+                FOREIGN KEY(is_active_id) REFERENCES statuses(id)
+                ON UPDATE CASCADE
+                ON DELETE RESTRICT,
+            date_created TIMESTAMP
+        )
+        `,
+        `
+        CREATE TABLE IF NOT EXISTS gkc_printer (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            printer_name VARCHAR(255),
+            assigned_to VARCHAR(255),
+            manufacturer VARCHAR(255),
+            model VARCHAR(255),
+            ink_type VARCHAR(255),
+            serial_number VARCHAR(255),
+            description VARCHAR(255),
+            department VARCHAR(255),
+            comment VARCHAR(255),
+            is_active_id INT,
+            date_installed VARCHAR(255),
+            date_pullout VARCHAR(255),
+            date_purchased VARCHAR(255),
+            CONSTRAINT fk_gkc_printer_status
+                FOREIGN KEY(is_active_id) REFERENCES statuses(id)
+                ON UPDATE CASCADE
+                ON DELETE RESTRICT,
+            date_created TIMESTAMP
+        )
+        `,
+        `
+        CREATE TABLE IF NOT EXISTS gsrc_printer (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            printer_name VARCHAR(255),
+            assigned_to VARCHAR(255),
+            manufacturer VARCHAR(255),
+            model VARCHAR(255),
+            ink_type VARCHAR(255),
+            serial_number VARCHAR(255),
+            description VARCHAR(255),
+            department VARCHAR(255),
+            comment VARCHAR(255),
+            is_active_id INT,
+            date_installed VARCHAR(255),
+            date_pullout VARCHAR(255),
+            date_purchased VARCHAR(255),
+            CONSTRAINT fk_gsrc_printer_status
+                FOREIGN KEY(is_active_id) REFERENCES statuses(id)
+                ON UPDATE CASCADE
+                ON DELETE RESTRICT,
+            date_created TIMESTAMP
+        )
+        `,
         ]
         for(const query of queries){
             await db.query(query);

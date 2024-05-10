@@ -27,9 +27,8 @@ const [dataUploaderHandler, setDataUploaderHandler] = useState<() => void>(() =>
     let getName = tableName.find(company => company.name === tablename)?.name || tablename
     let getTable = tableName.find(company => company.name === tablename)?.table || tablename
     let get_status = mobileInventory.map(status => status.is_active_id)
-
     
-    
+    // function for changing company
     const handleDropdown = (value: string) => {
         const pageLoading = toast.loading(`Selecting company, Please wait...`, {duration: 2500})
         setTimeout(() => {
@@ -42,16 +41,19 @@ const [dataUploaderHandler, setDataUploaderHandler] = useState<() => void>(() =>
         }, 2000)
     }
     
+    // function for create modal
     const openModal = () => {
         setIsModalOpen(true);
     }
+    // function for closing create modal
     const closeModal = () => {
         setIsModalOpen(false)
     }
+    // this function is handling for closing modal after successfully edit or create data
     const handleFormSubmit = async () =>{
         closeModal();
     }
-    
+    // this will be effect after successfully import excel file data
     useEffect(()=> {
         if(tablename) {
         const handleDataUploaded = async () => {
@@ -71,7 +73,7 @@ const [dataUploaderHandler, setDataUploaderHandler] = useState<() => void>(() =>
         // to use the handleDataUploaded function outside the useEffect
        } 
     }, [tablename, getTable])
-    
+    // this function is for StatusToggle and handling triggerValue
     const handleTrigger = () =>{
         if(triggerValue === 'active') {
             setTriggerValue(triggerValue === 'active' ? 'inactive' : 'active')
@@ -82,7 +84,7 @@ const [dataUploaderHandler, setDataUploaderHandler] = useState<() => void>(() =>
     
     return (
         <Layout>
-            <div className=" p-5 border border-collapse rounded shadow-2xl shadow-black mx-5 relative mt-5 bg-white">
+            <div className=" p-3 border rounded shadow-2xl shadow-black mx-5 relative mt-6 sm:mt-1 bg-white">
                 <div className="flex items-center justify-between w-full">
                     <h1 className={`${lato.className} text-2xl`}> {name} Mobile</h1>
                 </div>
