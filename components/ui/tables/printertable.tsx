@@ -1,5 +1,5 @@
 'use client'
-import EditAccountModal from "../inventory/edit-data/EditAccountModal";
+import EditPrinterModal from "../inventory/edit-data/EditPrinterModal";
 import { PrinterInventoryList } from "@/lib/definition"
 import { useEffect, useState } from "react"
 import { DeleteInventory, UpdateInventory } from "../buttons";
@@ -48,11 +48,11 @@ async function fetchPrinter(trigger: string) {
       setTotalPages(data.totalPages);
     } else {
       if(trigger === 'active') {
-        apiUrlEndpoint = `/api/${getTableName}/printer/?page=${currentPage}`;
+        apiUrlEndpoint = `/api/${getTableName}/printers/?page=${currentPage}`;
         response = await fetch(apiUrlEndpoint);
         data = await response.json()
       } else {
-        apiUrlEndpoint = `/api/${getTableName}/printer/inactive/?page=${currentPage}`
+        apiUrlEndpoint = `/api/${getTableName}/printers/inactive/?page=${currentPage}`
         response = await fetch(apiUrlEndpoint);
         data = await response.json();
       }
@@ -157,7 +157,7 @@ const handleSave = async () => {
 }
 
 
-const openEditModal = async (id: number) => {
+const openEdit = async (id: number) => {
   setSelectedId(id)
   setIsEditModalOpen(true)
   try {
@@ -266,7 +266,7 @@ const closeModal = () => {
                     </td>
                     <td className="px-3 py-3 whitespace-nowrap">
                       <div className="flex items-center justify-center gap-3">
-                        <UpdateInventory id={printer.id} onClick={openEditModal}/>
+                        <UpdateInventory id={printer.id} onClick={openEdit}/>
                         <DeleteInventory id={printer.id} onClick={openDeleteModal}/>
                       </div>
                     </td>
@@ -280,7 +280,7 @@ const closeModal = () => {
           </table>
          
             {isEditModalOpen && (
-              <EditAccountModal onClose={closeModal} onSubmit={handleFormSubmit} id={selectedId} tablename={getTableName}/>
+              <EditPrinterModal triggerValue={triggerValue} onClose={closeModal} onSubmit={handleFormSubmit} id={selectedId} tablename={getTableName}/>
             )} 
             {isDeleteModalOpen && (
               <DeleteAccountModal onClose={closeModal} onSubmit={handleFormSubmit} id={selectedId} tablename={getTableName}/>

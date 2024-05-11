@@ -107,7 +107,7 @@ export default function Page() {
 
     return (
         <Layout>
-            <div className=" p-3 border rounded shadow-2xl shadow-black mx-5 relative mt-6 sm:mt-1 bg-white">
+            <div className=" p-3 border rounded shadow-2xl shadow-black mx-2 relative mt-6 sm:mt-1 bg-white">
                 <div className="grid grid-rows-1 self-end w-full">
                     <h1 className={`${lato.className} text-2xl`}> {name} Server Accounts</h1>
                     <div className="relative flex flex-col  w-28 top-2">
@@ -125,7 +125,7 @@ export default function Page() {
                     
                    {name !== '' && <> <Search placeholder="Search...." /><CreateInventory onClick={openModal} /> </>}
                 </div>
-                    {gettable !== '' && (tableAccounts?.length === 0 || tableAccounts === null || tableAccounts === undefined) && <Upload tablename={gettable} onDataUploaded={dataUploaderHandler}/>}
+                    {name && gettable !== '' && (tableAccounts?.length === 0 || tableAccounts === null || tableAccounts === undefined) && <Upload tablename={gettable} onDataUploaded={dataUploaderHandler}/>}
                 <div className="flex justify-between items-center">
                     <div className="flex flex-row items-center mt-1">
                         <div className="relative flex flex-col items-center justify-between md:mt-2">

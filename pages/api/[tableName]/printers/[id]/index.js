@@ -78,14 +78,14 @@ export default async function handler(req, res) {
 
     try {
       const {id} = req.query;
-      const {printer_name, assigned_to, department, manufacturer, model, serial_number, ink_type, description, comment, date_insatalled, date_purchased, is_active_id, date_pullout} = req.body
+      const {printer_name, assigned_to, department, manufacturer, model, serial_number, ink_type, description, comment, date_installed, date_purchased, is_active_id, date_pullout} = req.body
 
-      if(!id || !assigned_to || !brand){
+      if(!id || !assigned_to){
         return res.status(400).json({ error: 'Missing required fields' })
       }
       const updateResult = await query
-      (`UPDATE ${tableName} SET printer_name=?, assigned_to=?, department=?, manufacturer=?, model=?, serial_number=?, ink_type=?, description=?, comment=?, date_insatalled=?, date_purchased=?, is_active_id=?, date_pullout=? WHERE id=?`,
-      [printer_name, assigned_to, department, manufacturer, model, serial_number, ink_type, description, comment, date_insatalled, date_purchased, is_active_id, date_pullout, id]);
+      (`UPDATE ${tableName} SET printer_name=?, assigned_to=?, department=?, manufacturer=?, model=?, serial_number=?, ink_type=?, description=?, comment=?, date_installed=?, date_purchased=?, is_active_id=?, date_pullout=? WHERE id=?`,
+      [printer_name, assigned_to, department, manufacturer, model, serial_number, ink_type, description, comment, date_installed, date_purchased, is_active_id, date_pullout, id]);
       
       if(updateResult.affectedRows > 0){
         res.status(200).json({response: { message: 'success', updatedItem: id }})
