@@ -12,12 +12,12 @@ export interface InventoryList {
     date_installed: string;
 }
 
-export type User = {
-    id: string;
-    name: string;
+export interface User {
+    id: number;
+    username: string;
     email: string;
-    password: string;
-  };
+  }
+
 
 export interface MobileInventoryList {
     id: number;

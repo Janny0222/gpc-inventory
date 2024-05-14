@@ -10,9 +10,13 @@ import OldMobile from '@/components/ui/tables/oldunit-mobile';
 import DoughnutChart from '@/components/DougnutChart';
 import ToggleButton from '@/components/ToggleButton';
 import BarChart from '@/components/BarChart';
-
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { User } from '@/lib/definition';
+import jwt, { JwtPayload} from 'jsonwebtoken';
 
 export default function Page() {
+  const [user, setUser] = useState<User | null>(null);
   const [count, setCount] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -20,7 +24,8 @@ export default function Page() {
   const [laptopToCount, setLaptopToCount] = useState<number | null>(null)
   const [mobileCount, setMobileCount] = useState<number | null>(null)
   const [triggerValue, setTriggerValue] = useState<string>("graph")
-  
+  const { data: session, status } = useSession();
+  const router = useRouter();
   
   
   const fetchData = async () => {
@@ -52,7 +57,7 @@ export default function Page() {
       setLoading(false)
     }
   }
-  console.log("Result for data: ")
+
   useEffect(() => {
     const delayTime = 1000;
     const delayTimer = setTimeout(() => {
@@ -60,6 +65,14 @@ export default function Page() {
     }, delayTime);
     return () => clearTimeout(delayTimer);
   }, []);
+
+  
+  // useEffect(() => {
+  // if (status === 'unauthenticated') {
+  //     router.push('/login');
+  // }
+  // }, [status, router]);
+
   
   const handleTrigger = () =>{
    setTriggerValue(triggerValue === 'graph' ? 'detail' : 'graph')
@@ -67,9 +80,9 @@ export default function Page() {
   
   return (
     <Layout>
-      <div className='p-1 border rounded shadow-2xl relative my-5 bg-gray-200/50'>
+      <div className='p-1 border rounded shadow-2xl relative my-5 h-screen bg-white'>
         <div className="p-3 rounded-t-lg bg-black mb-1">
-          <h1 className={`${lato.className} text-xl md:text-xl custom-font   sm:text-left`}>Summary</h1>
+          <h1 className={`${lato.className} text-xl md:text-xl custom-font   sm:text-left`}>Summary {session?.user?.email}</h1>
         </div>
         <div className="px-4 overflow-y-hidden rounded-lg bg-white shadow-md border">
             <div className='flex flex-col pb-2'>

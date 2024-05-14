@@ -7,10 +7,7 @@
   padding: 0;
   box-sizing: border-box;
   scroll-behavior: smooth;
-  --tw-gradient-from: #15803d var(--tw-gradient-from-position);
-  --tw-gradient-to: #157f3c00 var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-  background-image: linear-gradient(to right, var(--tw-gradient-stops));
+  background-color: rgb(11, 99, 56, 0.8);
 
 }
 .name {
@@ -58,3 +55,26 @@
   visibility: visible;
   opacity: 1;
 }
+
+
+@keyframes scrollAnimation {
+  0% {
+      transform: translateY(100%);
+  }
+  100% {
+      transform: translateY(-100%);
+  }
+}
+
+.animated-text {
+  display: inline-block;
+  overflow: hidden;
+  height: 3em; /* Adjust the height based on your text size */
+}
+
+.scrolling-text {
+  display: block;
+  animation: scrollAnimation 10s linear infinite; /* Adjust duration and timing function as needed */
+}
+
+

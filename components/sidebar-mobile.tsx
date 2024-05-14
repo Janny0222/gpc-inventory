@@ -17,6 +17,7 @@ import { Separator } from './ui/separator';
 import { Drawer, DrawerContent, DrawerTrigger } from './ui/drawer';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { lato } from '@/styles/font';
+import { TbFileExport } from 'react-icons/tb';
 
 interface SidebarMobileProps {
   sidebarItems: SidebarItems;
@@ -36,7 +37,7 @@ export function SidebarMobile(props: SidebarMobileProps) {
         <SheetHeader className='flex flex-row justify-between items-center space-y-0'>
         <div className='flex flex-col justify-center items-center'>
           <h3 className={`mx-3 text-3xl font-extrabold  text-green-400 tracking-[.3rem] drop-shadow-md ${lato.className}`}>Greenstone</h3>
-          <span className='text-white text-sm font-bold'>I.T EQUIPEMENT INVENTORY</span>
+          <span className='text-white text-sm font-bold'>IT EQUIPMENT INVENTORY</span>
         </div>
           <SheetClose asChild>
             <Button className='h-7 w-7 p-0' variant='ghost'>
@@ -60,6 +61,14 @@ export function SidebarMobile(props: SidebarMobileProps) {
               </Link>
             ))}
             {props.sidebarItems.extras}
+            <div className='mt-12 rounded focus:selection:border-white hover:border-y-2 border-green-500/50 hover:text-green-200 focus:ring-white w-full py-2'>
+              <Link href={'/export'}>
+                <div className={`flex items-center gap-1 justify-start ml-3 ${lato.className}`}>
+                  <TbFileExport className='h-6 w-7' />
+                  <span className='text-sm'>Export Data</span>
+                </div>
+              </Link>
+            </div>
           </div>
           <div className='absolute w-full bottom-4 px-1 left-0'>
             <Separator className='absolute -top-3 left-0 w-full' />

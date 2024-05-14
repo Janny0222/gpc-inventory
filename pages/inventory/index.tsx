@@ -1,5 +1,6 @@
 "use client"
-import React, { useState, useEffect, use } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import  {branchName, branchTableMap, tableName} from "@/lib/company";
 import { lusitana } from "@/styles/font";
 import GPCInventoryTable from "@/components/ui/tables/inventorytable";
@@ -17,11 +18,13 @@ import GetBranch from "@/components/ui/dropdowns/select-company";
 import toast from "react-hot-toast";
 import { duration } from "html2canvas/dist/types/css/property-descriptors/duration";
 import StatusToggle from "@/components/StatusToggle";
-
+import jwt, { JwtPayload} from 'jsonwebtoken';
+import { User } from "@/lib/definition";
+import { useSession } from "next-auth/react";
 
 export default function Page({searchParams,}:{searchParams?: {search?: string}}) {
     let search = searchParams?.search || ''
-    
+    const [user, setUser] = useState<User | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [inventories, setInventories] = useState<InventoryList[]>([]);
     const [company, setCompany] = useState<string>("");
@@ -29,6 +32,8 @@ export default function Page({searchParams,}:{searchParams?: {search?: string}})
     const [tblName, setTblName] = useState<string>("");
     const [triggerValue, setTriggerValue] = useState<string>("active")
     const [dataUploaderHandler, setDataUploaderHandler] = useState<() => void>(() => () => {})
+    const { data: session, status } = useSession();
+    const router = useRouter();
 
     let name = tableName.find(companyName => companyName.name === company)?.displayName || company
         
@@ -46,7 +51,7 @@ export default function Page({searchParams,}:{searchParams?: {search?: string}})
     const closeModal = () => {
         setIsModalOpen(false)
     }
-
+   
     // Handle selecting company
     const handleCompanyChange = (value: string) => {
         if(value === 'gpc_inventory'){
@@ -60,14 +65,6 @@ export default function Page({searchParams,}:{searchParams?: {search?: string}})
             setCompany(value)
             setTblName(value)
     }
-    
-    // this function is trigger after successfully add or edit a data
-    const handleFormSubmit = async () =>{
-        closeModal();
-        // await getPageData();
-        dataUploaderHandler()
-    }
-    // this will be effect after successfully upload excel file
     useEffect(() => {
         if(tblName){
         const handleDataUploaded = async () =>{
@@ -84,6 +81,16 @@ export default function Page({searchParams,}:{searchParams?: {search?: string}})
         handleDataUploaded()
         }
     }, [tblName])
+    
+    // this function is trigger after successfully add or edit a data
+    const handleFormSubmit = async () =>{
+        closeModal();
+        // await getPageData();
+        dataUploaderHandler()
+    }
+
+    // this will be effect after successfully upload excel file
+   
     // this function handle changing branch
     const handleBranchChange = (value: string) => {
         const branchTableName = branchTableMap[value as keyof typeof branchTableMap] || company;
@@ -112,7 +119,7 @@ export default function Page({searchParams,}:{searchParams?: {search?: string}})
                 <div className="grid grid-rows-1 self-end w-full">
                     <h1 className={`${lusitana.className} text-2xl`}> {name} Inventory</h1>
                     
-                    <div className="relative flex flex-col  w-28 top-2">
+                    <div className="relative flex flex-col  w-28 top-2 sm:top-7">
                     {(company === 'gpc_inventory' || company === 'lsi_inventory') && branchName.length > 1 && (
                         <>
                         <span>Change Branch: </span>

@@ -127,9 +127,7 @@ const [dataUploaderHandler, setDataUploaderHandler] = useState<() => void>(() =>
                     <h1 className={`${lato.className} text-2xl`}> {name} Mobile</h1>
                 </div>
                 <div className="flex items-center justify-between gap-2 mt-12">
-                    <div className="absolute top-14 right-3">
-                    {name !== '' && <ExportInventory onClick={handleExport} table={getTable} /> }
-                    </div>
+                    
                    {name !== '' && <> <Search placeholder="Search...." /><CreateInventory onClick={openModal}/> </>}
                 </div>
                     {getTable !== '' && (mobileInventory?.length === 0 || mobileInventory === undefined) && <Upload tablename={getTable} onDataUploaded={dataUploaderHandler}/>}

@@ -7,6 +7,11 @@ import { usePathname } from 'next/navigation';
 import { lato } from '@/styles/font';
 import { FaFileExport } from 'react-icons/fa';
 import { TbFileExport } from 'react-icons/tb'
+import { useSession, signOut } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import toast from 'react-hot-toast';
+
+
 
 interface SidebarDesktopProps {
   sidebarItems: SidebarItems;
@@ -14,16 +19,32 @@ interface SidebarDesktopProps {
 
 export function SidebarDesktop(props: SidebarDesktopProps) {
   const pathname = usePathname();
+  const {data: session, status} = useSession();
+  const router = useRouter()
+  const user  = session?.user;
 
+  
+
+  const handleSubmit = async () => {
+    const signOutToast = toast.loading(`Signing Out...`, {duration: 3000})
+    setTimeout(() => {
+      toast.success(`Signing Out successfully`, {id: signOutToast})
+       signOut();
+       router.push('/login')
+    }, 2500)
+  }
   return (
     <aside className='w-[250px] rounded max-w-xs h-screen fixed left-0 top-0 z-40 bg-black/80'>
       <div className='h-full py-3'>
         <div className='flex flex-col justify-center items-center'>
-          <h3 className={`mx-3 text-3xl font-extrabold  text-green-400 tracking-[.3rem] drop-shadow-md name ${lato.className}`}>Greenstone</h3>
-          <span className='text-white text-sm font-bold'>I.T EQUIPEMENT INVENTORY</span>
+          <h3 className={`mx-3 text-3xl font-bold  text-green-400 tracking-[.3rem]  ${lato.className}`}>Greenstone</h3>
+          
+          <span className='text-white text-sm font-bold'>IT EQUIPMENT INVENTORY</span>
         </div>
         <div className='mt-2'>
-          <div className='border border-white/50'></div>
+          <div className='border border-white/50'>
+
+          </div>
           <div className=' flex flex-col gap-1 w-full mt-5 text-white'>
             {props.sidebarItems.links.map((link, index) => (
               <Link key={index} href={link.href}>
@@ -44,6 +65,14 @@ export function SidebarDesktop(props: SidebarDesktopProps) {
                   <span className='text-sm'>Export Data</span>
                 </div>
               </Link>
+            </div>
+            <div>
+              <span>{user?.email}</span>
+            </div>
+            <div>
+              <button className='border rounded-md bg-red-200 text-black' onClick={handleSubmit}>
+                Sign Out
+              </button>
             </div>
           </div>
          
