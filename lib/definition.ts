@@ -13,9 +13,21 @@ export interface InventoryList {
 }
 
 export interface User {
-    id: number;
-    username: string;
-    email: string;
+   
+    id: number | null;
+    name: string | null;
+    username: string | null;
+    email: string | null;
+    role_id: number | null
+    
+  }
+
+  export interface AuthUser {
+   
+    uid?: string | null | undefined;
+    username?: string | null | undefined;
+    role_id: number | null | undefined
+        
   }
 
 

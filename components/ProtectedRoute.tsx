@@ -8,10 +8,11 @@ const ProtectedRoute = ({ children }: {children: React.ReactNode}) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (status === 'unauthenticated') {
+    if ( status === 'unauthenticated') {
       router.push('/login');
+      console.log("Result for status: ")
     }
-  }, [status, router]);
+  }, [status, router, session]);
 
   if (status === 'loading') {
     return <p>Loading...</p>;
@@ -20,6 +21,7 @@ const ProtectedRoute = ({ children }: {children: React.ReactNode}) => {
   if (status === 'authenticated') {
     return children;
   }
+  
 
   return null;
 };

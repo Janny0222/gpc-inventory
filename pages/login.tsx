@@ -32,7 +32,7 @@ export default function LoginPage() {
         event.preventDefault();
 
         const { username, password } = credentials;
-        const toastLogin = toast.loading(`Logging In. Please Wait...`, {duration: 2500})
+        const toastLogin = toast.loading(`Logging In. Please Wait...`, {duration: 1000})
         try {
             const result = await signIn('credentials', {
                 redirect: false,
@@ -45,7 +45,7 @@ export default function LoginPage() {
             if (result?.error) {
               setTimeout(() => {
                 toast.error(result.error,{id: toastLogin});
-              }, 2000)
+              }, 500)
                 
             } else {
                 setTimeout(() => {

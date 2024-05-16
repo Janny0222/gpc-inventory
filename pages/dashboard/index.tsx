@@ -24,9 +24,6 @@ export default function Page() {
   const [laptopToCount, setLaptopToCount] = useState<number | null>(null)
   const [mobileCount, setMobileCount] = useState<number | null>(null)
   const [triggerValue, setTriggerValue] = useState<string>("graph")
-  const { data: session, status } = useSession();
-  const router = useRouter();
-  
   
   const fetchData = async () => {
     try {
@@ -65,7 +62,7 @@ export default function Page() {
     }, delayTime);
     return () => clearTimeout(delayTimer);
   }, []);
-
+  
   
   // useEffect(() => {
   // if (status === 'unauthenticated') {
@@ -80,9 +77,9 @@ export default function Page() {
   
   return (
     <Layout>
-      <div className='p-1 border rounded shadow-2xl relative my-5 h-screen bg-white'>
-        <div className="p-3 rounded-t-lg bg-black mb-1">
-          <h1 className={`${lato.className} text-xl md:text-xl custom-font   sm:text-left`}>Summary {session?.user?.email}</h1>
+      <div className='p-1 border rounded shadow-2xl relative  h-full bg-white'>
+        <div className="p-3 rounded-t-lg bg-[#74d1a4cc] mb-1">
+          <h1 className={`${lato.className} text-xl md:text-xl text-black sm:text-left`}>Summary</h1>
         </div>
         <div className="px-4 overflow-y-hidden rounded-lg bg-white shadow-md border">
             <div className='flex flex-col pb-2'>
@@ -131,8 +128,8 @@ export default function Page() {
         {/* Trigger for Detail */}
         {triggerValue === 'detail' ? (
             <>
-        <div className="p-2 my-1 rounded-t-lg bg-black">
-          <h1 className={`${lusitana.className} text-white text-xl md:text-[15px] sm:text-[10px]`}>Desktop/Laptop Unit/s 5years old and Above</h1>
+        <div className="p-2 my-1 rounded-t-lg bg-[#74d1a4cc]">
+          <h1 className={`${lusitana.className} text-black text-xl md:text-[15px] sm:text-[10px]`}>Desktop/Laptop Unit/s 5years old and Above</h1>
         </div>
         <div className="  rounded-lg shadow-md border">
             <div className="grid">
@@ -143,8 +140,8 @@ export default function Page() {
             </div>
         </div>
          
-        <div className="p-2 mt-2 rounded-t-lg bg-black">
-          <h1 className={`${lusitana.className} text-white text-xl md:text-[15px] sm:text-[10px]`}>Mobile Issued 5 years old and above </h1>
+        <div className="p-2 mt-2 rounded-t-lg bg-[#74d1a4cc]">
+          <h1 className={`${lusitana.className} text-black text-xl md:text-[15px] sm:text-[10px]`}>Mobile Issued 5 years old and above </h1>
         </div>
         <div className='p-1  rounded-t-lg shadow-md border'>
           <div className='grid'>
@@ -156,8 +153,8 @@ export default function Page() {
         {/* Trigger for Graph Chart */}
         {triggerValue === 'graph' ? (
               <>
-            <div className="p-2 mt-2 rounded-t-lg bg-black mb-1" >
-              <h1 className={`${lusitana.className} text-white text-xl md:text-[15px] sm:text-[10px] `}>Old Units with more then 5 years of age</h1>
+            <div className="p-2 mt-2 rounded-t-lg bg-[#74d1a4cc] mb-1" >
+              <h1 className={`${lusitana.className} text-black text-xl md:text-[15px] sm:text-[10px] `}>Old Units with more then 5 years of age</h1>
             </div>
             <div className="p-1 bg-white rounded-lg shadow-md border">
               <div className='flex justify-center lg:h-[400px]'>
