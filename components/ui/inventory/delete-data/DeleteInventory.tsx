@@ -76,17 +76,17 @@ const DeleteInventoryModal: React.FC<ModalProps> = ({onClose, onSubmit, tablenam
                 {/* Assigned To */}
                 <h3 className='text-3xl'>Are you sure you want to delete this data? </h3>
             </div>
-            <div className="flex justify-center py-2 mt-2">
+            <div className="flex justify-center gap-2 py-2 mt-2">
                 <button
                   type="submit"
                   
-                  className="flex items-center justify-center h-10 px-4 text-sm font-medium text-white transition-colors border-4 hover:border-black bg-black rounded-lg hover:text-green-800 hover:bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 "
+                  className="flex items-center justify-center h-10 px-4 text-sm font-medium text-white transition-colors border-2 border-black hover:border-white bg-blue-500 rounded-lg hover:text-black  focus:outline-none focus:ring-2 focus:ring-offset-2 "
                   >
                   Yes
                 </button>
                 <button
                   onClick={() => onClose()}
-                  className="flex items-center justify-center h-10 px-4 text-sm font-medium text-white transition-colors border-4 hover:border-black bg-black rounded-lg hover:text-green-800 hover:bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 "
+                  className="flex items-center justify-center h-10 px-4 text-sm font-medium text-white transition-colors border-2 border-black hover:border-white bg-red-400 rounded-lg hover:text-black  focus:outline-none focus:ring-2 focus:ring-offset-2 "
                   >
                   NO
                 </button>

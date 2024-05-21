@@ -1,6 +1,8 @@
 import React, { FormEvent, useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { status } from "@/lib/company";
+import { accountTables, status, tableName } from "@/lib/company";
+import { getSession } from 'next-auth/react';
+import { ActivityLogInventory } from '@/lib/definition';
 
 interface ModalProps {
   onClose: () => void;
@@ -22,6 +24,22 @@ const EditAccountModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, i
     is_active_id: '',
     notes: ''
   });
+  const getCompany = accountTables[tablename] || ""
+  const [userDetails, setUserDetails] = useState({
+    userId: 0,
+    userName: ''
+  })
+ 
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      const session = await getSession();
+      if(session){
+        setUserDetails({ userId: session?.user?.uid, userName: session?.user?.username})
+      }
+    }
+    fetchUserDetails()
+  }, [])
+
   // handle for changing the value in inputs
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -41,9 +59,7 @@ const EditAccountModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, i
     console.log("Result for selected value: ", selectedValue)
   }
 
-
   // handle for getting the specific data in database using the unique id
-  
   useEffect(() => {
     async function fetchAccountTable() {
       try {
@@ -61,6 +77,7 @@ const EditAccountModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, i
     fetchAccountTable()
   }, [tablename, id, getstatus])
 
+  console.log("Result for accountTables: ", getCompany)
   // this function to be called upon clicking the save button in edit modal and automaticall save in the database and show in the table
   
   async function updateAccount(e: FormEvent<HTMLFormElement>) {
@@ -78,7 +95,14 @@ const EditAccountModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, i
           username: formData.username,
           password: formData.password,
           is_active_id: formData.is_active_id,
-          notes: formData.notes
+          notes: formData.notes,
+
+          user_id: userDetails.userId,
+          user_name: userDetails.userName,
+          company_name: getCompany,
+          details: `Edit the details of ${formData.name}`,
+          db_table: tablename,
+          actions: "EDIT"
         }),
       };
       const res = await fetch(`/api/${tablename}/accounts/${id}`, updateAccount);
@@ -106,14 +130,7 @@ const EditAccountModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, i
     }
   }
 
-  const statusChange = (value: string) => {
-    setGetValue(value)
-    if(value === '1') {
-      setGetStatus('1')
-    } else {
-      setGetStatus('2')
-    }
-  }
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       // console.log('Key pressed: ', event.key)
@@ -126,6 +143,8 @@ const EditAccountModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, i
       window.removeEventListener('keydown', handleKeyDown)
     };
   }, [onClose])
+
+  
   
   return (
     <div className="fixed inset-0 z-50 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center">

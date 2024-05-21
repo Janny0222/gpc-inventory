@@ -50,6 +50,14 @@ export const status = [
     {name: "Inactive", value: 2}
 ]
 
+export const accountTables: { [key: string]: string } = {
+    'gpc_accounts': 'GPC',
+    'gpc_sq_accounts': 'GPC',
+    'lsi_accounts': 'LSI',
+    'lsi_can_accounts': 'LSI',
+    'gkc_accounts': 'GKC',
+    'gsrc_accounts': 'GSRC'
+  };
 
 export const roles: { [key: number] : string} = {
     1: 'Admin',

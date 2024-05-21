@@ -6,7 +6,8 @@ import { DeleteInventory, UpdateInventory } from "../buttons";
 import CustomPagination from "@/components/Pagination";
 import {tableName} from "@/lib/company";
 import { XCircleIcon, CheckCircleIcon } from "@heroicons/react/24/solid";
-import DeleteAccountModal from "../inventory/delete-data/DeleteAccountInventory";
+import DeletePrinterModal from "../inventory/delete-data/DeletePrinterInventory";
+import ActivityLog from "./activity_log";
 
 interface PrinterInventoryProps {
     getTableName: string,
@@ -26,7 +27,9 @@ const [modalData, setModalData] = useState<any>(null)
 
 const getQuery = new URLSearchParams(window.location.search)
 const queryValue = getQuery.get('query')
-let company = tableName.find(company => company.name === getTableName)?.company || getTableName
+let company = tableName.find(company => company.name === getTableName)?.displayName || getTableName
+
+
 
 async function fetchPrinter(trigger: string) {
   try {
@@ -280,10 +283,10 @@ const closeModal = () => {
           </table>
          
             {isEditModalOpen && (
-              <EditPrinterModal triggerValue={triggerValue} onClose={closeModal} onSubmit={handleFormSubmit} id={selectedId} tablename={getTableName}/>
+              <EditPrinterModal triggerValue={triggerValue} getCompany={company} onClose={closeModal} onSubmit={handleFormSubmit} id={selectedId} tablename={getTableName}/>
             )} 
             {isDeleteModalOpen && (
-              <DeleteAccountModal onClose={closeModal} onSubmit={handleFormSubmit} id={selectedId} tablename={getTableName}/>
+              <DeletePrinterModal onClose={closeModal} getCompany={company} onSubmit={handleFormSubmit} id={selectedId} tablename={getTableName}/>
             )} 
 
         </div>
@@ -294,6 +297,13 @@ const closeModal = () => {
           onPageChange={handlePageClick}
         />}
       </div>
+      <div className="w-full border-black border mt-10"></div>
+        <div className="p-4 my-2 border rounded-md bg-white">
+            <div className="">
+                <h1 className="text-lg">Recent Activity</h1>
+                <ActivityLog getTableName={getTableName} originTable={company} onDataSubmitted={handleFormSubmit} />
+            </div>
+        </div>
     </div>     
     )
 }

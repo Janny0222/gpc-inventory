@@ -2,18 +2,18 @@
 import { useState, useEffect, FormEvent } from 'react';
 import toast from 'react-hot-toast';
 import Status from '../../dropdowns/status';
+import { getSession } from 'next-auth/react';
+import { ActivityLogInventory } from '@/lib/definition';
+import { Session } from 'inspector';
 
 interface FormProps {
   gettableName: string;
+  getCompany: string;
   triggerValue: string;
   onDataSubmitted: () => void; // Callback function to handle data submission
 }
 
-export default function Form({triggerValue, gettableName, onDataSubmitted }: FormProps) {
-  const [isDuplicate, setIsDuplicate] = useState(false);
-  const [getValue, setGetValue] = useState('');
-  const [errorMessage, setErrorMessage] = useState("");
-  const [status, setStatus] = useState('')
+export default function Form({triggerValue, getCompany, gettableName, onDataSubmitted }: FormProps) {
   const [formData, setFormData] = useState({
     name: '',
     department: '',
@@ -22,7 +22,20 @@ export default function Form({triggerValue, gettableName, onDataSubmitted }: For
     is_active_id: 0,
     notes: ''
   });
+  const [userDetails, setUserDetails] = useState({
+    userId: 0,
+    userName: ''
+  })
   // const [create, setCreated] = useState(false);
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      const session = await getSession();
+      if(session) {
+        setUserDetails({userId: session?.user?.uid, userName: session?.user?.username})
+      }
+    }
+    fetchUserDetails()
+  }, [])
   useEffect(() => {
     if(triggerValue === 'active') {
       setFormData(prevState => ({
@@ -61,6 +74,13 @@ export default function Form({triggerValue, gettableName, onDataSubmitted }: For
         password: formData.password,
         is_active_id: formData.is_active_id,
         notes: formData.notes,
+
+        user_id: userDetails.userId,
+        user_name: userDetails.userName,
+        company_name: getCompany,
+        details: `Added a new account with username: ${formData.username}`,
+        db_table: gettableName,
+        actions: "ADD"
           // tableName: gettableName
         }),
       };

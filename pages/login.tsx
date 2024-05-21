@@ -4,9 +4,8 @@ import toast, { Toaster } from 'react-hot-toast';
 import Link from 'next/link';
 import { signIn, useSession } from 'next-auth/react';
 import { lato } from '@/styles/font';
-import { duration } from 'html2canvas/dist/types/css/property-descriptors/duration';
-import anime from 'animejs';
 import AnimatedName from '@/components/AnimatedName';
+
 
 export default function LoginPage() {
     const [credentials, setCredentials] = useState({ username: '', password: '' });
@@ -15,7 +14,7 @@ export default function LoginPage() {
 
     useEffect(() => {
       if(session) {
-        router.replace('/dashboard')
+        router.push(`/dashboard`)
       }
     }, [session, router])
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +38,7 @@ export default function LoginPage() {
                 username,
                 password,
             });
-
+            console.log(`Results for NODE_ENV: ${process.env.NODE_ENV}`)
             console.log('Response:', result);
 
             if (result?.error) {

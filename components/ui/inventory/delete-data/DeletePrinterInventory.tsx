@@ -12,13 +12,13 @@ interface ModalProps {
 
 
 
-const DeleteAccountModal: React.FC<ModalProps> = ({getCompany, onClose, onSubmit, tablename, id}) => {
+const DeletePrinterModal: React.FC<ModalProps> = ({getCompany, onClose, onSubmit, tablename, id}) => {
   const [userDetails, setUserDetails] = useState({
     userId: 0,
     userName: ''
   })
   const [formData, setFormData] = useState({
-    name: '',
+    printer_name: '',
   });
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const DeleteAccountModal: React.FC<ModalProps> = ({getCompany, onClose, onSubmit
   useEffect(() => {
     async function fetchAccountTable() {
       try {
-        const res = await fetch(`/api/${tablename}/accounts/${id}`);
+        const res = await fetch(`/api/${tablename}/printer/${id}`);
         if(!res.ok){
           throw new Error('Failed to fetch inventory item')
         }
@@ -60,12 +60,12 @@ const DeleteAccountModal: React.FC<ModalProps> = ({getCompany, onClose, onSubmit
           user_id: userDetails.userId,
           user_name: userDetails.userName.toUpperCase(),
           company_name: getCompany,
-          details: `Delete data of ${formData.name}`,
+          details: `Delete record of ${formData.printer_name}`,
           db_table: tablename,
           actions: "DELETE"
         })
       }
-      const res = await fetch(`/api/${tablename}/accounts/${id}`, deleteRequest)
+      const res = await fetch(`/api/${tablename}/printers/${id}`, deleteRequest)
 
       if(!res.ok) {
         throw new Error ('Failed to delete data')
@@ -148,4 +148,4 @@ const DeleteAccountModal: React.FC<ModalProps> = ({getCompany, onClose, onSubmit
 
 };
 
-export default DeleteAccountModal;
+export default DeletePrinterModal;
