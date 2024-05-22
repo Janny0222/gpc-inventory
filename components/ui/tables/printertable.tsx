@@ -240,7 +240,7 @@ const closeModal = () => {
                 <>
                 {printerInventories?.map((printer) => (
                   <tr key={printer.id}
-                    className="w-full shadow-md shadow-gray-700 rounded text-sm   hover:bg-gray-200 hover:border-t-0"
+                    className="w-full shadow-md shadow-gray-700 rounded text-sm hover:border-t-0"
                   >
                     <td className=" pl-6 pr-3 whitespace-nowrap relative cursor-pointer">
                       <div className="flex items-center gap-3">
@@ -283,10 +283,10 @@ const closeModal = () => {
           </table>
          
             {isEditModalOpen && (
-              <EditPrinterModal triggerValue={triggerValue} getCompany={company} onClose={closeModal} onSubmit={handleFormSubmit} id={selectedId} tablename={getTableName}/>
+              <EditPrinterModal triggerValue={triggerValue} onClose={closeModal} onSubmit={handleFormSubmit} id={selectedId} tablename={getTableName}/>
             )} 
             {isDeleteModalOpen && (
-              <DeletePrinterModal onClose={closeModal} getCompany={company} onSubmit={handleFormSubmit} id={selectedId} tablename={getTableName}/>
+              <DeletePrinterModal triggerValue={triggerValue} onClose={closeModal} onSubmit={handleFormSubmit} id={selectedId} tablename={getTableName}/>
             )} 
 
         </div>
@@ -301,7 +301,7 @@ const closeModal = () => {
         <div className="p-4 my-2 border rounded-md bg-white">
             <div className="">
                 <h1 className="text-lg">Recent Activity</h1>
-                <ActivityLog getTableName={getTableName} originTable={company} onDataSubmitted={handleFormSubmit} />
+                <ActivityLog tablename={getTableName} originTable={company} onDataSubmitted={handleFormSubmit} />
             </div>
         </div>
     </div>     

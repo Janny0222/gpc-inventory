@@ -1,6 +1,6 @@
 import React, { FormEvent, useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { status } from "@/lib/company";
+import { accountTables, status } from "@/lib/company";
 import { getSession } from 'next-auth/react';
 
 interface ModalProps {
@@ -9,12 +9,11 @@ interface ModalProps {
   id: number | null;
   tablename: string;
   triggerValue: string;
-  getCompany: string;
 }
 
 
 
-const EditPrinterModal: React.FC<ModalProps> = ({getCompany, triggerValue, onClose, onSubmit, tablename, id}) => {
+const EditPrinterModal: React.FC<ModalProps> = ({triggerValue, onClose, onSubmit, tablename, id}) => {
   const [getvalue, setGetValue] = useState('');
   const [getstatus, setGetStatus] = useState('')
   const [formData, setFormData] = useState({
@@ -36,6 +35,10 @@ const EditPrinterModal: React.FC<ModalProps> = ({getCompany, triggerValue, onClo
     userId: 0,
     userName: ''
   })
+
+  // Converting db_table to company Acronym
+  const getCompany = accountTables[tablename] || ""
+
   useEffect(() => {
     const fetchUserDetails = async () => {
       const session = await getSession();
@@ -110,9 +113,9 @@ const EditPrinterModal: React.FC<ModalProps> = ({getCompany, triggerValue, onClo
 
 
           user_id: userDetails.userId,
-          user_name: userDetails.userName,
+          user_name: userDetails.userName.toUpperCase(),
           company_name: getCompany,
-          details: `Edit the details of ${formData.printer_name}`,
+          details: `Edit the details of "${formData.printer_name}" - (${triggerValue})`,
           db_table: tablename,
           actions: "EDIT"
         }),
@@ -312,17 +315,17 @@ const EditPrinterModal: React.FC<ModalProps> = ({getCompany, triggerValue, onClo
                       />
                     </div>
                     <div className="">
-                      <label htmlFor="comment" className="block mb-2 text-sm font-semibold">
-                        Comment
+                      <label htmlFor="description" className="block mb-2 text-sm font-semibold">
+                        Description
                       </label>
                       <textarea
                         rows={2}
-                        id="comment"
-                        name="comment"
-                        value={formData.comment}
+                        id="description"
+                        name="description"
+                        value={formData.description}
                         onChange={handleChange}
                         className="block w-full px-3 py-2 text-sm border border-gray-600/35 rounded-md focus:outline-none focus:border-gray-400 shadow-md"
-                        placeholder='Enter Comment'
+                        placeholder='Enter description'
                       />
                     </div>
                   </div>

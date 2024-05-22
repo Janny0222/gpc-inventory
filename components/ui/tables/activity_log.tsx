@@ -6,12 +6,12 @@ import { useEffect, useState } from "react"
 import { formatInTimeZone } from 'date-fns-tz'
 
 interface ActivityLogProps {
-    getTableName: string
+    tablename: string
     originTable: string
     onDataSubmitted: () => void;
 }
 
-export default function ActivityLog ({ originTable, getTableName, onDataSubmitted}: ActivityLogProps) {
+export default function ActivityLog ({ originTable, tablename, onDataSubmitted}: ActivityLogProps) {
 
 const [activityLog, setActivityLog] = useState<ActivityLogInventory[]>([])
 const [totalPages, setTotalPages] = useState(1);
@@ -25,7 +25,7 @@ const queryValue = getQuery.get('query')
 useEffect(() => {
   async function fetchActivityLog () {
     try {
-       const apiUrlEndpoint = `/api/${getTableName}/activity_log`;
+       const apiUrlEndpoint = `/api/${tablename}/activity_log`;
        const response = await fetch(apiUrlEndpoint);
        const data = await response.json()
         setActivityLog(data.results);
@@ -37,7 +37,7 @@ useEffect(() => {
     }
   }
   fetchActivityLog()
-}, [getTableName, onDataSubmitted])
+}, [tablename, onDataSubmitted])
 // console.log("Result for activity log: ", activityLog)
 
 const handlePageClick = async (selected: { selected: number }) => {
@@ -45,13 +45,13 @@ const handlePageClick = async (selected: { selected: number }) => {
     const newPage = selected.selected + 1
     
     if (newPage > currentPage) {
-    const apiUrlEndpoint = `/api/${getTableName}/activity_log?page=${newPage}`;
+    const apiUrlEndpoint = `/api/${tablename}/activity_log?page=${newPage}`;
     const response = await fetch(apiUrlEndpoint);
     const data = await response.json()
     setActivityLog(data.results)
     setTotalPages(data.totalPages)
     } else if (newPage < currentPage) {
-    const apiUrlEndpoint = `/api/${getTableName}/activity_log?page=${newPage}`;
+    const apiUrlEndpoint = `/api/${tablename}/activity_log?page=${newPage}`;
     const response = await fetch(apiUrlEndpoint);
     const data = await response.json()
     setActivityLog(data.results)

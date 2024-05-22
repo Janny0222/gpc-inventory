@@ -1,3 +1,5 @@
+import { accountTables } from '@/lib/company';
+import { getSession } from 'next-auth/react';
 import React, { FormEvent, useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 
@@ -6,16 +8,62 @@ interface ModalProps {
   onSubmit: () => void;
   id: number | null;
   tablename: string;
-  
+  triggerValue: string
 }
-const DeleteInventoryModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id}) => {
+const DeleteInventoryModal: React.FC<ModalProps> = ({triggerValue, onClose, onSubmit, tablename, id}) => {
+  const [userDetails, setUserDetails] = useState({
+    userId: 0,
+    userName: ''
+  })
+  const [formData, setFormData] = useState({
+    name: '',
+  });
+
+  const getCompany = accountTables[tablename] || ""
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      const session = await getSession();
+      if(session){
+        setUserDetails({ userId: session?.user?.uid, userName: session?.user?.username})
+      }
+    }
+    fetchUserDetails()
+  }, [])
+
+  useEffect(() => {
+    async function fetchInventoryTable() {
+      try {
+        const res = await fetch(`/api/${tablename}/accounts/${id}`);
+        if(!res.ok){
+          throw new Error('Failed to fetch inventory item')
+        }
+        const data = await res.json();
+        setFormData(data.results[0])
+      } catch(error) {
+        console.error('Error fetching inventory item:', error)
+      }
+    }
+    fetchInventoryTable()
+  }, [tablename, id])
 
   async function deleteInventory(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const deleteToast = toast.loading('Deleting Data. Please wait..', {duration: 2500, position: "top-center"})
     try {
       const deleteRequest = {
-        method: "DELETE"
+        method: "DELETE",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: userDetails.userId,
+          user_name: userDetails.userName.toUpperCase(),
+          company_name: getCompany,
+          details: `Delete data of "${formData.name}" - (${triggerValue})`,
+          db_table: tablename,
+          actions: "DELETE"
+        })
       }
       const res = await fetch(`/api/${tablename}/${id}`, deleteRequest)
 

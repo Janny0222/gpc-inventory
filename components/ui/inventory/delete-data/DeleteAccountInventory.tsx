@@ -1,3 +1,4 @@
+import { accountTables } from '@/lib/company';
 import { getSession } from 'next-auth/react';
 import React, { FormEvent, useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
@@ -7,12 +8,12 @@ interface ModalProps {
   onSubmit: () => void;
   id: number | null;
   tablename: string;
-  getCompany: string
+  triggerValue: string;
 }
 
 
 
-const DeleteAccountModal: React.FC<ModalProps> = ({getCompany, onClose, onSubmit, tablename, id}) => {
+const DeleteAccountModal: React.FC<ModalProps> = ({triggerValue, onClose, onSubmit, tablename, id}) => {
   const [userDetails, setUserDetails] = useState({
     userId: 0,
     userName: ''
@@ -20,6 +21,8 @@ const DeleteAccountModal: React.FC<ModalProps> = ({getCompany, onClose, onSubmit
   const [formData, setFormData] = useState({
     name: '',
   });
+
+  const getCompany = accountTables[tablename] || ""
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -60,7 +63,7 @@ const DeleteAccountModal: React.FC<ModalProps> = ({getCompany, onClose, onSubmit
           user_id: userDetails.userId,
           user_name: userDetails.userName.toUpperCase(),
           company_name: getCompany,
-          details: `Delete data of ${formData.name}`,
+          details: `Delete data of "${formData.name}" - (${triggerValue})`,
           db_table: tablename,
           actions: "DELETE"
         })

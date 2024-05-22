@@ -169,9 +169,6 @@ const openDeleteModal = async (id: number) => {
   await fetchAccountData(id)
 }
 
-const closeQrModal = () => {
-  setSelectedId(null)
-}
 const closeModal = () => {
   setIsEditModalOpen(false);
   setIsDeleteModalOpen(false)
@@ -219,7 +216,7 @@ const closeModal = () => {
                     <>
                     {accountInventories?.map((accounts) => (
                       <tr key={accounts.id}
-                        className="w-full shadow-md shadow-gray-700 rounded text-sm   hover:bg-gray-200 hover:border-t-0"
+                        className="w-full shadow-md shadow-gray-700 rounded text-sm hover:border-t-0"
                       >
                         <td className=" pl-6 pr-3 whitespace-nowrap relative cursor-pointer">
                           <div className="flex items-center gap-3">
@@ -259,10 +256,10 @@ const closeModal = () => {
               </table>
         
                 {isEditModalOpen && (
-                  <EditAccountModal onClose={closeModal} onSubmit={handleFormSubmit} id={selectedId} tablename={getTableName}/>
+                  <EditAccountModal triggerValue={triggerValue} onClose={closeModal} onSubmit={handleFormSubmit} id={selectedId} tablename={getTableName}/>
                 )}
                 {isDeleteModalOpen && (
-                  <DeleteAccountModal onClose={closeModal} getCompany={company} onSubmit={handleFormSubmit} id={selectedId} tablename={getTableName}/>
+                  <DeleteAccountModal triggerValue={triggerValue} onClose={closeModal} onSubmit={handleFormSubmit} id={selectedId} tablename={getTableName}/>
                 )}
             </div>
             {!queryValue && totalPages > 0 &&
@@ -274,12 +271,12 @@ const closeModal = () => {
           </div>
         </div>
         <div className="w-full border-black border mt-10"></div>
-        <div className="p-4 my-2 border rounded-md bg-white">
-            <div className="">
-                <h1 className="text-lg">Recent Activity</h1>
-                <ActivityLog getTableName={getTableName} originTable={company} onDataSubmitted={handleFormSubmit} />
-            </div>
-        </div>
+      </div>
+      <div className="p-4 my-2 border rounded-md bg-white">
+          <div className="">
+              <h1 className="text-md font-bold">Recent Activity</h1>
+              <ActivityLog tablename={getTableName} originTable={company} onDataSubmitted={handleFormSubmit} />
+          </div>
       </div>
     </>
     )

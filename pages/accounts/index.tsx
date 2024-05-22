@@ -153,7 +153,7 @@ export default function Page() {
                     {(company !== 'gpc_inventory' && company !== 'lsi_inventory' ) && company !== '' && <AccountInventoryTable triggerValue={triggerValue} getTableName={gettable} onDataSubmitted={handleFormSubmit}/>}
                     {isModalOpen && (
                             <Modal onClose={closeModal} title={`${branch} Accounts`} companyName={name} onSubmit={handleFormSubmit} tablename={gettable}>
-                                <Form triggerValue={triggerValue} gettableName={gettable} getCompany={company} onDataSubmitted={handleFormSubmit}/>
+                                <Form triggerValue={triggerValue} tablename={gettable} onDataSubmitted={handleFormSubmit}/>
                             </Modal>
                         )}
                 </div>

@@ -1,19 +1,16 @@
 'use client'
 import { useState, useEffect, FormEvent } from 'react';
 import toast from 'react-hot-toast';
-import Status from '../../dropdowns/status';
 import { getSession } from 'next-auth/react';
-import { ActivityLogInventory } from '@/lib/definition';
-import { Session } from 'inspector';
+import { accountTables } from '@/lib/company';
 
 interface FormProps {
-  gettableName: string;
-  getCompany: string;
+  tablename: string;
   triggerValue: string;
   onDataSubmitted: () => void; // Callback function to handle data submission
 }
 
-export default function Form({triggerValue, getCompany, gettableName, onDataSubmitted }: FormProps) {
+export default function Form({triggerValue, tablename, onDataSubmitted }: FormProps) {
   const [formData, setFormData] = useState({
     name: '',
     department: '',
@@ -26,7 +23,9 @@ export default function Form({triggerValue, getCompany, gettableName, onDataSubm
     userId: 0,
     userName: ''
   })
-  // const [create, setCreated] = useState(false);
+  
+  const getCompany = accountTables[tablename] || ""
+
   useEffect(() => {
     const fetchUserDetails = async () => {
       const session = await getSession();
@@ -50,6 +49,7 @@ export default function Form({triggerValue, getCompany, gettableName, onDataSubm
     }
   }, [triggerValue])
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    e.preventDefault();
     const { name, value } = e.target;
     setFormData(prevState => ({
       ...prevState,
@@ -76,15 +76,15 @@ export default function Form({triggerValue, getCompany, gettableName, onDataSubm
         notes: formData.notes,
 
         user_id: userDetails.userId,
-        user_name: userDetails.userName,
+        user_name: userDetails.userName.toUpperCase(),
         company_name: getCompany,
-        details: `Added a new account with username: ${formData.username}`,
-        db_table: gettableName,
+        details: `"${formData.name}" has been added to record - (${triggerValue})`,
+        db_table: tablename,
         actions: "ADD"
           // tableName: gettableName
         }),
       };
-      const res = await fetch(`/api/${gettableName}/accounts`, addAccounts);
+      const res = await fetch(`/api/${tablename}/accounts`, addAccounts);
       const response = await res.json();
       if (response && response.response && response.response.message === "success") {
         setTimeout(() => {

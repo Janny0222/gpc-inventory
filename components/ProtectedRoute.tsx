@@ -13,7 +13,6 @@ const ProtectedRoute = ({ children }: {children: React.ReactNode}) => {
       
     }
   }, [status, router, session]);
-  console.log("Result for status: ", status)
   if (status === 'loading') {
     return <p>Loading...</p>;
   }

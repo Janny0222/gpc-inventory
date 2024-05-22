@@ -9,12 +9,12 @@ interface ModalProps {
   onSubmit: () => void;
   id: number | null;
   tablename: string;
+  triggerValue: string;
 }
 
 
 
-const EditAccountModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, id}) => {
-  const [getvalue, setGetValue] = useState('');
+const EditAccountModal: React.FC<ModalProps> = ({triggerValue, onClose, onSubmit, tablename, id}) => {
   const [getstatus, setGetStatus] = useState('')
   const [formData, setFormData] = useState({
     name: '',
@@ -24,7 +24,9 @@ const EditAccountModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, i
     is_active_id: '',
     notes: ''
   });
+
   const getCompany = accountTables[tablename] || ""
+
   const [userDetails, setUserDetails] = useState({
     userId: 0,
     userName: ''
@@ -56,7 +58,6 @@ const EditAccountModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, i
       is_active_id: selectedValue
     }));
 
-    console.log("Result for selected value: ", selectedValue)
   }
 
   // handle for getting the specific data in database using the unique id
@@ -77,7 +78,6 @@ const EditAccountModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, i
     fetchAccountTable()
   }, [tablename, id, getstatus])
 
-  console.log("Result for accountTables: ", getCompany)
   // this function to be called upon clicking the save button in edit modal and automaticall save in the database and show in the table
   
   async function updateAccount(e: FormEvent<HTMLFormElement>) {
@@ -98,9 +98,9 @@ const EditAccountModal: React.FC<ModalProps> = ({onClose, onSubmit, tablename, i
           notes: formData.notes,
 
           user_id: userDetails.userId,
-          user_name: userDetails.userName,
+          user_name: userDetails.userName.toUpperCase(),
           company_name: getCompany,
-          details: `Edit the details of ${formData.name}`,
+          details: `Edit the details of "${formData.name}" - (${triggerValue})`,
           db_table: tablename,
           actions: "EDIT"
         }),

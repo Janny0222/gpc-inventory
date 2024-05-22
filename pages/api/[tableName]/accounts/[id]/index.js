@@ -79,7 +79,7 @@ export default async function handler(req, res) {
         res.status(404).json({ error: 'Data not found or not updated '});
       }
       const addActivityLog = await query(`INSERT INTO activity_log (user_id, user_name, company_name, details, db_table, actions) VALUES (?, ?, ?, ?, ?, ?)`,
-        [user_id, user_name, company_name, details, tableName, actions]);
+      [user_id, user_name, company_name, details, tableName, actions]);
       
     } catch (error){
       console.error('Error updating inventory: ', error);
@@ -91,6 +91,7 @@ export default async function handler(req, res) {
 
       const addActivityLog = await query(`INSERT INTO activity_log (user_id, user_name, company_name, details, db_table, actions) VALUES (?, ?, ?, ?, ?, ?)`,
         [user_id, user_name, company_name, details, tableName, actions]);
+
       if (!id) {
         return res.status(400).json({ error: 'Unable to delete'})
       }

@@ -1,3 +1,4 @@
+import { accountTables } from '@/lib/company';
 import { getSession } from 'next-auth/react';
 import React, { FormEvent, useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
@@ -7,12 +8,12 @@ interface ModalProps {
   onSubmit: () => void;
   id: number | null;
   tablename: string;
-  getCompany: string
+  triggerValue: string
 }
 
 
 
-const DeletePrinterModal: React.FC<ModalProps> = ({getCompany, onClose, onSubmit, tablename, id}) => {
+const DeletePrinterModal: React.FC<ModalProps> = ({triggerValue, onClose, onSubmit, tablename, id}) => {
   const [userDetails, setUserDetails] = useState({
     userId: 0,
     userName: ''
@@ -20,6 +21,9 @@ const DeletePrinterModal: React.FC<ModalProps> = ({getCompany, onClose, onSubmit
   const [formData, setFormData] = useState({
     printer_name: '',
   });
+  
+  // Converting db_table to company Acronym
+  const getCompany = accountTables[tablename] || ""
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -32,9 +36,9 @@ const DeletePrinterModal: React.FC<ModalProps> = ({getCompany, onClose, onSubmit
   }, [])
 
   useEffect(() => {
-    async function fetchAccountTable() {
+    async function fetchPrinterTable() {
       try {
-        const res = await fetch(`/api/${tablename}/printer/${id}`);
+        const res = await fetch(`/api/${tablename}/printers/${id}`);
         if(!res.ok){
           throw new Error('Failed to fetch inventory item')
         }
@@ -44,7 +48,7 @@ const DeletePrinterModal: React.FC<ModalProps> = ({getCompany, onClose, onSubmit
         console.error('Error fetching inventory item:', error)
       }
     }
-    fetchAccountTable()
+    fetchPrinterTable()
   }, [tablename, id])
   
   async function deleteInventory(e: FormEvent<HTMLFormElement>) {
@@ -60,7 +64,7 @@ const DeletePrinterModal: React.FC<ModalProps> = ({getCompany, onClose, onSubmit
           user_id: userDetails.userId,
           user_name: userDetails.userName.toUpperCase(),
           company_name: getCompany,
-          details: `Delete record of ${formData.printer_name}`,
+          details: `Delete record printer "${formData.printer_name}" - (${triggerValue})`,
           db_table: tablename,
           actions: "DELETE"
         })
