@@ -38,12 +38,14 @@ export interface MobileInventoryList {
     brand: string;
     model_specs: string;
     imei: string;
+    email_password: string;
     number: string;
     serial_number: string;
     inclusion: string;
     date_issued: string;
     date_returned: string;
     is_active_id: number;
+    email?: string
 }
 
 export interface PrinterInventoryList {
