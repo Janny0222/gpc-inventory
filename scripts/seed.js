@@ -485,6 +485,17 @@ async function seedDatabase(){
             date_created TIMESTAMP
         )
         `,
+        `
+        CREATE TABLE IF NOT EXISTS deliver (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            quantity INT(11),
+            description VARCHAR(255),
+            location VARCHAR(255),
+            name VARCHAR(255),
+            date_acquired VARCHAR(255),
+            date_created TIMESTAMP
+        )
+        `
         ]
         for(const query of queries){
             await db.query(query);

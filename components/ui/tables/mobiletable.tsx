@@ -37,8 +37,10 @@ let company = tableName.find(company => company.name === getTableName)?.company 
 const tables = {
   header: ["Assigned To", "Department", "Brand", "Email", "Serial Number", "Number", "Status", "Date Issued", "Action"],
 }
-const extractEmail = (emailPassword: string) => {
-  const emailMatch = emailPassword.match(/Email:\s*([^ ]+)/)
+const extractEmail = (emailPassword: string | null) => {
+  if(!emailPassword) return ''
+  const emailMatch = emailPassword.match(/Email:\s*([^\s]+)/i)
+  
   return emailMatch ? emailMatch[1] : '';
 }
 // function for fetching data for Mobile
@@ -62,6 +64,7 @@ async function fetchMobile (trigger: string) {
         ...item,
         email: extractEmail(item.email_password)
       }));
+      
       setMobileInventory(updateData)
       setTotalPages(data.totalPages);
       setCurrentPage(1);
@@ -193,7 +196,11 @@ const handlePageClick = async (selected: { selected: number }) => {
         response = await fetch(apiUrlEndpoint);
         data = await response.json()
       }
-        setMobileInventory(data.results)
+        const updateData = data.results.map((item: { email_password: string; }) => ({
+          ...item,
+          email: extractEmail(item.email_password)
+        }))
+        setMobileInventory(updateData)
         setTotalPages(data.totalPages)
     } else if (newPage < currentPage) {
       if (triggerValue === 'active') {
@@ -205,7 +212,11 @@ const handlePageClick = async (selected: { selected: number }) => {
         response = await fetch(apiUrlEndpoint);
         data = await response.json()
       }
-    setMobileInventory(data.results)
+      const updateData = data.results.map((item: { email_password: string; }) => ({
+        ...item,
+        email: extractEmail(item.email_password)
+      }))
+      setMobileInventory(updateData)
     setTotalPages(data.totalPages)
     }
     setCurrentPage(newPage)

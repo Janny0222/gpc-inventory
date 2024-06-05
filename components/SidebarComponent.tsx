@@ -21,7 +21,7 @@ const sidebarItems: SidebarItems = {
     { label: 'Printer', href: '/printer', icon: Printer },
     { label: 'Cellphone', href: '/cellphone', icon: Smartphone },
     { label: 'Server Accounts', href: '/accounts', icon: Server },
-    { label: 'Others', href: '/supplies', icon: List },
+    { label: 'Others', href: '/others', icon: List },
     // {
     //   href: '/item/lists',
     //   icon: List,
