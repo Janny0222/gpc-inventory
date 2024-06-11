@@ -1,6 +1,6 @@
 import { lato } from "@/styles/font";
 import Layout from "../layout";
-import TabsWithTables from "@/components/ui/tables/otherstable";
+import SuppliesTableInventory from "@/components/ui/tables/otherstable";
 import { CreateInventory } from "@/components/ui/buttons";
 import { useState } from "react";
 import Modal from "@/components/modal";
@@ -26,29 +26,30 @@ export default function Page() {
     }
    return (
     <Layout>
-        <div className={`bg-white  h-screen`}>
-            <div className="px-2 ">
-                <div className="p-5">
-                    <h1 className={`text-2xl ${lato.className}`}>IT Supply</h1>
-                </div>
-                <div className="flex items-end justify-end gap-2 mt-4 md:mt-8">
-                     <CreateInventory onClick={openModal}/>
-                </div>
-                <div className="py-5">
-                    <div className=" bg-gray-100">
-                        <TabsWithTables onDataSubmitted={handleSubmit} onActiveTabChange={handleActiveTabChange} />
+        <div className={`bg-white max-h-full `}>
+            <div className="h-full" >
+                <div className="px-2 ">
+                    <div className="p-5">
+                        <h1 className={`text-2xl ${lato.className}`}>IT Supply</h1>
+                    </div>
+                    <div className="flex items-end justify-end gap-2 mt-4 md:mt-8">
+                        {activeTab > 1 ? ( ''  ) :  <CreateInventory onClick={openModal}/>}
+                    </div>
+                    <div className="py-5">
+                        <div className=" bg-gray-100">
+                            <SuppliesTableInventory onDataSubmitted={handleSubmit} onActiveTabChange={handleActiveTabChange} />
+                        </div>
                     </div>
                 </div>
+                {isModalOpen && activeTab === 0 &&  (
+                <Modal onClose={closeModal} title="Add Supply" companyName="" tablename="" onSubmit={() => ({})}>
+                    <Form onDataSubmitted={handleSubmit} />
+                </Modal> )}
+                {isModalOpen && activeTab === 1 &&  (
+                <Modal onClose={closeModal} title="Add Supply" companyName="" tablename="" onSubmit={() => ({})}>
+                    <DeliverForm onDataSubmitted={handleSubmit} />
+                </Modal> )}
             </div>
-            {isModalOpen && activeTab === 0 &&  (
-            <Modal onClose={closeModal} title="Add Supply" companyName="" tablename="" onSubmit={() => ({})}>
-                <Form onDataSubmitted={handleSubmit} />
-            </Modal> )}
-
-            {isModalOpen && activeTab === 1 &&  (
-            <Modal onClose={closeModal} title="Add Supply" companyName="" tablename="" onSubmit={() => ({})}>
-                <DeliverForm onDataSubmitted={handleSubmit} />
-            </Modal> )}
         </div>
     </Layout>
    )

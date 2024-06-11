@@ -495,7 +495,173 @@ async function seedDatabase(){
             date_acquired VARCHAR(255),
             date_created TIMESTAMP
         )
+        `,
         `
+        CREATE TABLE IF NOT EXISTS steniel_printer (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            printer_name VARCHAR(255),
+            assigned_to VARCHAR(255),
+            manufacturer VARCHAR(255),
+            model VARCHAR(255),
+            ink_type VARCHAR(255),
+            serial_number VARCHAR(255),
+            description VARCHAR(255),
+            department VARCHAR(255),
+            comment VARCHAR(255),
+            is_active_id INT,
+            date_installed VARCHAR(255),
+            date_pullout VARCHAR(255),
+            date_purchased VARCHAR(255),
+            CONSTRAINT fk_steniel_printer_status
+                FOREIGN KEY(is_active_id) REFERENCES statuses(id)
+                ON UPDATE CASCADE
+                ON DELETE RESTRICT,
+            date_created TIMESTAMP
+        )
+        `,
+        `
+        CREATE TABLE IF NOT EXISTS steniel_accounts (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255),
+            department VARCHAR(255),
+            username VARCHAR(255),
+            password VARCHAR(255),
+            notes VARCHAR(255),
+            is_active_id INT,
+            CONSTRAINT fk_is_active_id_steniel
+                FOREIGN KEY(is_active_id) REFERENCES statuses(id)
+                ON UPDATE CASCADE
+                ON DELETE RESTRICT,
+            date_created TIMESTAMP
+        )
+        `,
+        `
+        CREATE TABLE IF NOT EXISTS steniel_mobile_inventory (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            assigned_to VARCHAR(255),
+            department VARCHAR(255),
+            brand VARCHAR(255),
+            model_specs VARCHAR(255),
+            serial_number VARCHAR(255),
+            imei VARCHAR(255),
+            number VARCHAR(255),
+            email_password VARCHAR(255),
+            inclusion VARCHAR(255),
+            date_issued VARCHAR(255),
+            date_purchased VARCHAR(255),
+            date_created TIMESTAMP
+        )
+        `,
+        `
+        CREATE TABLE IF NOT EXISTS steniel_inventory (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            pc_name VARCHAR(255),
+            name VARCHAR(255),
+            ip_address VARCHAR(255),
+            mac_address VARCHAR(255),
+            computer_type VARCHAR(255),
+            monitor VARCHAR(255),
+            specs VARCHAR(255),
+            department VARCHAR(255),
+            anydesk VARCHAR(255),
+            supplier VARCHAR(255),
+            comment VARCHAR(255),
+            date_purchased VARCHAR(255),
+            date_installed VARCHAR(255),
+            date_created TIMESTAMP
+        )
+        `,
+        `
+        CREATE TABLE IF NOT EXISTS gcc_printer (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            printer_name VARCHAR(255),
+            assigned_to VARCHAR(255),
+            manufacturer VARCHAR(255),
+            model VARCHAR(255),
+            ink_type VARCHAR(255),
+            serial_number VARCHAR(255),
+            description VARCHAR(255),
+            department VARCHAR(255),
+            comment VARCHAR(255),
+            is_active_id INT,
+            date_installed VARCHAR(255),
+            date_pullout VARCHAR(255),
+            date_purchased VARCHAR(255),
+            CONSTRAINT fk_gcc_printer_status
+                FOREIGN KEY(is_active_id) REFERENCES statuses(id)
+                ON UPDATE CASCADE
+                ON DELETE RESTRICT,
+            date_created TIMESTAMP
+        )
+        `,
+        `
+        CREATE TABLE IF NOT EXISTS gcc_accounts (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255),
+            department VARCHAR(255),
+            username VARCHAR(255),
+            password VARCHAR(255),
+            notes VARCHAR(255),
+            is_active_id INT,
+            CONSTRAINT fk_is_active_id_gcc
+                FOREIGN KEY(is_active_id) REFERENCES statuses(id)
+                ON UPDATE CASCADE
+                ON DELETE RESTRICT,
+            date_created TIMESTAMP
+        )
+        `,
+        `
+        CREATE TABLE IF NOT EXISTS gcc_mobile_inventory (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            assigned_to VARCHAR(255),
+            department VARCHAR(255),
+            brand VARCHAR(255),
+            model_specs VARCHAR(255),
+            serial_number VARCHAR(255),
+            imei VARCHAR(255),
+            number VARCHAR(255),
+            email_password VARCHAR(255),
+            inclusion VARCHAR(255),
+            date_issued VARCHAR(255),
+            date_purchased VARCHAR(255),
+            date_created TIMESTAMP
+        )
+        `,
+        `
+        CREATE TABLE IF NOT EXISTS gcc_inventory (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            pc_name VARCHAR(255),
+            name VARCHAR(255),
+            ip_address VARCHAR(255),
+            mac_address VARCHAR(255),
+            computer_type VARCHAR(255),
+            monitor VARCHAR(255),
+            specs VARCHAR(255),
+            department VARCHAR(255),
+            anydesk VARCHAR(255),
+            supplier VARCHAR(255),
+            comment VARCHAR(255),
+            date_purchased VARCHAR(255),
+            date_installed VARCHAR(255),
+            date_created TIMESTAMP
+        )
+        `,
+        `
+        CREATE TABLE IF NOT EXISTS nas_table (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255),
+            company_name VARCHAR(255),
+            ip_address VARCHAR(255),
+            mac_address VARCHAR(255),
+            manufacturer VARCHAR(255),
+            model VARCHAR(255),
+            specs VARCHAR(255),
+            location_area VARCHAR(255),
+            date_purchased VARCHAR(255),
+            date_installed VARCHAR(255),
+            date_created TIMESTAMP
+        )
+        `,
         ]
         for(const query of queries){
             await db.query(query);
