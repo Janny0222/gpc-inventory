@@ -18,9 +18,10 @@ interface GPCInventoryTableProps {
   onDataSubmitted: () => void;
   query: string;
   triggerValue: string
+  inventory_type: string;
 }
 
-export default function GPCInventoryTable ({triggerValue, gettableName, onDataSubmitted, query}:GPCInventoryTableProps){
+export default function GPCInventoryTable ({inventory_type, triggerValue, gettableName, onDataSubmitted, query}:GPCInventoryTableProps){
   const [inventories, setInventories] = useState<InventoryList[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -293,11 +294,11 @@ export default function GPCInventoryTable ({triggerValue, gettableName, onDataSu
                       <td className="px-3 py-3 whitespace-nowrap">
                         <div className="flex items-center justify-center gap-3 edit-button">
                           <UpdateInventory id={inventory.id} onClick={openModal}/>
-                          <QRGeneratorButton
+                          {/* <QRGeneratorButton
                             id={inventory.id}
                             onClick={qrModal}
                             onSave={handleSave}
-                          />
+                          /> */}
                           <DeleteInventory id={inventory.id} onClick={openDeleteModal}/>
                         </div>
                       </td>
@@ -331,7 +332,7 @@ export default function GPCInventoryTable ({triggerValue, gettableName, onDataSu
       <div className="p-4 my-2 border rounded-md bg-white justify-center items-center">
         <div className="">
             <h1 className="text-lg">Recent Activity</h1>
-            <ActivityLog tablename={gettableName} originTable={company} onDataSubmitted={handleFormSubmit} />
+            <ActivityLog tablename={inventory_type} originTable={company} onDataSubmitted={handleFormSubmit} />
         </div>
       </div>
     </>
