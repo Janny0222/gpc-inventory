@@ -15,6 +15,7 @@ import Upload from "@/components/Upload";
 import toast from "react-hot-toast";
 import StatusToggle from "@/components/StatusToggle";
 import { duration } from "html2canvas/dist/types/css/property-descriptors/duration";
+import Head from "next/head";
 
 export default function Page(){
 const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,15 +33,11 @@ const [dataUploaderHandler, setDataUploaderHandler] = useState<() => void>(() =>
     
     // function for changing company
     const handleDropdown = (value: string) => {
-        const pageLoading = toast.loading(`Selecting company, Please wait...`, {duration: 2500})
-        setTimeout(() => {
-        toast.success(`Loading Successful`, {id: pageLoading})
         if(name === '') {
             setTriggerValue("active");
         }
-            setTableName(value)
-            setValue(value)
-        }, 2000)
+        setTableName(value)
+        setValue(value)
     }
     
     // function for create modal
@@ -61,7 +58,7 @@ const [dataUploaderHandler, setDataUploaderHandler] = useState<() => void>(() =>
         const handleDataUploaded = async () => {
         try {
             let apiUrlEndpoint
-            apiUrlEndpoint = `/api/${getTable}/cellphones`
+            apiUrlEndpoint = `/api/${getTable}/cellphone`
             const response = await fetch(apiUrlEndpoint);
             const data = await response.json();
             setMobileInventory(data.results)
@@ -86,6 +83,11 @@ const [dataUploaderHandler, setDataUploaderHandler] = useState<() => void>(() =>
     
     return (
         <Layout>
+            <Head>
+            <title>GPC | Cellphone</title>
+            <meta name="description" content="List of inventory for Mobile Phones" />
+            <meta name='viewport' content='width=device-width, initial-scale=1' />
+            </Head>
             <div className={`p-2 border rounded shadow-2xl shadow-black relative ${name === '' ? 'h-screen' : 'h-full'} bg-gray-100`}>
                 <div className="p-5 border bg-white rounded">
                     <div className="flex items-center justify-between w-full">
@@ -102,6 +104,7 @@ const [dataUploaderHandler, setDataUploaderHandler] = useState<() => void>(() =>
                                 <label className="">Select Company:</label>
                                 <Dropdown onCompanyChange={handleDropdown} />
                             </div>
+                            
                         </div>
                         <div className="mx-2">
                         {name !=='' &&  <StatusToggle loading={loading} onChange={handleTrigger}/> }

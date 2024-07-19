@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import  {branchName, branchTableMap, tableName} from "@/lib/company";
+import  {branchName, branchTableMap, tableName, tableInventoryMap} from "@/lib/company";
 import { lusitana } from "@/styles/font";
 import GPCInventoryTable from "@/components/ui/tables/inventorytable";
 import Dropdown from "@/components/ui/dropdowns/dropdown";
@@ -19,6 +19,7 @@ import toast from "react-hot-toast";
 import { duration } from "html2canvas/dist/types/css/property-descriptors/duration";
 import StatusToggle from "@/components/StatusToggle";
 import { useSession } from "next-auth/react";
+import Head from "next/head";
 
 export default function Page({searchParams,}:{searchParams?: {search?: string}}) {
     let search = searchParams?.search || ''
@@ -31,8 +32,9 @@ export default function Page({searchParams,}:{searchParams?: {search?: string}})
     const [dataUploaderHandler, setDataUploaderHandler] = useState<() => void>(() => () => {})
     const { data: session, status } = useSession();
     const router = useRouter();
-
-    let name = tableName.find(companyName => companyName.name === company)?.displayName || company
+    
+    let initial = tableInventoryMap[tblName] || ''
+    let name = tableName.find(companyName => companyName.name === company)?.displayName || ''
         
     let table = tableName.find(company => company.name === tblName)?.name || ''
     let mobileTable = tableName.find(company => company.name === tblName)?.table || tblName
@@ -112,10 +114,15 @@ export default function Page({searchParams,}:{searchParams?: {search?: string}})
      return (
         
         <Layout>
-            <div className={`p-2 border rounded shadow-2xl shadow-black relative ${name === '' ? 'h-screen' : 'h-full'} bg-gray-100`}>
+            <Head>
+            <title>GPC | Computers and Laptops</title>
+            <meta name="description" content="List of inventory for Computers and Laptops" />
+            <meta name='viewport' content='width=device-width, initial-scale=1' />
+            </Head>
+            <div className={`p-2 border rounded shadow-2xl shadow-black relative ${initial === '' ? 'h-screen' : 'h-full'} bg-gray-100`}>
                 <div className="p-5 border bg-white rounded">
                     <div className="grid grid-rows-1 self-end w-full">
-                        <h1 className={`${lusitana.className} text-2xl`}> {name} Inventory</h1>
+                        <h1 className={`${lusitana.className} text-2xl`}> {initial} Inventory</h1>
                 
                         <div className="relative flex flex-col  w-28 top-2 sm:top-7">
                         {(company === 'gpc_inventory' || company === 'lsi_inventory') && branchName.length > 1 && (
@@ -141,7 +148,7 @@ export default function Page({searchParams,}:{searchParams?: {search?: string}})
                             </div>
                         </div>
                         <div className="mx-2">
-                            {name !=='' &&  <StatusToggle loading={false} onChange={handleTrigger} /> }
+                            {initial !=='' &&  <StatusToggle loading={false} onChange={handleTrigger} /> }
                         </div>
                     </div>
                 

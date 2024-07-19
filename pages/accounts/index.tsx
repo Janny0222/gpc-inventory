@@ -15,6 +15,7 @@ import GetBranch from "@/components/ui/dropdowns/select-company";
 import toast from "react-hot-toast";
 import StatusToggle from "@/components/StatusToggle";
 import ActivityLog from "@/components/ui/tables/activity_log";
+import Head from "next/head";
 
 export default function Page() {
     const [valueX, setValueX] = useState<string>("")
@@ -33,46 +34,36 @@ export default function Page() {
     const title = "Accounts"
 
     const handleDropdown = (value: string) => {
-        const pageLoading = toast.loading(`Selecting company, Please wait...`, {duration: 3000})
-        setTimeout(() => {
-            toast.success(`Loading Successful`, {id: pageLoading})
-            if(value === 'gpc_inventory') {
-                setBranch('Balintawak')
-                setTablename('gpc_accounts')
-            } else if (value === 'lsi_inventory') {
-                setBranch('Valenzuela')
-                setTablename('lsi_accounts')
-            } else if (value === 'gkc_inventory') {
-                setTablename('gkc_accounts')
-            } else if (value === 'gsrc_inventory') {
-                setTablename('gsrc_accounts')
-            } else if (value === 'gcc_inventory') {
-                setTablename('gcc_accounts')
-            } else if (value === 'steniel_inventory') {
-                setTablename('steniel_accounts')
-            } else {
-                setBranch('')
-            }
-            if(name === '') {
-                setTriggerValue("active");
-            }
-            setCompany(value)
-            setValueX(value)
-        }, 2000)
-        
+        if(value === 'gpc_inventory') {
+            setBranch('Balintawak')
+            setTablename('gpc_accounts')
+        } else if (value === 'lsi_inventory') {
+            setBranch('Valenzuela')
+            setTablename('lsi_accounts')
+        } else if (value === 'gkc_inventory') {
+            setTablename('gkc_accounts')
+        } else if (value === 'gsrc_inventory') {
+            setTablename('gsrc_accounts')
+        } else if (value === 'gcc_inventory') {
+            setTablename('gcc_accounts')
+        } else if (value === 'steniel_inventory') {
+            setTablename('steniel_accounts')
+        } else {
+            setBranch('')
+        }
+        if(name === '') {
+            setTriggerValue("active");
+        }
+        setCompany(value)
+        setValueX(value)       
     }
     const openModal = () => {
         setIsModalOpen(true)
-        console.log("result for clicking add new data: " ,gettable ,branch)
     }
     const closeModal = () => {
         setIsModalOpen(false)
     }
     const handleFormSubmit = () => {
-        setActivityLogKey(prevKey => prevKey + 1);
-        closeModal()
-    }
-    const handleEditSubmit = () => {
         setActivityLogKey(prevKey => prevKey + 1);
         closeModal()
     }
@@ -97,15 +88,10 @@ export default function Page() {
     }, [gettable, tablename])
 
     const handleBranchChange = (value: string) => {
-        const branchTableName = accountTableMap[value as keyof typeof accountTableMap] || value;
-        const companyChange = toast.loading(`Changing branch...`, {duration: 3000})
-        
-        setTimeout(() => {
-            toast.success('Changed successful!', {id: companyChange})
+        const branchTableName = accountTableMap[value as keyof typeof accountTableMap] || value;     
             setTablename(branchTableName)
             setBranch(value)
             dataUploaderHandler()
-        }, 2000)
     }
 
     const handleTrigger = () =>{
@@ -118,6 +104,11 @@ export default function Page() {
 
     return (
         <Layout>
+            <Head>
+            <title>GPC | Accounts</title>
+            <meta name="description" content="List of inventory for User Credentials" />
+            <meta name='viewport' content='width=device-width, initial-scale=1' />
+            </Head>
             <div className={`p-2 border rounded shadow-2xl shadow-black relative ${name === '' ? 'h-screen' : 'h-full'} bg-gray-100`}>
                 <div className="border rounded p-5 bg-white">
                     <div className="grid grid-rows-1 self-end w-full">

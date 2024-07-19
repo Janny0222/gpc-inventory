@@ -5,8 +5,29 @@ export const tableName = [
         {name: 'lsi_inventory', accounts: 'lsi_accounts',company: 'Lamitek Systems Incorporated.', table: 'lsi_mobile_inventory', displayName: "LSI"},
         {name: 'gsrc_inventory', accounts: 'gsrc_accounts',company: 'Green Siam Resources Corporation.', table: 'gsrc_mobile_inventory', displayName: "GSRC"},
         {name: 'gcc_inventory', accounts: 'gcc_accounts',company: 'Greencycle Corporation.', table: 'gcc_mobile_inventory', displayName: "GCC"},
-        {name: 'steniel_inventory', accounts: 'steniel_accounts',company: 'Steniel.', table: 'steniel_mobile_inventory', displayName: "STENIEL"},
+        {name: 'steniel_inventory', accounts: 'steniel_accounts',company: 'Steniel.', table: 'steniel_mobile_inventory', displayName: "STENIEL"},   
     ]
+
+export const tableInventoryMap: { [key: string]: string } = {
+    gpc_inventory: 'GPC-CCP',
+    gpc_sq_inventory: 'GPC-SQ',
+    gkc_inventory: 'GKC',
+    lsi_inventory: 'LSI-V',
+    lsi_can_inventory: 'LSI-C',
+    gsrc_inventory: 'GSRC',
+    gcc_inventory: 'GCC',
+    steniel_inventory: 'STENIEL',
+    baling_inventory: 'BALING'
+}
+
+export const tableMobileMap: { [key: string]: string } = {
+    gpc_mobile_inventory: 'GPC',
+    gkc_mobile_inventory: 'GKC',
+    lsi_mobile_inventory: 'LSI-V',
+    gsrc_mobile_inventory: 'GSRC',
+    gcc_mobile_inventory: 'GCC',
+    steniel_mobile_inventory: 'STENIEL',
+}
 
 export const allTables = [
     {name: 'gpc_inventory'},
@@ -83,6 +104,7 @@ export const accountTables: { [key: string]: string } = {
     'steniel_printer': 'STENIEL',
     'steniel_mobile_inventory': 'STENIEL',
     'steniel_inventory': 'STENIEL',
+    'baling_inventory': 'BALING',
   };
 
 export const roles: { [key: number] : string} = {

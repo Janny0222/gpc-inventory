@@ -155,6 +155,28 @@ async function seedDatabase(){
             date_created TIMESTAMP
         )
         `,
+        `
+        CREATE TABLE IF NOT EXISTS baling_inventory (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            pc_name VARCHAR(255),
+            name VARCHAR(255),
+            ip_address VARCHAR(255),
+            mac_address VARCHAR(255),
+            computer_type VARCHAR(255),
+            monitor VARCHAR(255),
+            specs VARCHAR(255),
+            department VARCHAR(255),
+            anydesk VARCHAR(255),
+            supplier VARCHAR(255),
+            comment VARCHAR(255),
+            date_purchased VARCHAR(255),
+            date_installed VARCHAR(255),
+            date_created TIMESTAMP,
+            is_active_id INT,
+            date_pullout VARCHAR(255),
+            CONSTRAINT fk_baling_is_active_id FOREIGN KEY (is_active_id) REFERENCES statuses(id)
+        )
+        `,
         // Creating table for GPC Mobile
         `
         CREATE TABLE IF NOT EXISTS gpc_mobile_inventory (
